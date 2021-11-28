@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+ <item
+     android:checked="true"
+     android:title="Pizza"
+     android:id="@+id/pizza"
+     android:icon="@drawable/pizzanav"
+    />
+
+    <item
+        android:checked="false"
+        android:title="Appetizer"
+        android:id="@+id/appetizer"
+        android:icon="@drawable/friedchicken"
+       />
+    <item
+        android:checked="false"
+        android:title="Drink"
+        android:id="@+id/drink"
+        android:icon="@drawable/cocktail"
+       />
+
+    <item
+        android:title="Salad"
+        android:id="@+id/salad"
+        android:icon="@drawable/salad"
+        />
+
+
+</menu>
