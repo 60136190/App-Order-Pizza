@@ -2,7 +2,7 @@ package com.example.oderapp.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,11 +12,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.oderapp.R;
-import com.example.oderapp.api.ApiService;
-import com.example.oderapp.model.User;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -27,23 +22,36 @@ public class Login extends AppCompatActivity {
 
     private Button signin;
     private TextView tvcreate_account;
-    private EditText edtUsername;
-    private EditText edtPassword;
-    private List<User> mListUser;
-    private User mUser;
+
+    EditText edtEmail;
+    EditText edtPass;
+
+//    private List<User> mListUser;
+//    private User mUser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         initUi();
-        mListUser = new ArrayList<>();
-        getListUser();
+
+//        mListUser = new ArrayList<>();
+//        getListUser();
+
         signin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                clickLogin();
+                if (TextUtils.isEmpty(edtEmail.getText().toString()) || TextUtils.isEmpty(edtPass.getText().toString())){
+                    String message = "Try again";
+                    Toast.makeText(Login.this,message,Toast.LENGTH_SHORT).show();
+                }else{
+                    LoginRequest loginRequest = new LoginRequest();
+                    loginRequest.setEmail(edtEmail.getText().toString());
+                    loginRequest.setPassword(edtPass.getText().toString());
+                    loginUser(loginRequest);
+                }
             }
         });
+
         tvcreate_account.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,53 +62,88 @@ public class Login extends AppCompatActivity {
         });
     }
 
-
     public void initUi(){
         signin = findViewById(R.id.btnSignIn);
         tvcreate_account = findViewById(R.id.tvCreateNewAccount);
-        edtUsername = findViewById(R.id.inputEmail);
-        edtPassword = findViewById(R.id.inputPassword);
+        edtEmail = findViewById(R.id.inputEmail);
+        edtPass = findViewById(R.id.inputPassword);
     }
 
-    private void getListUser(){
-        ApiService.apiservice.getListUser("meelad")
-                .enqueue(new Callback<User>() {
-                    @Override
-                    public void onResponse(Call<User> call, Response<User> response) {
-                        mUser = response.body();
-                        Log.e("Info user",mListUser.size()+" ");
-                        Toast.makeText(Login.this,"OK",Toast.LENGTH_SHORT).show();
-                    }
 
-                    @Override
-                    public void onFailure(Call<User> call, Throwable t) {
-                        Toast.makeText(Login.this,"Call api erroe",Toast.LENGTH_SHORT).show();
-                    }
-                });
+    public void  loginUser(LoginRequest loginRequest) {
+        Call<LoginRespone> loginResponeCall = ApiClient.getService().loginUser(loginRequest);
+        loginResponeCall.enqueue(new Callback<LoginRespone>() {
+            @Override
+            public void onResponse(Call<LoginRespone> call, Response<LoginRespone> response) {
+
+                String mess = response.message();
+                String a ="Login successful";
+                if ((response.isSuccessful())){
+                        startActivity(new Intent(Login.this, SliderActivity.class));
+                        finish();
+                }else{
+                    String message = "Email or password is wrong";
+                    Toast.makeText(Login.this,message,Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<LoginRespone> call, Throwable t) {
+                String message = t.getLocalizedMessage();
+                Toast.makeText(Login.this,message,Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
-    private void clickLogin() {
-        String strUserName = edtUsername.getText().toString().trim();
+//    private void getListUser(){
+//        ApiService.apiservice.getListUser()
+//                .enqueue(new Callback<List<User>>() {
+//                    @Override
+//                    public void onResponse(Call<List<User>> call, Response<List<User>> response) {
+//                        mListUser= response.body();
+//                        Log.e("Info user",mListUser.size()+" ");
+//                        Toast.makeText(Login.this,"OK",Toast.LENGTH_SHORT).show();
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<List<User>> call, Throwable t) {
+//                        Toast.makeText(Login.this,"Call api error",Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+//    }
+//    private void clickLogin() {
+//        String strEmail = edtEmail.getText().toString().trim();
+//        String strPass = edtPass.getText().toString().trim();
+//
+//
+//        if (mListUser == null || mListUser.isEmpty()) {
+//            return;
+//        }
+//        boolean isHasUser = false;
+//        for (User user : mListUser) {
+//            if (strEmail.equals(user.getName()) && strPass.equals(user.getEmail())) {
+//                isHasUser = true;
+//                mUser = user;
+//                break;
+//            }
+//
+//        }
+//        if (isHasUser){
+//            Intent i = new Intent(Login.this,HomeFragment.class);
+//            Bundle bundle = new Bundle();
+//            bundle.putSerializable("object_user",mUser);
+//            i.putExtras(bundle);
+//
+//
+//            Intent intent = new Intent(Login.this, SliderActivity.class);
+//            startActivity(intent);
+//
+//        }else{
+//            Toast.makeText(Login.this,"User name or password invalid",Toast.LENGTH_SHORT).show();
+//        }
+//    }
 
-        if (mUser == null){
-            return;
-        }
-        boolean isHasUser = false;
-
-            if (strUserName.equals(mUser.getName())){
-                isHasUser = true;
-
-        }
-        if (isHasUser){
-            Intent intent = new Intent(Login.this,MainActivity.class);
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("object_user",mUser);
-            intent.putExtras(bundle);
-            startActivity(intent);
-
-        }else{
-            Toast.makeText(Login.this,"User name or password invalid",Toast.LENGTH_SHORT).show();
-        }
-    }
 
 }
+

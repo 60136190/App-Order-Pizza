@@ -1,6 +1,8 @@
 package com.example.oderapp.activities;
 
+
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -10,7 +12,13 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.oderapp.R;
+import com.example.oderapp.adapters.ItemPizzaAdappter;
 import com.example.oderapp.model.Item;
+import com.example.oderapp.model.ItemAppertizer;
+import com.example.oderapp.model.ItemPizza;
+import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
 
 
 public class DetailActivity extends AppCompatActivity {
@@ -23,11 +31,10 @@ public class DetailActivity extends AppCompatActivity {
     private Button btncong;
     private Button btntru;
     private TextView tvsoluong;
-
-    private TextView tvdetail;
+    private TextView tvDetailDescription;
     private ImageView imageBack;
     private Button btn_buy_now;
-
+    private ArrayList<ItemPizza> mItemPizzaList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,16 +42,32 @@ public class DetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail);
 
         initUI();
-        Bundle bundle =getIntent().getExtras();
-        if(bundle == null){
-            return;
-        }
-        Item item = (Item) bundle.get("object");
-        imageao.setImageResource(item.getImage());
-        tvname.setText(item.getName());
-        tvprice.setText(item.getPrice());
+        Bundle bundle = getIntent().getExtras();
+//        if(bundle == null){
+//            return;
+//        }
+
+
+//        Intent i = getIntent();
+//        ItemPizza myParcelableObject = (ItemPizza) i.getSerializableExtra("dghsga");
+//        tvname.setText(myParcelableObject.getTensp());
+
+//
+        ItemPizza item = (ItemPizza) bundle.get("object");
+//        imageao.setImageResource(Integer.parseInt(item.getHinhanh()));
+
+        Picasso.with(this)
+                .load(item.getUrl()).fit().centerInside().into(imageao);
+        tvname.setText(item.getTensp());
+        tvprice.setText(String.valueOf(item.getGia()));
+        tvDetailDescription.setText(item.getChitiet());
         tvsize.setText(item.getSize());
-        tvdetail.setText(item.getDetail());
+
+
+
+//        tvDetailDescription.setText(myParcelableObject.getId());
+
+
 
         imageBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,12 +129,12 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void initUI(){
-        imageao = findViewById(R.id.img_detail_ao);
+        imageao = findViewById(R.id.img_detail_pizza);
         tvname = findViewById(R.id.tv_detail_name);
         tvprice = findViewById(R.id.tv_detail_price);
         tvsize = findViewById(R.id.tv_detail_size);
         cart = findViewById(R.id.img_cart_detail);
-        tvdetail = findViewById(R.id.tv_detail);
+        tvDetailDescription = findViewById(R.id.tv_detail_description);
         imageBack = findViewById(R.id.back);
         btncong = findViewById(R.id.btn_cong);
         btntru = findViewById(R.id.btn_detail_tru);

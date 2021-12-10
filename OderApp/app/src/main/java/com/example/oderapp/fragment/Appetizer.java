@@ -1,5 +1,6 @@
 package com.example.oderapp.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,20 +9,37 @@ import android.view.ViewGroup;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.oderapp.R;
-import com.example.oderapp.adapters.ItemClothesAdappter;
+import com.example.oderapp.activities.DetailActivity;
+import com.example.oderapp.adapters.ItemAppetizerAdapter;
+import com.example.oderapp.adapters.ItemPizzaAdappter;
 import com.example.oderapp.model.Item;
+import com.example.oderapp.model.ItemAppertizer;
+import com.example.oderapp.model.ItemPizza;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Appetizer extends Fragment {
 
-    private RecyclerView rcvCooking;
-    private List<Item> item;
+    private RecyclerView mRecyclerView;
+    public ItemAppetizerAdapter mitemPizzaAdappter;
+    private ArrayList<ItemAppertizer> mitemPizzasList;
+    private RequestQueue mRequestQueue;
     public Appetizer() {
         // Required empty public constructor
     }
@@ -32,27 +50,60 @@ public class Appetizer extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_french_fries, container, false);
-        rcvCooking = view.findViewById(R.id.rcv_cooking);
-        ItemClothesAdappter itemScfiAdappter = new ItemClothesAdappter(getContext(),item);
+        View view = inflater.inflate(R.layout.fragment_appertizer, container, false);
+        mRecyclerView = view.findViewById(R.id.rcv_appertizer);
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
-        rcvCooking.setLayoutManager(gridLayoutManager);
-        rcvCooking.setAdapter(itemScfiAdappter);
+        mRecyclerView.setLayoutManager(gridLayoutManager);
         return view;
     }
+
+    private void parseJSON() {
+        String url = "http://192.168.2.92:5000/category/10";
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            JSONArray jsonArray = response.getJSONArray("data");
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                JSONObject dt = jsonArray.getJSONObject(i);
+                                String pizzaName = dt.getString("tensp");
+                                int pizzaPrice = dt.getInt("gia");
+                                String pizzaImage = dt.getString("hinhanh");
+                                String pizzaSize = dt.getString("size");
+//                                String pizzaDetail = dt.getString("chitiet");
+
+
+                                mitemPizzasList.add(new ItemAppertizer(pizzaName,pizzaPrice,pizzaImage,pizzaSize));
+                            }
+                            mitemPizzaAdappter = new ItemAppetizerAdapter(getActivity(), mitemPizzasList);
+                            mRecyclerView.setAdapter(mitemPizzaAdappter);
+                            // Click pass Deatil Activit
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                    }
+                });
+        mRequestQueue.add(request);
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        item = new ArrayList<>();
-        item.add(new Item(R.drawable.my_cay_hai_san,"TB Capcong Kaki - Beige","15","L","100% cotton"));
-        item.add(new Item(R.drawable.my_cay_thit_xong_khoi,"TB Capcong Couduroy - Olive","15","S","Pollyeste"));
-        item.add(new Item(R.drawable.my_cay_xuc_xich,"TB Capcong Couduroy - Buff","15","XL","100 cotton"));
-        item.add(new Item(R.drawable.my_chay_sot_kem_tuoi,"MILK COFFEE BASEBALL CAP DISTRESSED","15","XL","100 cotton"));
-        item.add(new Item(R.drawable.my_chay_sot_marinara,"SUEDE BUCKET HAT","15","XL","100 cotton"));
-        item.add(new Item(R.drawable.my_giam_bong_nam_sot_kem,"CODUROY MIKI HAT","15","XL","100 cotton"));
-        item.add(new Item(R.drawable.my_thi_bo_bam,"SUEDE BASEBALL CAP","15","XL","100 cotton"));
-        item.add(new Item(R.drawable.my_tom_sot_kem_ca_chua,"SUEDE BASEBALL CAP","15","XL","100 cotton"));
+        mitemPizzasList = new ArrayList<>();
+        mRequestQueue = Volley.newRequestQueue(getContext());
+        parseJSON();
 
 
     }
+
 }

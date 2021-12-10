@@ -8,10 +8,10 @@
     tools:context=".fragment.HomeFragment">
 
     <TextView
-        android:id="@+id/info"
+        android:id="@+id/tv_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="hi"
+        android:text=""
         android:textSize="@dimen/_17ssp"
         android:textColor="@color/primary_dark"
         app:layout_constraintTop_toTopOf="parent"
@@ -20,8 +20,8 @@
         android:id="@+id/tv_from"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_30sdp"
-        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginStart="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_10sdp"
         android:text="@string/from_italy_with"
         android:textColor="@color/primary_dark"
         android:textSize="@dimen/_20ssp"
@@ -36,7 +36,7 @@
         android:text="@string/pizza_love"
         android:textColor="@color/secondary_text"
         android:textSize="@dimen/_20ssp"
-        android:layout_marginStart="@dimen/_30sdp"
+        android:layout_marginStart="@dimen/_20sdp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_from" />
 
@@ -44,7 +44,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_10sdp"
         android:scrollbars="none"
         app:layout_constraintTop_toBottomOf="@+id/tv_pizza">
         <LinearLayout
@@ -101,13 +101,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_30sdp"
-                android:layout_marginTop="@dimen/_30sdp"
-                android:text="@string/hot_this_month"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:text="@string/promotion"
                 android:textColor="@color/primary_dark"
                 android:textSize="@dimen/_15ssp"
                 android:textStyle="bold"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/pizza" />
+
 
             <ViewFlipper
                 android:id="@+id/viewflipper_hot_this_month"
@@ -117,17 +118,14 @@
                 app:layout_constraintRight_toRightOf="parent"
                 android:layout_margin="@dimen/_10sdp"
                 app:layout_constraintTop_toBottomOf="@+id/tv_hot_this_month">
-
-
             </ViewFlipper>
-
             <TextView
                 android:id="@+id/tv_promotion"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_30sdp"
-                android:layout_marginTop="@dimen/_30sdp"
-                android:text="@string/promotion"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:text="@string/hot_this_month"
                 android:textColor="@color/primary_dark"
                 android:textSize="@dimen/_15ssp"
                 android:textStyle="bold"
@@ -135,54 +133,17 @@
                 app:layout_constraintTop_toBottomOf="@+id/scroll_hot_this_month" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/a"
+                android:id="@+id/rcv_hot_this_month"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_100sdp"
-                android:orientation="horizontal"
+                android:layout_height="@dimen/_400sdp"
+                android:background="@drawable/noel"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_promotion">
 
             </androidx.recyclerview.widget.RecyclerView>
 
-            <ImageView
-                android:id="@+id/b"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:src="@drawable/carts"
-                app:layout_constraintTop_toBottomOf="@+id/a"
-                app:layout_constraintLeft_toLeftOf="parent"/>
-            <ImageView
-                android:id="@+id/c"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:src="@drawable/carts"
-                app:layout_constraintTop_toBottomOf="@+id/b"
-                app:layout_constraintLeft_toLeftOf="parent"/>
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:src="@drawable/carts"
-                app:layout_constraintTop_toBottomOf="@+id/c"
-                app:layout_constraintLeft_toLeftOf="parent"/>
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:src="@drawable/carts"
-                app:layout_constraintTop_toBottomOf="@+id/c"
-                app:layout_constraintLeft_toLeftOf="parent"/>
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:src="@drawable/carts"
-                app:layout_constraintTop_toBottomOf="@+id/c"
-                app:layout_constraintLeft_toLeftOf="parent"/>
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:src="@drawable/carts"
-                app:layout_constraintTop_toBottomOf="@+id/c"
-                app:layout_constraintLeft_toLeftOf="parent"/>
+
         </LinearLayout>
     </ScrollView>
 

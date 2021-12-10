@@ -6,8 +6,9 @@
     android:layout_height="match_parent"
     android:clipToPadding="false"
     android:overScrollMode="never"
-    android:padding="@dimen/_24sdp"
+    android:padding="@dimen/_10sdp"
     android:scrollbars="none"
+    android:background="@drawable/register"
     tools:context=".activities.SignUp">
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,42 +19,42 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_10sdp"
             android:text="@string/create_new_account"
             android:textColor="@color/primary_text"
             android:textSize="@dimen/_18ssp"
             android:textStyle="bold"/>
-        <FrameLayout
-            android:id="@+id/layoutImage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_20sdp">
+<!--        <FrameLayout-->
+<!--            android:id="@+id/layoutImage"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="@dimen/_10sdp">-->
 
-            <com.makeramen.roundedimageview.RoundedImageView
-                android:id="@+id/imageProfile"
-                android:layout_width="@dimen/_80sdp"
-                android:layout_height="@dimen/_80sdp"
-                android:background="@drawable/background_image"
-                android:scaleType="centerCrop"
-                app:riv_oval="true"/>
+<!--            <com.makeramen.roundedimageview.RoundedImageView-->
+<!--                android:id="@+id/imageProfile"-->
+<!--                android:layout_width="@dimen/_80sdp"-->
+<!--                android:layout_height="@dimen/_80sdp"-->
+<!--                android:background="@drawable/background_image"-->
+<!--                android:scaleType="centerCrop"-->
+<!--                app:riv_oval="true"/>-->
 
-            <TextView
-                android:id="@+id/textAddImage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/add_image"
-                android:textColor="@color/secondary_text"
-                android:textSize="@dimen/_10ssp"/>
+<!--            <TextView-->
+<!--                android:id="@+id/textAddImage"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="center"-->
+<!--                android:text="@string/add_image"-->
+<!--                android:textColor="@color/secondary_text"-->
+<!--                android:textSize="@dimen/_10ssp"/>-->
 
-        </FrameLayout>
+<!--        </FrameLayout>-->
 
         <EditText
-            android:id="@+id/inputName"
+            android:id="@+id/edt_ho_ten"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_45sdp"
-            android:layout_marginTop="@dimen/_20sdp"
-            android:hint="@string/name"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:hint="Full name"
             android:imeOptions="actionNext"
             android:background="@drawable/background_input"
             android:importantForAutofill="no"
@@ -64,13 +65,94 @@
             android:textSize="@dimen/_13ssp"
             />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="10"
+            android:orientation="horizontal">
+            <EditText
+                android:id="@+id/edt_username"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_45sdp"
+                android:layout_weight="5"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:hint="User name"
+                android:imeOptions="actionNext"
+                android:background="@drawable/background_input"
+                android:importantForAutofill="no"
+                android:inputType="textEmailAddress"
+                android:paddingStart="@dimen/_16sdp"
+                android:paddingEnd="@dimen/_16sdp"
+                android:textColor="@color/primary_text"
+                android:textSize="@dimen/_13ssp"
+                />
+
+            <EditText
+                android:id="@+id/edt_ngay_sinh"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_45sdp"
+                android:layout_weight="5"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:hint="Date of birth"
+                android:imeOptions="actionNext"
+                android:inputType="date"
+                android:background="@drawable/background_input"
+                android:importantForAutofill="no"
+                android:paddingStart="@dimen/_16sdp"
+                android:paddingEnd="@dimen/_16sdp"
+                android:textColor="@color/primary_text"
+                android:textSize="@dimen/_13ssp"
+                />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="10"
+            android:orientation="horizontal">
+            <EditText
+                android:id="@+id/edt_gioi_tinh"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_45sdp"
+                android:layout_weight="5"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:hint="Sex"
+                android:imeOptions="actionDone"
+                android:background="@drawable/background_input"
+                android:importantForAutofill="no"
+                android:paddingStart="@dimen/_16sdp"
+                android:paddingEnd="@dimen/_16sdp"
+                android:textColor="@color/primary_text"
+                android:textSize="@dimen/_13ssp"
+                />
+            <EditText
+                android:id="@+id/edt_phone_number"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_45sdp"
+                android:layout_weight="5"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:hint="Phone number"
+                android:imeOptions="actionDone"
+                android:inputType="phone"
+                android:background="@drawable/background_input"
+                android:importantForAutofill="no"
+                android:paddingStart="@dimen/_16sdp"
+                android:paddingEnd="@dimen/_16sdp"
+                android:textColor="@color/primary_text"
+                android:textSize="@dimen/_13ssp"
+                />
+        </LinearLayout>
+
         <EditText
-            android:id="@+id/inputEmail"
+            android:id="@+id/edt_email"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_45sdp"
-            android:layout_marginTop="@dimen/_16sdp"
-            android:hint="@string/email"
-            android:imeOptions="actionNext"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:hint="Email"
+            android:imeOptions="actionDone"
             android:background="@drawable/background_input"
             android:importantForAutofill="no"
             android:inputType="textEmailAddress"
@@ -81,36 +163,35 @@
             />
 
         <EditText
-            android:id="@+id/inputPassword"
+            android:id="@+id/edt_password"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_45sdp"
-            android:layout_marginTop="@dimen/_16sdp"
-            android:hint="@string/password"
-            android:imeOptions="actionNext"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:hint="Password"
+            android:imeOptions="actionDone"
             android:background="@drawable/background_input"
             android:importantForAutofill="no"
-            android:inputType="textPassword"
             android:paddingStart="@dimen/_16sdp"
+            android:inputType="textPassword"
             android:paddingEnd="@dimen/_16sdp"
             android:textColor="@color/primary_text"
             android:textSize="@dimen/_13ssp"
             />
 
         <EditText
-            android:id="@+id/inputConfirmPassword"
+            android:id="@+id/edt_confirm_password"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_45sdp"
-            android:layout_marginTop="@dimen/_16sdp"
-            android:hint="@string/confirm_password"
-            android:imeOptions="actionDone"
+            android:layout_marginTop="@dimen/_10sdp"
             android:background="@drawable/background_input"
+            android:hint="Confirm password"
+            android:imeOptions="actionDone"
             android:importantForAutofill="no"
-            android:inputType="textPassword"
             android:paddingStart="@dimen/_16sdp"
+            android:inputType="textPassword"
             android:paddingEnd="@dimen/_16sdp"
             android:textColor="@color/primary_text"
-            android:textSize="@dimen/_13ssp"
-            />
+            android:textSize="@dimen/_13ssp" />
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -125,15 +206,15 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/_13ssp"
                 android:textStyle="bold"
-                app:backgroundTint="@color/button"
+                app:backgroundTint="@color/main_color"
                 app:cornerRadius="@dimen/_8sdp"/>
 
-            <ProgressBar
-                android:id="@+id/progressBar"
-                android:layout_width="@dimen/_25sdp"
-                android:layout_height="@dimen/_25sdp"
-                android:layout_gravity="center"
-                android:visibility="invisible"/>
+<!--            <ProgressBar-->
+<!--                android:id="@+id/progressBar"-->
+<!--                android:layout_width="@dimen/_25sdp"-->
+<!--                android:layout_height="@dimen/_25sdp"-->
+<!--                android:layout_gravity="center"-->
+<!--                android:visibility="invisible"/>-->
         </FrameLayout>
 
         <TextView
@@ -145,6 +226,7 @@
             android:textColor="@color/primary"
             android:textSize="@dimen/_13ssp"
             android:textStyle="bold"/>
+
 
 
     </LinearLayout>

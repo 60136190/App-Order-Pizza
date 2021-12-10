@@ -3,41 +3,28 @@ package com.example.oderapp.model;
 import java.io.Serializable;
 
 public class User implements Serializable {
-    private String name;
-    private int age;
-    private int count;
+    private String email;
+    private String password;
 
-    public String getName() {
-        return name;
+    public User(String email, String password) {
+        this.email = email;
+        this.password = password;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getEmail() {
+        return email;
     }
 
-    public int getAge() {
-        return age;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public String getPassword() {
+        return password;
     }
 
-    public int getCount() {
-        return count;
-    }
-
-    public void setCount(int count) {
-        this.count = count;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "name='" + name + '\'' +
-                ", age=" + age +
-                ", count=" + count +
-                '}';
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
 
