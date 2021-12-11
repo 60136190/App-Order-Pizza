@@ -41,12 +41,12 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         roundedImageView = view.findViewById(R.id.pizza);
-        tvinfo = view.findViewById(R.id.tv_info);
+        tvinfo = view.findViewById(R.id.tv_from);
 
 
         // hot this month
-
-
+//
+//
 //        Bundle bundleRecive = getActivity().getIntent().getExtras();
 //        if (bundleRecive != null) {
 //            User user = (User) bundleRecive.get("object_user");

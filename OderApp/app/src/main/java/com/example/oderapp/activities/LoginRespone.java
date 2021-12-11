@@ -3,6 +3,7 @@ package com.example.oderapp.activities;
 import java.io.Serializable;
 
 public class LoginRespone implements Serializable {
+    private int status;
     private String message;
     private String accessToken;
     private String refreshToken;
@@ -29,5 +30,13 @@ public class LoginRespone implements Serializable {
 
     public void setRefreshToken(String refreshToken) {
         this.refreshToken = refreshToken;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 }

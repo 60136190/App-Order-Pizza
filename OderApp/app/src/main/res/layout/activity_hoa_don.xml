@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".HoaDon">
+    >
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -20,13 +20,13 @@
         android:layout_marginRight="10dp">
     </androidx.recyclerview.widget.RecyclerView>
 
-        <ImageButton
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/thanhtoan"
-            android:background="@drawable/border_radiobutton"
-            android:scaleType="centerCrop"
-            android:layout_marginTop="700dp"
-            android:layout_marginLeft="320dp"/>
+<!--        <ImageButton-->
+<!--            android:layout_width="50dp"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:src="@drawable/thanhtoan"-->
+<!--            android:background="@drawable/border_radiobutton"-->
+<!--            android:scaleType="centerCrop"-->
+<!--            android:layout_marginTop="700dp"-->
+<!--            android:layout_marginLeft="320dp"/>-->
     </FrameLayout>
 </LinearLayout>

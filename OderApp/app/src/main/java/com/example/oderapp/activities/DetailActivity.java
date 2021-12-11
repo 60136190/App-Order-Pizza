@@ -2,7 +2,6 @@ package com.example.oderapp.activities;
 
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,10 +11,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.oderapp.R;
-import com.example.oderapp.adapters.ItemPizzaAdappter;
-import com.example.oderapp.model.Item;
-import com.example.oderapp.model.ItemAppertizer;
-import com.example.oderapp.model.ItemPizza;
+import com.example.oderapp.model.ItemFood;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -34,7 +30,7 @@ public class DetailActivity extends AppCompatActivity {
     private TextView tvDetailDescription;
     private ImageView imageBack;
     private Button btn_buy_now;
-    private ArrayList<ItemPizza> mItemPizzaList;
+    private ArrayList<ItemFood> mItemFoodList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +49,9 @@ public class DetailActivity extends AppCompatActivity {
 //        tvname.setText(myParcelableObject.getTensp());
 
 //
-        ItemPizza item = (ItemPizza) bundle.get("object");
+        ItemFood item = (ItemFood) bundle.get("object");
+//        ItemPasta itemPasta = (ItemPasta) bundle.get("object");
+//        ItemAppertizer itemAppertizer = (ItemAppertizer) bundle.get("object");
 //        imageao.setImageResource(Integer.parseInt(item.getHinhanh()));
 
         Picasso.with(this)
@@ -62,6 +60,20 @@ public class DetailActivity extends AppCompatActivity {
         tvprice.setText(String.valueOf(item.getGia()));
         tvDetailDescription.setText(item.getChitiet());
         tvsize.setText(item.getSize());
+
+//        Picasso.with(this)
+//                .load(itemPasta.getUrl()).fit().centerInside().into(imageao);
+//        tvname.setText(itemPasta.getTensp());
+//        tvprice.setText(String.valueOf(itemPasta.getGia()));
+//        tvDetailDescription.setText(itemPasta.getChitiet());
+//        tvsize.setText(itemPasta.getSize());
+//
+//        Picasso.with(this)
+//                .load(itemAppertizer.getUrl()).fit().centerInside().into(imageao);
+//        tvname.setText(itemAppertizer.getTensp());
+//        tvprice.setText(String.valueOf(itemAppertizer.getGia()));
+//        tvDetailDescription.setText(itemAppertizer.getChitiet());
+//        tvsize.setText(itemAppertizer.getSize());
 
 
 

@@ -3,21 +3,22 @@ package com.example.oderapp.model;
 
 import java.io.Serializable;
 
-public class ItemPasta implements Serializable {
+public class ItemFood implements Serializable {
     private String tensp;
     private int gia;
     private String url;
     private String chitiet;
     private String size;
 
-
-    public ItemPasta(String tensp, int gia, String url, String chitiet, String size) {
+    public ItemFood(String tensp, int gia, String url, String chitiet, String size) {
         this.tensp = tensp;
         this.gia = gia;
         this.url = url;
         this.chitiet = chitiet;
         this.size = size;
     }
+
+
 
     public String getTensp() {
         return tensp;

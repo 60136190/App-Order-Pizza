@@ -19,10 +19,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.oderapp.R;
-import com.example.oderapp.adapters.ItemPastaAdappter;
-import com.example.oderapp.adapters.ItemPizzaAdappter;
-import com.example.oderapp.model.ItemPasta;
-import com.example.oderapp.model.ItemPizza;
+import com.example.oderapp.adapters.ItemProductAdappter;
+import com.example.oderapp.model.ItemFood;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,9 +30,10 @@ import java.util.ArrayList;
 
 public class Pasta extends Fragment {
     private RecyclerView mRecyclerView;
-    private ItemPastaAdappter mitemPastaAdappter;
-    private ArrayList<ItemPasta> mitemPastaList;
+    private ItemProductAdappter mitemPizzaAdappter;
+    private ArrayList<ItemFood> mitemPizzasList;
     private RequestQueue mRequestQueue;
+
     public Pasta() {
         // Required empty public constructor
     }
@@ -53,7 +52,7 @@ public class Pasta extends Fragment {
         return view;
     }
     private void parseJSON() {
-        String url = "http://172.20.10.9:5000/product";
+        String url = "http://192.168.1.2:5000/category/17";
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -63,15 +62,15 @@ public class Pasta extends Fragment {
 
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject dt = jsonArray.getJSONObject(i);
-                                String pizzaName = dt.getString("tensp");
-                                String pizzaImage = dt.getString("url");
-                                int pizzaPrice = dt.getInt("gia");
-                                String pizzaDetail = dt.getString("chitiet");
-                                String pizzaSize = dt.getString("size");
-                                mitemPastaList.add(new ItemPasta(pizzaName,pizzaPrice,pizzaImage,pizzaDetail,pizzaSize));
+                                String productName = dt.getString("tensp");
+                                String productImage = dt.getString("url");
+                                int productPrice = dt.getInt("gia");
+                                String productDetail = dt.getString("chitiet");
+                                String productSize = dt.getString("size");
+                                mitemPizzasList.add(new ItemFood(productName,productPrice,productImage,productDetail,productSize));
                             }
-                            mitemPastaAdappter = new ItemPastaAdappter(getActivity(), mitemPastaList);
-                            mRecyclerView.setAdapter(mitemPastaAdappter);
+                            mitemPizzaAdappter = new ItemProductAdappter(getActivity(), mitemPizzasList);
+                            mRecyclerView.setAdapter(mitemPizzaAdappter);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -90,7 +89,7 @@ public class Pasta extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mitemPastaList = new ArrayList<>();
+        mitemPizzasList = new ArrayList<>();
         mRequestQueue = Volley.newRequestQueue(getContext());
         parseJSON();
     }

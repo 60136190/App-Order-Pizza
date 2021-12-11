@@ -19,6 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_100sdp"
             android:id="@+id/itemImage"
+            android:scaleType="fitCenter"
             android:src="@drawable/pizza_hai_san_dao"/>
         <TextView
             android:id="@+id/tv_name"

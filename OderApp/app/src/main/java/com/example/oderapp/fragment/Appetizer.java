@@ -1,6 +1,5 @@
 package com.example.oderapp.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,25 +19,20 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.oderapp.R;
-import com.example.oderapp.activities.DetailActivity;
-import com.example.oderapp.adapters.ItemAppetizerAdapter;
-import com.example.oderapp.adapters.ItemPizzaAdappter;
-import com.example.oderapp.model.Item;
-import com.example.oderapp.model.ItemAppertizer;
-import com.example.oderapp.model.ItemPizza;
+import com.example.oderapp.adapters.ItemProductAdappter;
+import com.example.oderapp.model.ItemFood;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Appetizer extends Fragment {
 
     private RecyclerView mRecyclerView;
-    public ItemAppetizerAdapter mitemPizzaAdappter;
-    private ArrayList<ItemAppertizer> mitemPizzasList;
+    private ItemProductAdappter mitemPizzaAdappter;
+    private ArrayList<ItemFood> mitemPizzasList;
     private RequestQueue mRequestQueue;
     public Appetizer() {
         // Required empty public constructor
@@ -60,28 +54,25 @@ public class Appetizer extends Fragment {
     }
 
     private void parseJSON() {
-        String url = "http://192.168.2.92:5000/category/10";
+        String url = "http://192.168.1.2:5000/category/19";
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
                             JSONArray jsonArray = response.getJSONArray("data");
+
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject dt = jsonArray.getJSONObject(i);
-                                String pizzaName = dt.getString("tensp");
-                                int pizzaPrice = dt.getInt("gia");
-                                String pizzaImage = dt.getString("hinhanh");
-                                String pizzaSize = dt.getString("size");
-//                                String pizzaDetail = dt.getString("chitiet");
-
-
-                                mitemPizzasList.add(new ItemAppertizer(pizzaName,pizzaPrice,pizzaImage,pizzaSize));
+                                String productName = dt.getString("tensp");
+                                String productImage = dt.getString("url");
+                                int productPrice = dt.getInt("gia");
+                                String productDetail = dt.getString("chitiet");
+                                String productSize = dt.getString("size");
+                                mitemPizzasList.add(new ItemFood(productName,productPrice,productImage,productDetail,productSize));
                             }
-                            mitemPizzaAdappter = new ItemAppetizerAdapter(getActivity(), mitemPizzasList);
+                            mitemPizzaAdappter = new ItemProductAdappter(getActivity(), mitemPizzasList);
                             mRecyclerView.setAdapter(mitemPizzaAdappter);
-                            // Click pass Deatil Activit
-
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

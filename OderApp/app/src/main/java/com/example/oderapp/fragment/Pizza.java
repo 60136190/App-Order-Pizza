@@ -1,6 +1,5 @@
 package com.example.oderapp.fragment;
 
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,8 +18,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.oderapp.R;
-import com.example.oderapp.adapters.ItemPizzaAdappter;
-import com.example.oderapp.model.ItemPizza;
+import com.example.oderapp.adapters.ItemProductAdappter;
+import com.example.oderapp.model.ItemFood;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,8 +29,8 @@ import java.util.ArrayList;
 
 public class Pizza extends Fragment {
     private RecyclerView mRecyclerView;
-    private ItemPizzaAdappter mitemPizzaAdappter;
-    private ArrayList<ItemPizza> mitemPizzasList;
+    private ItemProductAdappter mitemPizzaAdappter;
+    private ArrayList<ItemFood> mitemPizzasList;
     private RequestQueue mRequestQueue;
 
     //    private RecyclerView rcvCooking;
@@ -48,6 +47,7 @@ public class Pizza extends Fragment {
         mRecyclerView = view.findViewById(R.id.rcv_pizza);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
         mRecyclerView.setLayoutManager(gridLayoutManager);
 
@@ -55,7 +55,7 @@ public class Pizza extends Fragment {
     }
 
     private void parseJSON() {
-        String url = "http://172.20.10.9:5000/product";
+        String url = "http://192.168.1.2:5000/category/16";
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -65,14 +65,14 @@ public class Pizza extends Fragment {
 
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject dt = jsonArray.getJSONObject(i);
-                                String pizzaName = dt.getString("tensp");
-                                String pizzaImage = dt.getString("url");
-                                int pizzaPrice = dt.getInt("gia");
-                                String pizzaDetail = dt.getString("chitiet");
-                                String pizzaSize = dt.getString("size");
-                                mitemPizzasList.add(new ItemPizza(pizzaName,pizzaPrice,pizzaImage,pizzaDetail,pizzaSize));
+                                String productName = dt.getString("tensp");
+                                String productImage = dt.getString("url");
+                                int productPrice = dt.getInt("gia");
+                                String productDetail = dt.getString("chitiet");
+                                String productSize = dt.getString("size");
+                                mitemPizzasList.add(new ItemFood(productName,productPrice,productImage,productDetail,productSize));
                             }
-                            mitemPizzaAdappter = new ItemPizzaAdappter(getActivity(), mitemPizzasList);
+                            mitemPizzaAdappter = new ItemProductAdappter(getActivity(), mitemPizzasList);
                             mRecyclerView.setAdapter(mitemPizzaAdappter);
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -92,6 +92,7 @@ public class Pizza extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         mitemPizzasList = new ArrayList<>();
         mRequestQueue = Volley.newRequestQueue(getContext());
         parseJSON();

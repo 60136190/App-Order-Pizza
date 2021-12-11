@@ -102,18 +102,18 @@ public class SignUp extends AppCompatActivity {
             @Override
             public void onResponse(Call<UserRegister> call, Response<UserRegister> response) {
                 if (response.isSuccessful()){
-                    String message = "Successfully";
-                    Toast.makeText(SignUp.this,message,Toast.LENGTH_LONG).show();
+                    String message = "Sign up Successfully";
+                    Toast.makeText(SignUp.this,message,Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(SignUp.this,Login.class));
                     finish();
                 }else{
                     String message = "Try again....";
-                    Toast.makeText(SignUp.this,message,Toast.LENGTH_LONG).show();
+                    Toast.makeText(SignUp.this,message,Toast.LENGTH_SHORT).show();
                 }
             }
             @Override
             public void onFailure(Call<UserRegister> call, Throwable t) {
-                Toast.makeText(SignUp.this,"Call Api Error",Toast.LENGTH_LONG);
+                Toast.makeText(SignUp.this,"Call Api Error",Toast.LENGTH_SHORT);
             }
         });
     }

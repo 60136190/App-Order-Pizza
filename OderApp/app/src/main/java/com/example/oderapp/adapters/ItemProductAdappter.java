@@ -2,42 +2,32 @@ package com.example.oderapp.adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.oderapp.R;
 import com.example.oderapp.activities.DetailActivity;
-import com.example.oderapp.fragment.Pizza;
-import com.example.oderapp.model.Item;
-import com.example.oderapp.model.ItemPizza;
+import com.example.oderapp.model.ItemFood;
 import com.squareup.picasso.Picasso;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
-public class ItemPizzaAdappter extends RecyclerView.Adapter<ItemPizzaAdappter.ItemViewHolder>{
+public class ItemProductAdappter extends RecyclerView.Adapter<ItemProductAdappter.ItemViewHolder>{
 
     private Context mContext;
-    private ArrayList<ItemPizza> mItemPizzaList;
+    private ArrayList<ItemFood> mItemFoodList;
 
 
-    public ItemPizzaAdappter(Context context, ArrayList<ItemPizza> item1) {
+    public ItemProductAdappter(Context context, ArrayList<ItemFood> item1) {
         mContext = context;
-        mItemPizzaList = item1;
+        mItemFoodList = item1;
     }
 
     @Override
@@ -50,13 +40,13 @@ public class ItemPizzaAdappter extends RecyclerView.Adapter<ItemPizzaAdappter.It
     @Override
     public void onBindViewHolder( ItemViewHolder holder, int position) {
 
-        ItemPizza currentItem = mItemPizzaList.get(position);
+        ItemFood currentItem = mItemFoodList.get(position);
 
         String imageUrl = currentItem.getUrl();
         String tenSp = currentItem.getTensp();
         int tien = currentItem.getGia();
         Picasso.with(mContext)
-                .load(imageUrl).fit().centerInside().into(holder.itemImage);
+                .load(imageUrl).error(R.drawable.pizza_cheese).fit().centerInside().into(holder.itemImage);
         holder.itemname.setText(tenSp);
         holder.itemprice.setText(Integer.toString(tien));
 
@@ -76,7 +66,7 @@ public class ItemPizzaAdappter extends RecyclerView.Adapter<ItemPizzaAdappter.It
         });
     }
 
-    private void onClickgotoDetail(ItemPizza pz) {
+    private void onClickgotoDetail(ItemFood pz) {
 
 
     }
@@ -84,7 +74,7 @@ public class ItemPizzaAdappter extends RecyclerView.Adapter<ItemPizzaAdappter.It
     @Override
     public int getItemCount() {
 
-            return mItemPizzaList.size();
+            return mItemFoodList.size();
     }
 
 
