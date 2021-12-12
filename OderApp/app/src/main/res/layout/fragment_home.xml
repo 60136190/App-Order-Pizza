@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginBottom="@dimen/_70sdp"
     tools:context=".fragment.HomeFragment">
 
@@ -24,84 +24,57 @@
         android:id="@+id/tv_pizza"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/pizza_love"
-        android:textColor="@color/secondary_text"
-        android:textSize="@dimen/_20ssp"
         android:layout_marginStart="@dimen/_20sdp"
+        android:text="Bạn muốn ăn gì?"
+        android:textColor="@color/secondary_text"
+        android:textSize="@dimen/_16ssp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_from" />
+
     <ImageView
         android:layout_width="@dimen/_35sdp"
         android:layout_height="@dimen/_35sdp"
-        android:src="@drawable/pizza_cheese"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
         android:layout_marginTop="@dimen/_15sdp"
         android:layout_marginRight="@dimen/_15sdp"
-        android:scaleType="centerCrop"/>
+        android:scaleType="centerCrop"
+        android:src="@drawable/pizza_cheese"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/search"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginEnd="@dimen/_15sdp"
+        android:background="@drawable/search"
+        android:drawableStart="@drawable/ic_baseline_search_24"
+        android:hint="Search..."
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_pizza" />
+
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:layout_height="@dimen/_410sdp"
         android:layout_marginTop="@dimen/_10sdp"
+        android:orientation="vertical"
         android:scrollbars="none"
-        app:layout_constraintTop_toBottomOf="@+id/tv_pizza">
+        app:layout_constraintTop_toBottomOf="@+id/search">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-            <com.makeramen.roundedimageview.RoundedImageView
-                android:id="@+id/pizza"
-                android:layout_width="@dimen/_50sdp"
-                android:layout_height="@dimen/_50sdp"
-                android:background="@drawable/border_sanpham"
-                android:scaleType="centerInside"
-                android:src="@drawable/pizzanav"
-                android:layout_marginLeft="@dimen/_25sdp"
-                 />
 
-            <com.makeramen.roundedimageview.RoundedImageView
-                android:id="@+id/pasta"
-                android:layout_width="@dimen/_50sdp"
-                android:layout_height="@dimen/_50sdp"
-                android:background="@drawable/border_sanpham"
-                android:scaleType="centerInside"
-                android:src="@drawable/friedchicken"
-                android:layout_marginLeft="@dimen/_20sdp"
-                 />
-
-            <com.makeramen.roundedimageview.RoundedImageView
-                android:id="@+id/icecream"
-                android:layout_width="@dimen/_50sdp"
-                android:layout_height="@dimen/_50sdp"
-                android:background="@drawable/border_sanpham"
-                android:scaleType="centerInside"
-                android:src="@drawable/cocktail"
-                android:layout_marginLeft="@dimen/_20sdp"
-                 />
-
-            <com.makeramen.roundedimageview.RoundedImageView
-                android:id="@+id/salad"
-                android:layout_width="@dimen/_50sdp"
-                android:layout_height="@dimen/_50sdp"
-                android:background="@drawable/border_sanpham"
-                android:scaleType="centerInside"
-                android:src="@drawable/salad"
-                android:layout_marginLeft="@dimen/_20sdp"
-                 />
-
-            </LinearLayout>
             <TextView
                 android:id="@+id/tv_hot_this_month"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_30sdp"
-                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:text="@string/promotion"
                 android:textColor="@color/primary_dark"
                 android:textSize="@dimen/_15ssp"
@@ -114,16 +87,16 @@
                 android:id="@+id/viewflipper_hot_this_month"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_100sdp"
+                android:layout_margin="@dimen/_10sdp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                android:layout_margin="@dimen/_10sdp"
-                app:layout_constraintTop_toBottomOf="@+id/tv_hot_this_month">
-            </ViewFlipper>
+                app:layout_constraintTop_toBottomOf="@+id/tv_hot_this_month"></ViewFlipper>
+
             <TextView
                 android:id="@+id/tv_promotion"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_30sdp"
+                android:layout_marginStart="@dimen/_20sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:text="@string/hot_this_month"
                 android:textColor="@color/primary_dark"
@@ -135,16 +108,52 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rcv_hot_this_month"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_400sdp"
-                android:background="@drawable/noel"
+                android:layout_height="@dimen/_150sdp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:orientation="horizontal"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_promotion">
 
             </androidx.recyclerview.widget.RecyclerView>
 
+            <TextView
+                android:id="@+id/tv_menu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:text="Trải nghiệm đáng nhớ"
+                android:textColor="@color/primary_dark"
+                android:textSize="@dimen/_15ssp"
+                android:textStyle="bold"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/scroll_hot_this_month" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ở mỗi cửa hàng, mỗi thành phố The pizza company luôn mang đến cho khách hàng một bữa ăn ngon miệng và ấp áp nhất có thể"
+                android:textSize="@dimen/_13ssp"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcv_menu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginBottom="@dimen/_90sdp"
+                android:orientation="horizontal"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_promotion">
+
+            </androidx.recyclerview.widget.RecyclerView>
         </LinearLayout>
     </ScrollView>
-
+ 
 </androidx.constraintlayout.widget.ConstraintLayout>

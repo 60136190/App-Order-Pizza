@@ -10,7 +10,7 @@
     <ImageView
         android:id="@+id/img_hot_detail"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_250sdp"
+        android:layout_height="@dimen/_230sdp"
         android:scaleType="centerCrop"
         android:src="@drawable/hota"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -68,7 +68,7 @@
                     <ImageView
                         android:layout_width="@dimen/_20sdp"
                         android:layout_height="@dimen/_20sdp"
-                        android:src="@drawable/ic_outline_access_time_24"/>
+                        android:src="@drawable/ic_baseline_access_time_24"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -90,7 +90,7 @@
                     <ImageView
                         android:layout_width="@dimen/_20sdp"
                         android:layout_height="@dimen/_20sdp"
-                        android:src="@drawable/ic_outline_access_time_24"/>
+                        android:src="@drawable/ic_baseline_access_time_24"/>
                     <TextView
                         android:id="@+id/tv_time"
                         android:layout_width="wrap_content"
@@ -113,7 +113,7 @@
                     <ImageView
                         android:layout_width="@dimen/_20sdp"
                         android:layout_height="@dimen/_20sdp"
-                        android:src="@drawable/ic_outline_access_time_24"/>
+                        android:src="@drawable/ic_baseline_access_time_24"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -157,15 +157,14 @@
 
     </ScrollView>
     <Button
-        android:id="@+id/btn_buy"
+        android:id="@+id/btn_get_qrcode"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/_50sdp"
         android:layout_gravity="center"
         android:layout_marginLeft="@dimen/_10sdp"
         android:layout_marginRight="@dimen/_10sdp"
-        android:layout_marginBottom="@dimen/_10sdp"
-        android:background="@drawable/border_button_next"
-        android:text="BUY NOW"
+        android:layout_marginBottom="@dimen/_30sdp"
+        android:text="GET PROMOTION"
         app:backgroundTint="@color/main_color" />
 
 

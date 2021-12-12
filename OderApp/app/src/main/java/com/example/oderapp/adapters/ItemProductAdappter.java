@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -18,16 +19,19 @@ import com.example.oderapp.model.ItemFood;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ItemProductAdappter extends RecyclerView.Adapter<ItemProductAdappter.ItemViewHolder>{
 
     private Context mContext;
-    private ArrayList<ItemFood> mItemFoodList;
+     ArrayList<ItemFood> mItemFoodList;
+    // filter
 
 
-    public ItemProductAdappter(Context context, ArrayList<ItemFood> item1) {
-        mContext = context;
-        mItemFoodList = item1;
+
+    public ItemProductAdappter(Context context, ArrayList<ItemFood> mItemFoodList) {
+        this.mContext = context;
+        this.mItemFoodList = mItemFoodList;
     }
 
     @Override
@@ -78,7 +82,7 @@ public class ItemProductAdappter extends RecyclerView.Adapter<ItemProductAdappte
     }
 
 
-    public class ItemViewHolder extends RecyclerView.ViewHolder {
+    public  class ItemViewHolder extends RecyclerView.ViewHolder {
         public ImageView itemImage;
         public TextView itemprice;
         public TextView itemname;
@@ -91,6 +95,10 @@ public class ItemProductAdappter extends RecyclerView.Adapter<ItemProductAdappte
             itemprice=itemView.findViewById(R.id.tv_price);
             itemname=itemView.findViewById(R.id.tv_name);
         }
+    }
+    public void filterList(ArrayList<ItemFood> filteredList){
+        mItemFoodList = filteredList;
+        notifyDataSetChanged();
     }
 
 }

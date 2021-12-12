@@ -1,9 +1,11 @@
 package com.example.oderapp.fragment;
 
+import android.media.Image;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -33,6 +35,7 @@ public class Pizza extends Fragment {
     private ArrayList<ItemFood> mitemPizzasList;
     private RequestQueue mRequestQueue;
 
+
     //    private RecyclerView rcvCooking;
 //    private List<ItemPizza> item;
     public Pizza() {
@@ -51,11 +54,12 @@ public class Pizza extends Fragment {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
         mRecyclerView.setLayoutManager(gridLayoutManager);
 
+
         return view;
     }
 
     private void parseJSON() {
-        String url = "http://192.168.1.2:5000/category/16";
+        String url = "http://192.168.1.6:5000/category/16";
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override

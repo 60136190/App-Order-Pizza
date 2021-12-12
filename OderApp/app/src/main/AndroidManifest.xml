@@ -13,6 +13,9 @@
         android:theme="@style/Theme.OderApp"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".activities.QRCode"
+            android:exported="false" />
+        <activity
             android:name=".activities.HotThisMonthDetail"
             android:exported="false" />
         <activity
@@ -30,7 +33,7 @@
             android:name=".activities.SignUp"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".activities.Login"
+            android:name=".activities.MainActivity"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -38,7 +41,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.MainActivity" />
+        <activity android:name=".activities.Login" />
     </application>
 
 </manifest>

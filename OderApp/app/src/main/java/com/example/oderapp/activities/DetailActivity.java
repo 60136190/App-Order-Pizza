@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.oderapp.R;
+import com.example.oderapp.fragment.MenuFragment;
 import com.example.oderapp.model.ItemFood;
 import com.squareup.picasso.Picasso;
 
@@ -39,21 +40,8 @@ public class DetailActivity extends AppCompatActivity {
 
         initUI();
         Bundle bundle = getIntent().getExtras();
-//        if(bundle == null){
-//            return;
-//        }
 
-
-//        Intent i = getIntent();
-//        ItemPizza myParcelableObject = (ItemPizza) i.getSerializableExtra("dghsga");
-//        tvname.setText(myParcelableObject.getTensp());
-
-//
         ItemFood item = (ItemFood) bundle.get("object");
-//        ItemPasta itemPasta = (ItemPasta) bundle.get("object");
-//        ItemAppertizer itemAppertizer = (ItemAppertizer) bundle.get("object");
-//        imageao.setImageResource(Integer.parseInt(item.getHinhanh()));
-
         Picasso.with(this)
                 .load(item.getUrl()).fit().centerInside().into(imageao);
         tvname.setText(item.getTensp());
@@ -61,30 +49,10 @@ public class DetailActivity extends AppCompatActivity {
         tvDetailDescription.setText(item.getChitiet());
         tvsize.setText(item.getSize());
 
-//        Picasso.with(this)
-//                .load(itemPasta.getUrl()).fit().centerInside().into(imageao);
-//        tvname.setText(itemPasta.getTensp());
-//        tvprice.setText(String.valueOf(itemPasta.getGia()));
-//        tvDetailDescription.setText(itemPasta.getChitiet());
-//        tvsize.setText(itemPasta.getSize());
-//
-//        Picasso.with(this)
-//                .load(itemAppertizer.getUrl()).fit().centerInside().into(imageao);
-//        tvname.setText(itemAppertizer.getTensp());
-//        tvprice.setText(String.valueOf(itemAppertizer.getGia()));
-//        tvDetailDescription.setText(itemAppertizer.getChitiet());
-//        tvsize.setText(itemAppertizer.getSize());
-
-
-
-//        tvDetailDescription.setText(myParcelableObject.getId());
-
-
-
         imageBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intentback = new Intent(DetailActivity.this,MainActivity.class);
+                Intent intentback = new Intent(DetailActivity.this, MainActivity.class);
                 startActivity(intentback);
             }
         });
