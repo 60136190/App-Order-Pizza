@@ -1,6 +1,7 @@
 package com.example.oderapp.model;
 
 public class UserRegister {
+    private int id;
     private String hoten;
     private String username;
     private String ngaysinh;
@@ -8,7 +9,6 @@ public class UserRegister {
     private String dienthoai;
     private String email;
     private String password;
-
 
     public UserRegister(String hoten, String username, String ngaysinh,
                         int gioitinh,String dienthoai, String email, String password) {
@@ -19,6 +19,14 @@ public class UserRegister {
         this.gioitinh = gioitinh;
         this.email = email;
         this.dienthoai = dienthoai;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getHoten() {

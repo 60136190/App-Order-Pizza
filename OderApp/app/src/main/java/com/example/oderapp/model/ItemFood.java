@@ -4,13 +4,15 @@ package com.example.oderapp.model;
 import java.io.Serializable;
 
 public class ItemFood implements Serializable {
+    private int id;
     private String tensp;
     private int gia;
     private String url;
     private String chitiet;
     private String size;
 
-    public ItemFood(String tensp, int gia, String url, String chitiet, String size) {
+    public ItemFood(int id, String tensp, int gia, String url, String chitiet, String size) {
+        this.id = id;
         this.tensp = tensp;
         this.gia = gia;
         this.url = url;
@@ -18,7 +20,13 @@ public class ItemFood implements Serializable {
         this.size = size;
     }
 
+    public int getId() {
+        return id;
+    }
 
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getTensp() {
         return tensp;

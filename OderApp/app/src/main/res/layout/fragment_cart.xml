@@ -4,33 +4,36 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/gray"
+    android:background="@color/white"
     tools:context=".fragment.CartFragment">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/_90sdp"
         >
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <TextView
-                android:id="@+id/tv13"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                android:textSize="@dimen/_20ssp"
-                android:textColor="#ff3d00"
                 android:text="My cart"
-                android:textStyle="bold"
-                android:padding="@dimen/_15sdp"
-                android:layout_marginTop="@dimen/_20sdp"/>
+                android:textSize="@dimen/_20ssp"
+                android:textColor="@color/primary_dark"
+                android:layout_gravity="center"
+                android:padding="@dimen/_10sdp"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray" />
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcv_cart"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="wrap_content" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -142,7 +145,7 @@
             </LinearLayout>
 
             <Button
-                android:id="@+id/btn_buy"
+                android:id="@+id/btn_check_out"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_50sdp"
                 android:layout_gravity="center"

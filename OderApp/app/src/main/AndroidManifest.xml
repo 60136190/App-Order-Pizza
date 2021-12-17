@@ -13,14 +13,21 @@
         android:theme="@style/Theme.OderApp"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".activities.MethodPaymentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.AddressActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.PaymentActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.QRCode"
             android:exported="false" />
         <activity
             android:name=".activities.HotThisMonthDetail"
             android:exported="false" />
-        <activity
-            android:name=".activities.MainActivity3"
-            android:exported="false" />
+        <activity android:name=".activities.MainActivity3" />
         <activity android:name=".activities.DetailActivity" />
         <activity android:name=".activities.MainActivity2" />
         <activity android:name=".fragmentinfo.AboutUs" />
@@ -33,7 +40,7 @@
             android:name=".activities.SignUp"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".activities.MainActivity"
+            android:name=".activities.Login"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -41,7 +48,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.Login" />
+        <activity android:name=".activities.MainActivity" />
     </application>
 
 </manifest>

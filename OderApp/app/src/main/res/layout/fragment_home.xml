@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginBottom="@dimen/_70sdp"
+    android:background="@color/white"
     tools:context=".fragment.HomeFragment">
 
     <TextView
@@ -155,5 +156,5 @@
             </androidx.recyclerview.widget.RecyclerView>
         </LinearLayout>
     </ScrollView>
- 
+
 </androidx.constraintlayout.widget.ConstraintLayout>

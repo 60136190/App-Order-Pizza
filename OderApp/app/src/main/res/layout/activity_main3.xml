@@ -6,10 +6,20 @@
     android:layout_height="match_parent"
     tools:context=".activities.MainActivity3">
 
-    <pl.droidsonroids.gif.GifImageView
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
+    <Button
+        android:id="@+id/show"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/gif"/>
+        android:layout_height="100dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/bun"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="52dp"
+        android:background="@color/gray"
+        app:layout_constraintTop_toBottomOf="@+id/show"
+        tools:layout_editor_absoluteX="16dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

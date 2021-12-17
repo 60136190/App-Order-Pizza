@@ -1,5 +1,8 @@
 package com.example.oderapp.activities;
 
+import com.example.oderapp.api.ProductServer;
+import com.example.oderapp.api.UserService;
+
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -15,7 +18,7 @@ public class ApiClient {
         OkHttpClient okHttpClient = new OkHttpClient.Builder().addInterceptor(httpLoggingInterceptor).build();
         Retrofit retrofit = new retrofit2.Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl("http://192.168.1.6:5000/")
+                .baseUrl("http://192.168.1.14:5000/")
                 .client(okHttpClient)
                 .build();
 
@@ -24,7 +27,11 @@ public class ApiClient {
 
     public static UserService getService(){
         UserService userService = getRetrofit().create(UserService.class);
+        return userService;
+    }
 
+    public static ProductServer getProductService(){
+        ProductServer userService = getRetrofit().create(ProductServer.class);
         return userService;
     }
 }

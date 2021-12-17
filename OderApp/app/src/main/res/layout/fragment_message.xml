@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
     tools:context=".fragment.MessageFragment">
     <ScrollView
         android:layout_width="match_parent"
@@ -13,6 +14,18 @@
             android:layout_height="match_parent"
             android:layout_margin="@dimen/_10sdp"
             android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="FeedBack"
+                android:textSize="@dimen/_20ssp"
+                android:textColor="@color/primary_dark"
+                android:layout_gravity="center"
+                android:padding="@dimen/_10sdp"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

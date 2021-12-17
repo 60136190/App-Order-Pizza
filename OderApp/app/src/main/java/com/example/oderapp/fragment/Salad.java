@@ -54,7 +54,7 @@ public class Salad extends Fragment {
         return view;
     }
  private void parseJSON() {
-        String url = "http://192.168.1.6:5000/category/18";
+        String url = "http://192.168.1.14:5000/category/18";
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -64,12 +64,13 @@ public class Salad extends Fragment {
 
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject dt = jsonArray.getJSONObject(i);
+                                int productId = dt.getInt("id");
                                 String productName = dt.getString("tensp");
                                 String productImage = dt.getString("url");
                                 int productPrice = dt.getInt("gia");
                                 String productDetail = dt.getString("chitiet");
                                 String productSize = dt.getString("size");
-                                mitemPizzasList.add(new ItemFood(productName,productPrice,productImage,productDetail,productSize));
+                                mitemPizzasList.add(new ItemFood(productId,productName,productPrice,productImage,productDetail,productSize));
                             }
                             mitemPizzaAdappter = new ItemProductAdappter(getActivity(), mitemPizzasList);
                             mRecyclerView.setAdapter(mitemPizzaAdappter);

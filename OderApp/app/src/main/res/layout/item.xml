@@ -5,14 +5,15 @@
     app:cardCornerRadius="8dp"
     android:layout_marginTop="15dp"
     android:layout_marginEnd="15dp"
-
     android:layout_height="wrap_content"
+
 
     >
     <LinearLayout
         android:id="@+id/layout_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white"
         android:orientation="vertical">
 
         <ImageView
