@@ -28,7 +28,6 @@ import retrofit2.Response;
 public class DetailActivity extends AppCompatActivity {
 
     private ImageView imageao;
-    private ImageView cart;
     private TextView tvname;
     private TextView tvprice;
     private TextView tvsize;
@@ -57,7 +56,7 @@ public class DetailActivity extends AppCompatActivity {
             item = (ItemFood) bundle.get("object");
             Picasso.with(this)
                     .load(item.getUrl()).fit().centerInside().into(imageao);
-            tvname.setText(item.getTensp());
+             tvname.setText(item.getTensp());
             tvprice.setText(String.valueOf(item.getGia()));
             tvDetailDescription.setText(item.getChitiet());
             tvsize.setText(item.getSize());
@@ -106,7 +105,6 @@ public class DetailActivity extends AppCompatActivity {
         tvname = findViewById(R.id.tv_detail_name);
         tvprice = findViewById(R.id.tv_detail_price);
         tvsize = findViewById(R.id.tv_detail_size);
-        cart = findViewById(R.id.img_cart_detail);
         tvDetailDescription = findViewById(R.id.tv_detail_description);
         imageBack = findViewById(R.id.back);
         btn_buy_now = findViewById(R.id.btn_buy);

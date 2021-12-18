@@ -141,7 +141,7 @@ public class HomeFragment extends Fragment {
     }
     // function parse json to get all product from api
     private void parseJSON() {
-        String url = "http://192.168.1.14:5000/product";
+        String url = "http://192.168.1.6:5000/product";
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override

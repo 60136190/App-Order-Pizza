@@ -55,7 +55,7 @@ public class Drink extends Fragment {
         return view;
     }
     private void parseJSON() {
-        String url = "http://192.168.1.14:5000/category/20";
+        String url = "http://192.168.1.6:5000/category/20";
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override

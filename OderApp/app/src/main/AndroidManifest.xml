@@ -13,6 +13,9 @@
         android:theme="@style/Theme.OderApp"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".activities.AddAddressActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.MethodPaymentActivity"
             android:exported="false" />
         <activity

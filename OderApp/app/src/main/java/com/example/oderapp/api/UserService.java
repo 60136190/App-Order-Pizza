@@ -2,8 +2,10 @@ package com.example.oderapp.api;
 
 import com.example.oderapp.activities.LoginRequest;
 import com.example.oderapp.activities.LoginRespone;
+import com.example.oderapp.model.Address;
 import com.example.oderapp.model.ResponseBodyDTO;
 import com.example.oderapp.model.request.UserRequest;
+import com.example.oderapp.model.response.ResponseBodyAddress;
 import com.example.oderapp.model.response.ResponseDTO;
 
 import java.util.HashMap;
@@ -18,6 +20,7 @@ import retrofit2.http.HeaderMap;
 import retrofit2.http.Headers;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 public interface UserService {
     @POST("customer/login")
@@ -32,5 +35,11 @@ public interface UserService {
 
     @DELETE("/customer/logout")
     Call<ResponseDTO> deleteUser(@Header("Authorization") String map);
+
+    @POST("/address/add/")
+    Call<ResponseBodyAddress> insertAddress(@Header("Authorization") String authorization, @Body Address address);
+
+    @GET("/address")
+    Call<ResponseBodyAddress> getListAddress(@HeaderMap HashMap<String, String> hashMap);
 
 }
