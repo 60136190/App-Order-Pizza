@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment;
 import com.example.oderapp.R;
 import com.example.oderapp.activities.ApiClient;
 import com.example.oderapp.activities.Login;
+import com.example.oderapp.activities.SendEmailActivity;
 import com.example.oderapp.fragmentinfo.AboutUs;
 import com.example.oderapp.fragmentinfo.Account;
 import com.example.oderapp.fragmentinfo.FAQ;
@@ -44,7 +45,7 @@ public class InfoFragment extends Fragment {
     private LinearLayout aboutus;
     private LinearLayout share;
     private LinearLayout rate;
-
+    private LinearLayout sendEmail;
     private LinearLayout logout;
 
     public InfoFragment() {
@@ -66,6 +67,7 @@ public class InfoFragment extends Fragment {
         aboutus = view.findViewById(R.id.about_us);
         share = view.findViewById(R.id.share);
         rate = view.findViewById(R.id.rate);
+        sendEmail = view.findViewById(R.id.send_email);
 
         logout = view.findViewById(R.id.logout);
 
@@ -148,14 +150,22 @@ public class InfoFragment extends Fragment {
                 }
             }
         });
+
+        sendEmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent itsendEmail = new Intent(getActivity(), SendEmailActivity.class);
+                startActivity(itsendEmail);
+            }
+        });
         return view;
     }
 
     public void deleteInfo() {
-//        HashMap<String, String> hashMap = new HashMap<>();
-//        hashMap.put(Contants.accessToken, "Bearer " + StoreUtil.get(getActivity(), Contants.accessToken));
-
-        Call<ResponseDTO> loginResponeCall = ApiClient.getService().deleteUser("Bearer " + StoreUtil.get(getActivity(), Contants.accessToken));
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put(Contants.requestToken, "Bearer " + StoreUtil.get(getActivity(), Contants.requestToken));
+        hashMap.put(Contants.postManToken, "<calculated when request is sent>");
+        Call<ResponseDTO> loginResponeCall = ApiClient.getService().deleteUser("Bearer " + StoreUtil.get(getActivity(), Contants.requestToken));
         loginResponeCall.enqueue(new Callback<ResponseDTO>() {
             @Override
             public void onResponse(Call<ResponseDTO> call, Response<ResponseDTO> response) {

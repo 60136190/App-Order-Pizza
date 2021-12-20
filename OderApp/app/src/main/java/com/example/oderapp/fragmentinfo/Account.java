@@ -96,7 +96,7 @@ public class Account extends AppCompatActivity {
     // update
     public void updateInfo(UserRequest userRequest) {
         HashMap<String, String> hashMap = new HashMap<>();
-        hashMap.put(Contants.accessToken, "Bearer " + StoreUtil.get(Account.this, Contants.accessToken));
+        hashMap.put(Contants.requestToken, "Bearer " + StoreUtil.get(Account.this, Contants.requestToken));
         hashMap.put(Contants.contentLength, "<calculated when request is sent>");
         Call<ResponseDTO> loginResponeCall = ApiClient.getService().updateInfo(hashMap, userRequest);
         loginResponeCall.enqueue(new Callback<ResponseDTO>() {
@@ -116,7 +116,7 @@ public class Account extends AppCompatActivity {
     // get data user profile
     public void getData() {
         HashMap<String, String> hashMap = new HashMap<>();
-        hashMap.put(Contants.accessToken, "Bearer " + StoreUtil.get(Account.this, Contants.accessToken));
+        hashMap.put(Contants.requestToken, "Bearer " + StoreUtil.get(Account.this, Contants.accessToken));
 
         Call<ResponseBodyDTO> loginResponeCall = ApiClient.getService().getProfile(hashMap);
         loginResponeCall.enqueue(new Callback<ResponseBodyDTO>() {

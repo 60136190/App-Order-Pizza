@@ -1,12 +1,9 @@
 package com.example.oderapp.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -15,8 +12,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.oderapp.R;
 import com.example.oderapp.activities.ApiClient;
-import com.example.oderapp.activities.PaymentActivity;
+import com.example.oderapp.adapters.ItemBillAdapter;
 import com.example.oderapp.adapters.ItemCartAdappter;
+import com.example.oderapp.model.ItemBill;
+import com.example.oderapp.model.response.ResponseBodyBill;
 import com.example.oderapp.model.response.ResponseBodyCart;
 import com.example.oderapp.utils.Contants;
 import com.example.oderapp.utils.StoreUtil;
@@ -28,47 +27,34 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class CartFragment extends Fragment {
+public class BillFragment extends Fragment {
+
     private RecyclerView mRecyclerView;
-
-
-
-    private TextView result;
     private View mview;
-    private Button btnCheckOut;
-
-    public CartFragment() {
+    public BillFragment() {
         // Required empty public constructor
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        mview = inflater.inflate(R.layout.fragment_cart, container, false);
-        getCart();
-        mRecyclerView = mview.findViewById(R.id.rcv_cart);
-        btnCheckOut = mview.findViewById(R.id.btn_check_out);
-
-        btnCheckOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getContext(), PaymentActivity.class);
-                startActivity(intent);
-            }
-        });
+         mview= inflater.inflate(R.layout.fragment_bill, container, false);
+        mRecyclerView = mview.findViewById(R.id.rcv_bill);
+        getAllBill();
         return mview;
-    }
 
-    private void getCart() {
+    }
+    private void getAllBill() {
         HashMap<String, String> hashMap = new HashMap<>();
         hashMap.put(Contants.requestToken, "Bearer " + StoreUtil.get(getActivity(), Contants.requestToken));
 
-        Call<ResponseBodyCart> responseDTOCall = ApiClient.getProductService().getCart(hashMap);
-        responseDTOCall.enqueue(new Callback<ResponseBodyCart>() {
+        Call<ResponseBodyBill> responseBodyBillCall = ApiClient.getProductService().getAllBill(hashMap);
+        responseBodyBillCall.enqueue(new Callback<ResponseBodyBill>() {
             @Override
-            public void onResponse(Call<ResponseBodyCart> call, Response<ResponseBodyCart> response) {
-                ItemCartAdappter adappter = new ItemCartAdappter(getContext(), response.body().getData());
+            public void onResponse(Call<ResponseBodyBill> call, Response<ResponseBodyBill> response) {
+                ItemBillAdapter adappter = new ItemBillAdapter(getContext(), response.body().getData());
                 mRecyclerView.setAdapter(adappter);
                 mRecyclerView.setHasFixedSize(true);
                 mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -78,10 +64,9 @@ public class CartFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<ResponseBodyCart> call, Throwable t) {
+            public void onFailure(Call<ResponseBodyBill> call, Throwable t) {
                 t.printStackTrace();
             }
         });
     }
 }
-

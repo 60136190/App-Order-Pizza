@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".activities.HotThisMonthDetail">
-
     <ImageView
         android:id="@+id/img_hot_detail"
         android:layout_width="match_parent"
@@ -16,14 +15,12 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_200sdp"
-        android:layout_margin="@dimen/_7sdp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_10sdp"
+            app:layout_constraintTop_toBottomOf="@+id/img_hot_detail"
             android:orientation="vertical">
 
             <TextView
@@ -154,8 +151,6 @@
                 android:layout_height="1dp"
                 android:background="@color/gray"/>
         </LinearLayout>
-
-    </ScrollView>
     <Button
         android:id="@+id/btn_get_qrcode"
         android:layout_width="match_parent"
@@ -163,9 +158,9 @@
         android:layout_gravity="center"
         android:layout_marginLeft="@dimen/_10sdp"
         android:layout_marginRight="@dimen/_10sdp"
-        android:layout_marginBottom="@dimen/_30sdp"
         android:text="GET PROMOTION"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:backgroundTint="@color/main_color" />
 
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

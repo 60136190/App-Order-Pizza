@@ -5,21 +5,26 @@
       <map>
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/drawable-v24/border_background_delete_item.xml" value="0.19166666666666668" />
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/drawable-v24/border_background_itemcart.xml" value="0.19166666666666668" />
+        <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/drawable-v24/border_background_price.xml" value="0.19166666666666668" />
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/drawable-v24/border_view_flipper.xml" value="0.2128205128205128" />
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/drawable/background_image.xml" value="0.2128205128205128" />
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/drawable/background_input.xml" value="0.21203703703703702" />
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/drawable/border_background.xml" value="0.20833333333333334" />
+        <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/drawable/border_background_back.xml" value="0.19166666666666668" />
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/drawable/border_background_detail.xml" value="0.19166666666666668" />
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/drawable/border_button.xml" value="0.19166666666666668" />
+        <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/drawable/border_first_screen.xml" value="0.18871794871794872" />
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/drawable/border_radiobutton.xml" value="0.19166666666666668" />
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/drawable/border_soluong_itemcart.xml" value="0.19166666666666668" />
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/drawable/cart_backgroung.xml" value="0.21197916666666666" />
+        <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/drawable/dialog_top.xml" value="0.19166666666666668" />
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/drawable/ic_about_us.xml" value="0.21197916666666666" />
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/drawable/ic_baseline_access_time_24.xml" value="0.19166666666666668" />
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/drawable/ic_baseline_account_circle_24.xml" value="0.21197916666666666" />
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/drawable/ic_baseline_edit_24.xml" value="0.19166666666666668" />
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/drawable/ic_baseline_keyboard_backspace_24.xml" value="0.19166666666666668" />
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.21614583333333334" />
+        <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/drawable/ic_baseline_send_24.xml" value="0.19166666666666668" />
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/drawable/ic_dieukhoan.xml" value="0.21197916666666666" />
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/drawable/ic_faq.xml" value="0.21197916666666666" />
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/drawable/ic_outline_access_time_24.xml" value="0.21614583333333334" />
@@ -46,8 +51,11 @@
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/layout/activity_pizzaa.xml" value="0.2" />
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/layout/activity_qrcode.xml" value="0.184375" />
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/layout/activity_recruiment.xml" value="0.19583333333333333" />
+        <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/layout/activity_second_screen.xml" value="0.17552083333333332" />
+        <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/layout/activity_send_email.xml" value="0.17552083333333332" />
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/layout/activity_sign_up.xml" value="0.17314814814814813" />
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/layout/activity_slider.xml" value="0.1712962962962963" />
+        <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/layout/dialog_edit_address.xml" value="0.15885416666666666" />
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/layout/fragment_appertizer.xml" value="0.18333333333333332" />
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/layout/fragment_cart.xml" value="0.2" />
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/layout/fragment_drink.xml" value="0.2" />
@@ -62,6 +70,7 @@
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/layout/item.xml" value="0.2" />
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/layout/item_address.xml" value="0.17552083333333332" />
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/layout/item_appertizer.xml" value="0.2" />
+        <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/layout/item_bill.xml" value="0.22" />
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/layout/item_cart.xml" value="0.22" />
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/layout/item_hoa_don.xml" value="0.2" />
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/layout/item_home_menu.xml" value="0.184375" />

@@ -54,7 +54,7 @@ public class Salad extends Fragment {
         return view;
     }
  private void parseJSON() {
-        String url = "http://192.168.1.6:5000/category/18";
+        String url = "http://192.168.1.5:5000/category/18";
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override

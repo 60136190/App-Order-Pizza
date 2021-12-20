@@ -16,8 +16,9 @@
     <color name="icon_background">#20FFFFFF</color>
     <color name="error">#B00020</color>
     <color name="recived_message_background">#090D16</color>
-    <color name="main_color">#ff785b</color>
-    <color name="gray">#DCDADA</color>
+    <color name="main_color">#FAC252</color>
+<!--    <color name="main_color">#ff785b</color>-->
+    <color name="gray">#f7f7f7</color>
     <color name="blue">#4482af</color>
     <color name="yellow">#EDDF92</color>
     <color name="red_dark">#b0313f</color>

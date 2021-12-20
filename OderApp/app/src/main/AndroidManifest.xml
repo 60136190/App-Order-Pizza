@@ -13,6 +13,9 @@
         android:theme="@style/Theme.OderApp"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".activities.SendEmailActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.AddAddressActivity"
             android:exported="false" />
         <activity
@@ -30,9 +33,9 @@
         <activity
             android:name=".activities.HotThisMonthDetail"
             android:exported="false" />
-        <activity android:name=".activities.MainActivity3" />
+        <activity android:name=".activities.SecondScreenActivity" />
         <activity android:name=".activities.DetailActivity" />
-        <activity android:name=".activities.MainActivity2" />
+        <activity android:name=".activities.Login" />
         <activity android:name=".fragmentinfo.AboutUs" />
         <activity android:name=".fragmentinfo.TermsAndCondition" />
         <activity android:name=".fragmentinfo.FAQ" />
@@ -43,7 +46,7 @@
             android:name=".activities.SignUp"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".activities.Login"
+            android:name=".activities.FirstScreenActivity"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

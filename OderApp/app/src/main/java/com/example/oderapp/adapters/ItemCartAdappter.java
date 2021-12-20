@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,7 +23,10 @@ import com.example.oderapp.model.GetItemCart;
 import com.example.oderapp.model.ItemCart;
 import com.example.oderapp.model.ItemFood;
 import com.example.oderapp.model.UserRegister;
+import com.example.oderapp.model.response.ResponseBodyAddress;
 import com.example.oderapp.model.response.ResponseBodyCart;
+import com.example.oderapp.utils.Contants;
+import com.example.oderapp.utils.StoreUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -112,6 +116,19 @@ public class ItemCartAdappter extends RecyclerView.Adapter<ItemCartAdappter.Item
             public void onClick(View v) {
                 mItemCartList.remove(holder.getAdapterPosition());
                 notifyItemRemoved(holder.getAdapterPosition());
+                Call<ResponseBodyCart> responseBodyCartCall = ApiClient.getProductService().deleteItemCart(id,
+                        "Bearer " + StoreUtil.get(v.getContext(), Contants.requestToken));
+                responseBodyCartCall.enqueue(new Callback<ResponseBodyCart>() {
+                    @Override
+                    public void onResponse(Call<ResponseBodyCart> call, Response<ResponseBodyCart> response) {
+                        Toast.makeText(v.getContext(), "Added in cart", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBodyCart> call, Throwable t) {
+
+                    }
+                });
             }
         });
 

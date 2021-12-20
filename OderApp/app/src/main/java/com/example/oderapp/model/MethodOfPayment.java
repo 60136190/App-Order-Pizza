@@ -1,6 +1,8 @@
 package com.example.oderapp.model;
 
-public class MethodOfPayment {
+import java.io.Serializable;
+
+public class MethodOfPayment implements Serializable {
     private int id;
     private String ten_hinhthuc;
     private String url;

@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -39,9 +40,10 @@ public class SignUp extends AppCompatActivity {
     private EditText edtEmail;
     private EditText edtPassword;
     private EditText edtConfrimPassword;
+    private ImageView imgBack;
 
     private RadioGroup radioGroup;
-    int sex;
+    int sex = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,12 +58,10 @@ public class SignUp extends AppCompatActivity {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId) {
                     case R.id.Male:
-                        int male = 1;
-                        edtGioiTinh.setText(String.valueOf(male));
+                        sex = 1;
                         break;
                     case R.id.Female:
-                        int female = 0;
-                        edtGioiTinh.setText(String.valueOf(female));
+                        sex = 0;
                         break;
                 }
             }
@@ -71,7 +71,7 @@ public class SignUp extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (TextUtils.isEmpty(edtHoTen.getText().toString()) || TextUtils.isEmpty(edtUserName.getText().toString()) ||
-                        TextUtils.isEmpty(edtNgaySinh.getText().toString()) || TextUtils.isEmpty(edtGioiTinh.getText().toString()) ||
+                        TextUtils.isEmpty(edtNgaySinh.getText().toString()) ||
                         TextUtils.isEmpty(edtDienThoai.getText().toString()) || TextUtils.isEmpty(edtEmail.getText().toString()) ||
                         TextUtils.isEmpty(edtPassword.getText().toString()) || TextUtils.isEmpty(edtConfrimPassword.getText().toString())) {
                     String message = "Try again";
@@ -91,6 +91,18 @@ public class SignUp extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        imgBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+    }
+    @Override
+    public void onBackPressed()
+    {
+        // code here to show dialog
+        super.onBackPressed();  // optional depending on your needs
     }
 
     public void initUi() {
@@ -100,12 +112,12 @@ public class SignUp extends AppCompatActivity {
         edtHoTen = findViewById(R.id.edt_ho_ten);
         edtUserName = findViewById(R.id.edt_username);
         edtNgaySinh = findViewById(R.id.edt_ngay_sinh);
-       edtGioiTinh = findViewById(R.id.edt_gioi_tinh);
+        edtGioiTinh = findViewById(R.id.edt_gioi_tinh);
         edtDienThoai = findViewById(R.id.edt_phone_number);
         edtEmail = findViewById(R.id.edt_email);
         edtPassword = findViewById(R.id.edt_password);
         edtConfrimPassword = findViewById(R.id.edt_confirm_password);
-
+        imgBack = findViewById(R.id.back);
         radioGroup = findViewById(R.id.radioGroup);
     }
 
@@ -114,14 +126,13 @@ public class SignUp extends AppCompatActivity {
         String hoTen = edtHoTen.getText().toString().trim();
         String userName = edtUserName.getText().toString().trim();
         String ngaySinh = edtNgaySinh.getText().toString().trim();
-        int gioiTinh = Integer.parseInt(edtGioiTinh.getText().toString());
         String dienThoai = edtDienThoai.getText().toString().trim();
         String email = edtEmail.getText().toString().trim();
         String password = edtPassword.getText().toString().trim();
         String confirmPassword = edtConfrimPassword.getText().toString();
 
 
-        UserRegister userRegister = new UserRegister(hoTen, userName, ngaySinh, gioiTinh, dienThoai, email, password);
+        UserRegister userRegister = new UserRegister(hoTen, userName, ngaySinh, sex, dienThoai, email, password);
         ApiService.apiservice.sendPost(userRegister).enqueue(new Callback<UserRegister>() {
             @Override
             public void onResponse(Call<UserRegister> call, Response<UserRegister> response) {

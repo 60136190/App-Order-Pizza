@@ -31,6 +31,7 @@ import retrofit2.Response;
 public class AddressActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
 
+    Address address;
 
     private ImageView imgBack;
     private ImageView imgAddAddress;
@@ -71,12 +72,11 @@ public class AddressActivity extends AppCompatActivity {
     }
 
     private void getListAddress() {
-
         HashMap<String, String> hashMap = new HashMap<>();
-        hashMap.put(Contants.accessToken, "Bearer " + StoreUtil.get(AddressActivity.this, Contants.accessToken));
+        hashMap.put(Contants.requestToken, "Bearer " + StoreUtil.get(AddressActivity.this, Contants.requestToken));
 
-        Call<ResponseBodyAddress> responseBodyAddressCall = ApiClient.getService().getListAddress(hashMap);
-        responseBodyAddressCall.enqueue(new Callback<ResponseBodyAddress>() {
+        Call<ResponseBodyAddress> responseDTOCall = ApiClient.getService().getListAddress(hashMap);
+        responseDTOCall.enqueue(new Callback<ResponseBodyAddress>() {
             @Override
             public void onResponse(Call<ResponseBodyAddress> call, Response<ResponseBodyAddress> response) {
                 AddressAdapter adappter = new AddressAdapter(AddressActivity.this, response.body().getData());

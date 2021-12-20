@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +30,7 @@ public class Login extends AppCompatActivity {
 
     EditText edtEmail;
     EditText edtPass;
+    ImageView imgBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +61,21 @@ public class Login extends AppCompatActivity {
                 finish();
             }
         });
+
+        imgBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+
+
+    }
+    @Override
+    public void onBackPressed()
+    {
+        // code here to show dialog
+        super.onBackPressed();  // optional depending on your needs
     }
 
     public void initUi() {
@@ -66,6 +83,7 @@ public class Login extends AppCompatActivity {
         tvcreate_account = findViewById(R.id.tvCreateNewAccount);
         edtEmail = findViewById(R.id.inputEmail);
         edtPass = findViewById(R.id.inputPassword);
+        imgBack = findViewById(R.id.back);
     }
 
 

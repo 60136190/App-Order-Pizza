@@ -42,9 +42,12 @@ public class AddAddressActivity extends AppCompatActivity {
         btnAddAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String strAddress = edtAddAddress.getText().toString();
-                address = new Address(strAddress);
-                addAddress(address);
+
+//                int id = address.getId();
+//                address = new Address(strAddress);
+//                addAddress(address);
+                addAddress();
+
                 Toast.makeText(AddAddressActivity.this, "Added your address", Toast.LENGTH_LONG).show();
             }
         });
@@ -63,9 +66,11 @@ public class AddAddressActivity extends AppCompatActivity {
     }
 
 
-    public void addAddress(Address address) {
+    public void addAddress( ) {
+        String strAddress = edtAddAddress.getText().toString();
+        address = new Address(strAddress);
         Call<ResponseBodyAddress> addAddressResponeCall = ApiClient.getService().insertAddress(
-                "Bearer " + StoreUtil.get(AddAddressActivity.this, Contants.accessToken), address);
+                "Bearer " + StoreUtil.get(AddAddressActivity.this, Contants.requestToken),address);
         addAddressResponeCall.enqueue(new Callback<ResponseBodyAddress>() {
             @Override
             public void onResponse(Call<ResponseBodyAddress> call, Response<ResponseBodyAddress> response) {

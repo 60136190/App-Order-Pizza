@@ -4,30 +4,38 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg"
+    android:background="@color/main_color"
     tools:context=".activities.MainActivity">
 
+    <ImageView
+        android:id="@+id/back"
+        android:layout_width="@dimen/_30sdp"
+        android:layout_height="@dimen/_30sdp"
+        android:layout_marginLeft="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:src="@drawable/ic_baseline_keyboard_backspace_24"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
-        android:text="@string/let_go"
-        android:textColor="@color/white"
-        android:textSize="30sp"
+        android:text="Sign In"
+        android:textColor="@color/primary"
+        android:textSize="@dimen/_30ssp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_margin="@dimen/_10sdp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/back" />
 
     <TextView
         android:id="@+id/hi"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_margin="@dimen/_10sdp"
         android:paddingBottom="@dimen/_20sdp"
-        android:text="@string/pizza_around_everyone"
-        android:textColor="@color/white"
+        android:text="We bring you the best experience of our service, not only in terms of food but also in spirit."
+        android:textColor="@color/primary"
         android:textSize="@dimen/_12ssp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -49,7 +57,7 @@
         <EditText
             android:id="@+id/inputEmail"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_45ssp"
+            android:layout_height="@dimen/_50sdp"
             android:layout_marginTop="@dimen/_50sdp"
             android:background="@drawable/background_input"
             android:hint="@string/email"
@@ -59,13 +67,13 @@
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
             android:textColor="@color/white"
-            android:textColorHint="@color/white"
+            android:textColorHint="@color/black"
             android:textSize="@dimen/_14ssp" />
 
         <EditText
             android:id="@+id/inputPassword"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_45ssp"
+            android:layout_height="@dimen/_50sdp"
             android:layout_marginTop="20dp"
             android:background="@drawable/background_input"
             android:hint="@string/password"
@@ -75,7 +83,7 @@
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
             android:textColor="@color/white"
-            android:textColorHint="@color/white"
+            android:textColorHint="@color/black"
             android:textSize="@dimen/_14ssp" />
 
         <FrameLayout
@@ -94,8 +102,8 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/_13ssp"
                 android:textStyle="bold"
-                app:backgroundTint="@color/main_color"
-                app:cornerRadius="8dp" />
+                app:backgroundTint="@color/primary"
+                 />
 
             <ProgressBar
                 android:id="@+id/progressBar"
@@ -131,7 +139,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_10sdp"
                     android:text="@string/thang"
-                    android:textColor="@color/white"
+                    android:textColor="@color/primary"
                     android:textSize="25sp" />
 
                 <TextView

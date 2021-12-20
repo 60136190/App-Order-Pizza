@@ -7,7 +7,6 @@
     android:layout_marginBottom="@dimen/_70sdp"
     android:background="@color/white"
     tools:context=".fragment.HomeFragment">
-
     <TextView
         android:id="@+id/tv_from"
         android:layout_width="wrap_content"
@@ -50,20 +49,18 @@
         android:layout_marginTop="@dimen/_5sdp"
         android:layout_marginEnd="@dimen/_15sdp"
         android:background="@drawable/search"
-        android:drawableStart="@drawable/ic_baseline_search_24"
+        android:drawableEnd="@drawable/ic_baseline_search_24"
         android:hint="Search..."
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_pizza" />
-
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="@dimen/_410sdp"
         android:layout_marginTop="@dimen/_10sdp"
         android:orientation="vertical"
-        android:scrollbars="none"
-        app:layout_constraintTop_toBottomOf="@+id/search">
+        app:layout_constraintTop_toBottomOf="@+id/search"
+        android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"

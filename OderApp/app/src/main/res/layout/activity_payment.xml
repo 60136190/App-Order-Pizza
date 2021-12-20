@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/gray"
     tools:context=".activities.PaymentActivity">
 
     <LinearLayout
@@ -20,8 +21,8 @@
             android:id="@+id/img_back"
             android:layout_width="@dimen/_30sdp"
             android:layout_height="@dimen/_30sdp"
-            android:layout_margin="@dimen/_10sdp"
-            android:layout_weight="2"
+            android:layout_margin="@dimen/_5sdp"
+            android:layout_gravity="center"
             android:src="@drawable/ic_baseline_keyboard_backspace_24"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -31,12 +32,13 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginEnd="@dimen/_20sdp"
-            android:layout_weight="8"
+            android:layout_weight="7"
+            android:padding="@dimen/_10sdp"
             android:gravity="center"
             android:text="Payment"
             android:textColor="@color/primary_dark"
             android:textSize="@dimen/_20ssp"
-            android:textStyle="bold" />
+            />
     </LinearLayout>
 
     <ScrollView
@@ -52,7 +54,7 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:id="@+id/ln_address"
+                android:id="@+id/ln_choose_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -75,6 +77,7 @@
                     android:textSize="@dimen/_13ssp" />
 
                 <TextView
+                    android:id="@+id/tv_address"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_10sdp"
@@ -83,14 +86,7 @@
                     android:textColor="@color/primary_dark"
                     android:textSize="@dimen/_13ssp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_10sdp"
-                    android:layout_marginBottom="@dimen/_5sdp"
-                    android:text="Thanh pho Nha Trang, Phuong Vinh Hoa, Nha Trang"
-                    android:textColor="@color/primary_dark"
-                    android:textSize="@dimen/_13ssp" />
+
 
                 <View
                     android:layout_width="match_parent"
@@ -104,7 +100,7 @@
                 android:layout_height="wrap_content" />
 
             <LinearLayout
-                android:id="@+id/ln_method"
+                android:id="@+id/ln_choose_method"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_10sdp"
@@ -116,7 +112,7 @@
                     android:layout_height="@dimen/_25sdp"
                     android:layout_gravity="center"
                     android:layout_marginRight="@dimen/_5sdp"
-                    android:src="@drawable/ic_baseline_access_time_24" />
+                    android:src="@drawable/creditcard" />
 
                 <TextView
                     android:layout_width="match_parent"
