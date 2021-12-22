@@ -14,11 +14,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.oderapp.R;
 import com.example.oderapp.adapters.AddressAdapter;
 import com.example.oderapp.adapters.ItemCartAdappter;
+import com.example.oderapp.eventbus.EventBack;
 import com.example.oderapp.model.Address;
 import com.example.oderapp.model.response.ResponseBodyAddress;
 import com.example.oderapp.model.response.ResponseBodyCart;
 import com.example.oderapp.utils.Contants;
 import com.example.oderapp.utils.StoreUtil;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,6 +39,7 @@ public class AddressActivity extends AppCompatActivity {
 
     private ImageView imgBack;
     private ImageView imgAddAddress;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,7 +78,7 @@ public class AddressActivity extends AppCompatActivity {
 
     private void getListAddress() {
         HashMap<String, String> hashMap = new HashMap<>();
-        hashMap.put(Contants.requestToken, "Bearer " + StoreUtil.get(AddressActivity.this, Contants.requestToken));
+        hashMap.put(Contants.accessToken, "Bearer " + StoreUtil.get(AddressActivity.this, Contants.accessToken));
 
         Call<ResponseBodyAddress> responseDTOCall = ApiClient.getService().getListAddress(hashMap);
         responseDTOCall.enqueue(new Callback<ResponseBodyAddress>() {
@@ -94,5 +99,4 @@ public class AddressActivity extends AppCompatActivity {
             }
         });
     }
-
 }

@@ -8,6 +8,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +28,8 @@ import com.example.oderapp.activities.LoginRespone;
 import com.example.oderapp.activities.SliderActivity;
 import com.example.oderapp.adapters.ItemProductAdappter;
 import com.example.oderapp.fragment.InfoFragment;
+import com.example.oderapp.fragmentinfo.optionaccount.ChangePasswordActivity;
+import com.example.oderapp.fragmentinfo.optionaccount.UpdateInformationActivity;
 import com.example.oderapp.model.ItemFood;
 import com.example.oderapp.model.ResponseBodyDTO;
 import com.example.oderapp.model.UserRegister;
@@ -47,105 +51,31 @@ import retrofit2.Response;
 
 
 public class Account extends AppCompatActivity {
-
-    private EditText edtHoTen;
-    private EditText edtUserName;
-    private EditText edtNgaySinh;
-    private EditText edtDienThoai;
-
-    private Button btnUpdate;
-    int male = 0;
-    private RadioGroup radioGroup;
-
+    private LinearLayout lnUpdateInformation;
+    private LinearLayout lnChangePassword;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account);
         initUi();
-        getData();
-
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId) {
-                    case R.id.Male:
-                        male = 1;
-                        break;
-                    case R.id.Female:
-                        male = 0;
-                        break;
-                }
-            }
-        });
-
-        btnUpdate.setOnClickListener(new View.OnClickListener() {
+        lnUpdateInformation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String hoten = edtHoTen.getText().toString();
-                String username = edtUserName.getText().toString();
-                String ngaySinh = edtNgaySinh.getText().toString();
-                String sdt = edtDienThoai.getText().toString();
-
-                UserRequest userRequest = new UserRequest(hoten, username, ngaySinh, male, sdt);
-                updateInfo(userRequest);
+                Intent itUpdate = new Intent(Account.this, UpdateInformationActivity.class);
+                startActivity(itUpdate);
             }
         });
-
-    }
-
-    // update
-    public void updateInfo(UserRequest userRequest) {
-        HashMap<String, String> hashMap = new HashMap<>();
-        hashMap.put(Contants.requestToken, "Bearer " + StoreUtil.get(Account.this, Contants.requestToken));
-        hashMap.put(Contants.contentLength, "<calculated when request is sent>");
-        Call<ResponseDTO> loginResponeCall = ApiClient.getService().updateInfo(hashMap, userRequest);
-        loginResponeCall.enqueue(new Callback<ResponseDTO>() {
+        lnChangePassword.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onResponse(Call<ResponseDTO> call, Response<ResponseDTO> response) {
-                Toast.makeText(Account.this, "Update Infomation is successful", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onFailure(Call<ResponseDTO> call, Throwable t) {
-
-            }
-        });
-
-    }
-
-    // get data user profile
-    public void getData() {
-        HashMap<String, String> hashMap = new HashMap<>();
-        hashMap.put(Contants.requestToken, "Bearer " + StoreUtil.get(Account.this, Contants.accessToken));
-
-        Call<ResponseBodyDTO> loginResponeCall = ApiClient.getService().getProfile(hashMap);
-        loginResponeCall.enqueue(new Callback<ResponseBodyDTO>() {
-            @Override
-            public void onResponse(Call<ResponseBodyDTO> call, Response<ResponseBodyDTO> response) {
-                UserRegister userRequest  = response.body().getData().get(0);
-                edtHoTen.setText(userRequest.getHoten());
-                edtUserName.setText(userRequest.getUsername());
-                edtNgaySinh.setText(userRequest.getNgaysinh());
-                edtDienThoai.setText(userRequest.getDienthoai());
-//                edtGioiTinh.setText(userRequest.getGioitinh());
-                // fill more data
-
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBodyDTO> call, Throwable t) {
-
+            public void onClick(View v) {
+                Intent itChangePW = new Intent(Account.this, ChangePasswordActivity.class);
+                startActivity(itChangePW);
             }
         });
     }
 
     private void initUi() {
-        btnUpdate = findViewById(R.id.buttonUpdate);
-
-        edtHoTen = findViewById(R.id.edt_ho_ten);
-        edtUserName = findViewById(R.id.edt_username);
-        edtNgaySinh = findViewById(R.id.edt_ngay_sinh);
-        edtDienThoai = findViewById(R.id.edt_phone_number);
-        radioGroup = findViewById(R.id.radioGroup);
+        lnUpdateInformation = findViewById(R.id.ln_update_information);
+        lnChangePassword = findViewById(R.id.ln_change_password);
     }
 }

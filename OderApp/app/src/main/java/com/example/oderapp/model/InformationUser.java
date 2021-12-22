@@ -1,23 +1,32 @@
-package com.example.oderapp.model.request;
+package com.example.oderapp.model;
 
-public class UserRequest {
+public class InformationUser {
+    private int id;
     private String hoten;
     private String username;
     private String ngaysinh;
     private int gioitinh;
     private String dienthoai;
+    private String email;
     private String url;
 
-    public UserRequest() {
-    }
-
-    public UserRequest(String hoten, String username, String ngaysinh, int gioitinh, String dienthoai, String url) {
+    public InformationUser(int id, String hoten, String username, String ngaysinh, int gioitinh, String dienthoai, String email, String url) {
+        this.id = id;
         this.hoten = hoten;
         this.username = username;
         this.ngaysinh = ngaysinh;
         this.gioitinh = gioitinh;
         this.dienthoai = dienthoai;
+        this.email = email;
         this.url = url;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getHoten() {
@@ -58,6 +67,14 @@ public class UserRequest {
 
     public void setDienthoai(String dienthoai) {
         this.dienthoai = dienthoai;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getUrl() {

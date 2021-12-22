@@ -6,7 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -36,6 +38,7 @@ public class CartFragment extends Fragment {
     private TextView result;
     private View mview;
     private Button btnCheckOut;
+    private ImageView imgDeleteAllItemInCart;
 
     public CartFragment() {
         // Required empty public constructor
@@ -49,6 +52,7 @@ public class CartFragment extends Fragment {
         getCart();
         mRecyclerView = mview.findViewById(R.id.rcv_cart);
         btnCheckOut = mview.findViewById(R.id.btn_check_out);
+        imgDeleteAllItemInCart = mview.findViewById(R.id.img_delete_all_item_cart);
 
         btnCheckOut.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,12 +61,32 @@ public class CartFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
+        imgDeleteAllItemInCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Call<ResponseBodyCart> responseBodyCartCall = ApiClient.getProductService().deleteAllItemInCart(
+                        "Bearer " + StoreUtil.get(v.getContext(), Contants.accessToken));
+                responseBodyCartCall.enqueue(new Callback<ResponseBodyCart>() {
+                    @Override
+                    public void onResponse(Call<ResponseBodyCart> call, Response<ResponseBodyCart> response) {
+                        Toast.makeText(v.getContext(), "Added in cart", Toast.LENGTH_SHORT).show();
+                        notify();
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBodyCart> call, Throwable t) {
+
+                    }
+                });
+            }
+        });
         return mview;
     }
 
     private void getCart() {
         HashMap<String, String> hashMap = new HashMap<>();
-        hashMap.put(Contants.requestToken, "Bearer " + StoreUtil.get(getActivity(), Contants.requestToken));
+        hashMap.put(Contants.accessToken, "Bearer " + StoreUtil.get(getActivity(), Contants.accessToken));
 
         Call<ResponseBodyCart> responseDTOCall = ApiClient.getProductService().getCart(hashMap);
         responseDTOCall.enqueue(new Callback<ResponseBodyCart>() {
@@ -83,5 +107,7 @@ public class CartFragment extends Fragment {
             }
         });
     }
+
+
 }
 

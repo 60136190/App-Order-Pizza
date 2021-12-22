@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginBottom="@dimen/_70sdp"
-    android:background="@color/white"
     tools:context=".fragment.HomeFragment">
     <TextView
         android:id="@+id/tv_from"
@@ -32,12 +31,14 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_from" />
 
     <ImageView
+        android:id="@+id/img_user"
         android:layout_width="@dimen/_35sdp"
         android:layout_height="@dimen/_35sdp"
         android:layout_marginTop="@dimen/_15sdp"
         android:layout_marginRight="@dimen/_15sdp"
         android:scaleType="centerCrop"
-        android:src="@drawable/pizza_cheese"
+        android:background="@drawable/border_image_user"
+        android:clipToOutline="true"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -51,6 +52,7 @@
         android:background="@drawable/search"
         android:drawableEnd="@drawable/ic_baseline_search_24"
         android:hint="Search..."
+        android:padding="@dimen/_10sdp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_pizza" />
@@ -106,7 +108,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rcv_hot_this_month"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_150sdp"
+                android:layout_height="@dimen/_180sdp"
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:orientation="horizontal"
@@ -141,7 +143,7 @@
                 android:id="@+id/rcv_menu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_10sdp"
+                android:paddingLeft="@dimen/_20sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:layout_marginBottom="@dimen/_90sdp"

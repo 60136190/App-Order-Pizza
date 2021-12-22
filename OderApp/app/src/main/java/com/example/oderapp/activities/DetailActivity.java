@@ -67,7 +67,7 @@ public class DetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Call<ResponseBodyDTO> loginResponeCall = ApiClient.getProductService().insertCart(item.getId(),
-                        "Bearer " + StoreUtil.get(DetailActivity.this, Contants.requestToken));
+                        "Bearer " + StoreUtil.get(DetailActivity.this, Contants.accessToken));
                 loginResponeCall.enqueue(new Callback<ResponseBodyDTO>() {
                     @Override
                     public void onResponse(Call<ResponseBodyDTO> call, Response<ResponseBodyDTO> response) {

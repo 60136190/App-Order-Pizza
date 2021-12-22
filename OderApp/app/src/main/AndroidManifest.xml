@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.oderapp">
+    package="com.example.oderapp" >
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -11,9 +11,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.OderApp"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true" >
         <activity
-            android:name=".activities.SendEmailActivity"
+            android:name=".fragmentinfo.optionaccount.UpdateInformationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".fragmentinfo.optionaccount.ChangePasswordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".fragmentinfo.SendEmailActivity"
             android:exported="false" />
         <activity
             android:name=".activities.AddAddressActivity"
@@ -47,7 +53,7 @@
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".activities.FirstScreenActivity"
-            android:windowSoftInputMode="adjustResize">
+            android:windowSoftInputMode="adjustResize" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

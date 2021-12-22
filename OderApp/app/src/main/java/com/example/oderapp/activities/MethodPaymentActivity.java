@@ -62,7 +62,7 @@ public class MethodPaymentActivity extends AppCompatActivity {
 
     private void getMethodOfPayment() {
         HashMap<String, String> hashMap = new HashMap<>();
-        hashMap.put(Contants.requestToken, "Bearer " + StoreUtil.get(MethodPaymentActivity.this, Contants.requestToken));
+        hashMap.put(Contants.accessToken, "Bearer " + StoreUtil.get(MethodPaymentActivity.this, Contants.accessToken));
 
         Call<ResponseBodyMethodOfPayment> responseBodyMethodOfPaymentCall = ApiClient.getService().getListMethodOfPayment(hashMap);
         responseBodyMethodOfPaymentCall.enqueue(new Callback<ResponseBodyMethodOfPayment>() {

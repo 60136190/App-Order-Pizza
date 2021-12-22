@@ -48,7 +48,7 @@ public class BillFragment extends Fragment {
     }
     private void getAllBill() {
         HashMap<String, String> hashMap = new HashMap<>();
-        hashMap.put(Contants.requestToken, "Bearer " + StoreUtil.get(getActivity(), Contants.requestToken));
+        hashMap.put(Contants.accessToken, "Bearer " + StoreUtil.get(getActivity(), Contants.accessToken));
 
         Call<ResponseBodyBill> responseBodyBillCall = ApiClient.getProductService().getAllBill(hashMap);
         responseBodyBillCall.enqueue(new Callback<ResponseBodyBill>() {

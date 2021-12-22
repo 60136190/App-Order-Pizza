@@ -7,7 +7,7 @@
     android:layout_height="wrap_content"
     app:mode="same_level"
     app:dragEdge="right"
-    android:layout_margin="10dp"
+    android:layout_margin="5dp"
     android:background="@drawable/border_background_itemcart">
 
     <LinearLayout
@@ -31,7 +31,6 @@
         android:id="@+id/img_product"
         android:layout_width="70dp"
         android:layout_height="70dp"
-        android:layout_marginLeft="8dp"
         android:scaleType="centerInside"
         android:src="@drawable/pizzaaaaa"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -41,12 +40,11 @@
         android:id="@+id/tv_nameProduct"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="@dimen/_5sdp"
         android:text="Pizza Double Cheese"
         android:textColor="@color/primary_dark"
-        android:textSize="@dimen/_16ssp"
-        android:textStyle="bold"
+        android:textSize="@dimen/_13ssp"
+
         app:layout_constraintStart_toEndOf="@+id/img_product"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -55,10 +53,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_8sdp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="6dp"
         android:text="100.000"
         android:textColor="@color/primary_dark"
-        android:textSize="@dimen/_16ssp"
+        android:textSize="@dimen/_13ssp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -69,8 +67,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:text="100.000"
         android:textColor="@color/primary_dark"
-        android:layout_marginEnd="16dp"
-        android:textSize="@dimen/_16ssp"
+        android:layout_marginEnd="6dp"
+        android:textSize="@dimen/_13ssp"
         app:layout_constraintTop_toBottomOf="@+id/tv_donGia" />
 
     <LinearLayout
@@ -99,7 +97,7 @@
             android:text="1"
             android:textColor="@color/black"
             android:textSize="@dimen/_16ssp"
-            android:textStyle="bold" />
+             />
 
         <Button
             android:id="@+id/btn_cong"

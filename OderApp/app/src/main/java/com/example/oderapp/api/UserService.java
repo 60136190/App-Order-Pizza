@@ -4,10 +4,13 @@ import com.example.oderapp.activities.LoginRequest;
 import com.example.oderapp.activities.LoginRespone;
 import com.example.oderapp.model.Address;
 import com.example.oderapp.model.ResponseBodyDTO;
+import com.example.oderapp.model.request.ChangePasswordRequest;
 import com.example.oderapp.model.request.UserRequest;
 import com.example.oderapp.model.response.ResponseBodyAddress;
 import com.example.oderapp.model.response.ResponseBodyMethodOfPayment;
+import com.example.oderapp.model.response.ResponseChangePasswordDTO;
 import com.example.oderapp.model.response.ResponseDTO;
+import com.example.oderapp.model.response.ResponseInformationUser;
 
 import java.util.HashMap;
 
@@ -31,8 +34,12 @@ public interface UserService {
     @PATCH("customer/updateProfile")
     Call<ResponseDTO> updateInfo(@HeaderMap HashMap<String, String> hashMap, @Body UserRequest userRequest);
 
+    // change password
+    @PATCH("customer/changePassword")
+    Call<ResponseChangePasswordDTO> changePasswordUser(@HeaderMap HashMap<String, String> hashMap, @Body ChangePasswordRequest changePasswordRequest);
+
     @GET("/customer/profile")
-    Call<ResponseBodyDTO> getProfile(@HeaderMap HashMap<String, String> hashMap);
+    Call<ResponseInformationUser> getProfile(@HeaderMap HashMap<String, String> hashMap);
 
     @DELETE("/customer/logout")
     Call<ResponseDTO> deleteUser(@Header("Authorization") String authorization);

@@ -14,6 +14,7 @@
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/drawable/border_background_detail.xml" value="0.19166666666666668" />
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/drawable/border_button.xml" value="0.19166666666666668" />
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/drawable/border_first_screen.xml" value="0.18871794871794872" />
+        <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/drawable/border_image_user.xml" value="0.19166666666666668" />
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/drawable/border_radiobutton.xml" value="0.19166666666666668" />
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/drawable/border_soluong_itemcart.xml" value="0.19166666666666668" />
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/drawable/cart_backgroung.xml" value="0.21197916666666666" />
@@ -31,14 +32,18 @@
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/drawable/ic_outline_rate_review_24.xml" value="0.21197916666666666" />
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/drawable/ic_outline_share_24.xml" value="0.21197916666666666" />
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/drawable/ic_outline_work_outline_24.xml" value="0.21197916666666666" />
+        <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/drawable/ic_protect.xml" value="0.19166666666666668" />
+        <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/drawable/ic_white_backspace.xml" value="0.19166666666666668" />
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/drawable/item_cart.xml" value="0.19166666666666668" />
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/drawable/search.xml" value="0.21614583333333334" />
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/layout/activity_about_us.xml" value="0.22" />
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/layout/activity_account.xml" value="0.22" />
-        <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/layout/activity_add_address.xml" value="0.17552083333333332" />
+        <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/layout/activity_add_address.xml" value="0.22" />
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/layout/activity_address.xml" value="0.17552083333333332" />
+        <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/layout/activity_change_password.xml" value="0.17552083333333332" />
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/layout/activity_detail.xml" value="0.2" />
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/layout/activity_f_a_q.xml" value="0.2" />
+        <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/layout/activity_first_screen.xml" value="0.17552083333333332" />
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/layout/activity_hoa_don.xml" value="0.2" />
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/layout/activity_hot_this_month.xml" value="0.2" />
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/layout/activity_hot_this_month_detail.xml" value="0.2" />
@@ -55,6 +60,7 @@
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/layout/activity_send_email.xml" value="0.17552083333333332" />
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/layout/activity_sign_up.xml" value="0.17314814814814813" />
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/layout/activity_slider.xml" value="0.1712962962962963" />
+        <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/layout/activity_update_information.xml" value="0.17552083333333332" />
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/layout/dialog_edit_address.xml" value="0.15885416666666666" />
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/layout/fragment_appertizer.xml" value="0.18333333333333332" />
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/layout/fragment_cart.xml" value="0.2" />

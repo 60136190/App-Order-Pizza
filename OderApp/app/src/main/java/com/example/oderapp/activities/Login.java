@@ -86,7 +86,6 @@ public class Login extends AppCompatActivity {
         imgBack = findViewById(R.id.back);
     }
 
-
     public void loginUser(LoginRequest loginRequest) {
         Call<LoginRespone> loginResponeCall = ApiClient.getService().loginUser(loginRequest);
         loginResponeCall.enqueue(new Callback<LoginRespone>() {

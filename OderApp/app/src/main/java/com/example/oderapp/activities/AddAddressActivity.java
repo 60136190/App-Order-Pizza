@@ -70,7 +70,7 @@ public class AddAddressActivity extends AppCompatActivity {
         String strAddress = edtAddAddress.getText().toString();
         address = new Address(strAddress);
         Call<ResponseBodyAddress> addAddressResponeCall = ApiClient.getService().insertAddress(
-                "Bearer " + StoreUtil.get(AddAddressActivity.this, Contants.requestToken),address);
+                "Bearer " + StoreUtil.get(AddAddressActivity.this, Contants.accessToken),address);
         addAddressResponeCall.enqueue(new Callback<ResponseBodyAddress>() {
             @Override
             public void onResponse(Call<ResponseBodyAddress> call, Response<ResponseBodyAddress> response) {

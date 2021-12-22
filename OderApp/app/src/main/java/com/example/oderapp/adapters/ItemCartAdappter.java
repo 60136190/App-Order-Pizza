@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,12 +24,16 @@ import com.example.oderapp.model.GetItemCart;
 import com.example.oderapp.model.ItemCart;
 import com.example.oderapp.model.ItemFood;
 import com.example.oderapp.model.UserRegister;
+import com.example.oderapp.model.request.QualityProduct;
 import com.example.oderapp.model.response.ResponseBodyAddress;
 import com.example.oderapp.model.response.ResponseBodyCart;
+import com.example.oderapp.model.response.ResponseBodyProduct;
 import com.example.oderapp.utils.Contants;
 import com.example.oderapp.utils.StoreUtil;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import retrofit2.Call;
@@ -68,7 +73,7 @@ public class ItemCartAdappter extends RecyclerView.Adapter<ItemCartAdappter.Item
         holder.tvDonGia.setText(Integer.toString(dongia));
         holder.tvSoLuong.setText(Integer.toString(soluong));
         holder.tvTongGia.setText(Integer.toString(tonggia));
-        //
+
         int sl = Integer.parseInt(holder.tvSoLuong.getText().toString());
         if (sl >= 10) {
             holder.btnCong.setVisibility(View.INVISIBLE);
@@ -92,6 +97,23 @@ public class ItemCartAdappter extends RecyclerView.Adapter<ItemCartAdappter.Item
                     holder.btnTru.setVisibility(View.VISIBLE);
                     holder.tvSoLuong.setText(String.valueOf(slmoi));
                 }
+
+                QualityProduct qualityProduct = new QualityProduct(slmoi);
+                HashMap<String, String> hashMap = new HashMap<>();
+                hashMap.put(Contants.accessToken, "Bearer " + StoreUtil.get(v.getContext(), Contants.accessToken));
+
+                Call<ResponseBodyCart> responseDTOCall = ApiClient.getProductService().updateQualityProduct(id,qualityProduct,hashMap);
+                responseDTOCall.enqueue(new Callback<ResponseBodyCart>() {
+                    @Override
+                    public void onResponse(Call<ResponseBodyCart> call, Response<ResponseBodyCart> response) {
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBodyCart> call, Throwable t) {
+                        t.printStackTrace();
+                    }
+                });
             }
         });
 
@@ -108,6 +130,24 @@ public class ItemCartAdappter extends RecyclerView.Adapter<ItemCartAdappter.Item
                     holder.btnTru.setVisibility(View.VISIBLE);
                     holder.tvSoLuong.setText(String.valueOf(slmoi));
                 }
+
+                QualityProduct qualityProduct = new QualityProduct(slmoi);
+                HashMap<String, String> hashMap = new HashMap<>();
+                hashMap.put(Contants.accessToken, "Bearer " + StoreUtil.get(v.getContext(), Contants.accessToken));
+
+                Call<ResponseBodyCart> responseDTOCall = ApiClient.getProductService().updateQualityProduct(id,qualityProduct,hashMap);
+                responseDTOCall.enqueue(new Callback<ResponseBodyCart>() {
+                    @Override
+                    public void onResponse(Call<ResponseBodyCart> call, Response<ResponseBodyCart> response) {
+
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBodyCart> call, Throwable t) {
+                        t.printStackTrace();
+                    }
+                });
             }
         });
 
@@ -117,7 +157,7 @@ public class ItemCartAdappter extends RecyclerView.Adapter<ItemCartAdappter.Item
                 mItemCartList.remove(holder.getAdapterPosition());
                 notifyItemRemoved(holder.getAdapterPosition());
                 Call<ResponseBodyCart> responseBodyCartCall = ApiClient.getProductService().deleteItemCart(id,
-                        "Bearer " + StoreUtil.get(v.getContext(), Contants.requestToken));
+                        "Bearer " + StoreUtil.get(v.getContext(), Contants.accessToken));
                 responseBodyCartCall.enqueue(new Callback<ResponseBodyCart>() {
                     @Override
                     public void onResponse(Call<ResponseBodyCart> call, Response<ResponseBodyCart> response) {
@@ -132,18 +172,26 @@ public class ItemCartAdappter extends RecyclerView.Adapter<ItemCartAdappter.Item
             }
         });
 
-        Call<ItemFood> responseDTOCall = ApiClient.getProductService().getDescription(currentItem.getId_sp());
-        responseDTOCall.enqueue(new Callback<ItemFood>() {
+        //---------------------------------------------
+        Call<ResponseBodyProduct> responseBodyProductCall = ApiClient.getProductService().getDescription(id_sp,
+                "Bearer " + StoreUtil.get(mContext.getApplicationContext(), Contants.accessToken));
+        responseBodyProductCall.enqueue(new Callback<ResponseBodyProduct>() {
             @Override
-            public void onResponse(Call<ItemFood> call, Response<ItemFood> response) {
-                holder.tv_nameProduct.setText(response.body().getTensp() + "");
+            public void onResponse(Call<ResponseBodyProduct> call, Response<ResponseBodyProduct> response) {
+                ItemFood itemFood = response.body().getData().get(0);
+                String anh = itemFood.getUrl();
+                holder.tv_nameProduct.setText(itemFood.getTensp());
+
+                Picasso.with(mContext.getApplicationContext())
+                        .load(anh).fit().centerInside().into(holder.imgProduct);
             }
 
             @Override
-            public void onFailure(Call<ItemFood> call, Throwable t) {
+            public void onFailure(Call<ResponseBodyProduct> call, Throwable t) {
                 t.printStackTrace();
             }
         });
+        //-----------------------------------------
 
 
     }

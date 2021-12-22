@@ -58,7 +58,7 @@ public class ItemBillAdapter extends RecyclerView.Adapter<ItemBillAdapter.ItemVi
             public void onClick(View v) {
 
                 Call<ResponseBodyBill> responseBodyBillCall = ApiClient.getProductService().cancelBill(id,
-                        "Bearer " + StoreUtil.get(v.getContext(), Contants.requestToken));
+                        "Bearer " + StoreUtil.get(v.getContext(), Contants.accessToken));
                 responseBodyBillCall.enqueue(new Callback<ResponseBodyBill>() {
                     @Override
                     public void onResponse(Call<ResponseBodyBill> call, Response<ResponseBodyBill> response) {

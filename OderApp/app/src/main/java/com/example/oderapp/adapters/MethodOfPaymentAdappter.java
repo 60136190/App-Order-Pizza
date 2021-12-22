@@ -65,7 +65,7 @@ public class MethodOfPaymentAdappter extends RecyclerView.Adapter<MethodOfPaymen
             @Override
             public void onClick(View v) {
                 HashMap<String, String> hashMap = new HashMap<>();
-                hashMap.put(Contants.requestToken, "Bearer " + StoreUtil.get(v.getContext(), Contants.requestToken));
+                hashMap.put(Contants.accessToken, "Bearer " + StoreUtil.get(v.getContext(), Contants.accessToken));
 
                 Call<ResponseBodyMethodOfPayment> responseBodyMethodOfPaymentCall = ApiClient.getService().getMethodOfPayment(id,hashMap);
                 responseBodyMethodOfPaymentCall.enqueue(new Callback<ResponseBodyMethodOfPayment>() {

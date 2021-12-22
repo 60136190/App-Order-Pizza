@@ -25,12 +25,12 @@
         android:layout_width="@dimen/_100sdp"
         android:layout_height="@dimen/_40sdp"
         android:layout_alignParentBottom="true"
-        android:layout_marginLeft="@dimen/_200sdp"
+        android:layout_marginLeft="@dimen/_180sdp"
         android:layout_marginBottom="@dimen/_20sdp"
         android:background="@drawable/border_button_next"
         android:text=""
         android:textColor="@color/white"
         android:textSize="@dimen/_12ssp"
-        app:backgroundTint="@color/main_color" />
+        app:backgroundTint="@color/primary" />
 
 </RelativeLayout>

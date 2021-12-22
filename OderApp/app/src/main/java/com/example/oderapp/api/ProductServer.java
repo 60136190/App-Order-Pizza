@@ -1,17 +1,22 @@
 package com.example.oderapp.api;
 
 import com.example.oderapp.model.ItemBill;
+import com.example.oderapp.model.ItemCart;
 import com.example.oderapp.model.ItemFood;
 import com.example.oderapp.model.ResponseBodyDTO;
+import com.example.oderapp.model.request.QualityProduct;
 import com.example.oderapp.model.response.ResponseBodyAddress;
 import com.example.oderapp.model.response.ResponseBodyBill;
 import com.example.oderapp.model.response.ResponseBodyCart;
+import com.example.oderapp.model.response.ResponseBodyProduct;
 import com.example.oderapp.model.response.ResponseDTO;
 
 import java.util.HashMap;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.DELETE;
+import retrofit2.http.Field;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.HeaderMap;
@@ -27,11 +32,21 @@ public interface ProductServer {
     @GET("/cart")
     Call<ResponseBodyCart> getCart(@HeaderMap HashMap<String, String> hashMap);
 
-    @GET("/product/{id}")
-    Call<ItemFood> getDescription(@Path("id") int id);
+    // update quality product
+    @PATCH("/cart/updateQuantityProduct/{id}")
+    Call<ResponseBodyCart> updateQualityProduct(@Path("id") int id, @Body QualityProduct qualityProduct, @HeaderMap HashMap<String, String> hashMap);
 
+    // get product with id, then show name's product.
+    @GET("/product/{id}")
+    Call<ResponseBodyProduct> getDescription(@Path("id") int id, @Header("Authorization") String authorization);
+
+    // delete item in cart with id
     @DELETE("/cart/delete/{id}")
     Call<ResponseBodyCart> deleteItemCart(@Path("id") int id, @Header("Authorization") String authorization);
+
+    // delete all item in cart
+    @DELETE("/cart/deleteAll")
+    Call<ResponseBodyCart> deleteAllItemInCart(@Header("Authorization") String authorization);
 
     @GET("/bill/history")
     Call<ResponseBodyBill> getAllBill(@HeaderMap HashMap<String, String> hashMap);

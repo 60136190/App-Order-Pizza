@@ -1,5 +1,6 @@
 package com.example.oderapp.fragment;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -24,27 +25,39 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.oderapp.R;
+import com.example.oderapp.activities.ApiClient;
 import com.example.oderapp.adapters.HotThisMonthAdapter;
 import com.example.oderapp.adapters.ItemProductAdappter;
+import com.example.oderapp.fragmentinfo.optionaccount.UpdateInformationActivity;
 import com.example.oderapp.model.Hot;
+import com.example.oderapp.model.InformationUser;
 import com.example.oderapp.model.ItemFood;
+import com.example.oderapp.model.response.ResponseInformationUser;
+import com.example.oderapp.utils.Contants;
+import com.example.oderapp.utils.StoreUtil;
 import com.makeramen.roundedimageview.RoundedImageView;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
 
 public class HomeFragment extends Fragment {
     ViewFlipper viewFlipper;
     private RoundedImageView roundedImageView;
-    TextView tvinfo;
+    private TextView tvinfo;
+    private ImageView imgUser;
 
     // search bar
-    EditText searchView;
-    CharSequence search="";
+    private EditText searchView;
+    private CharSequence search = "";
 
     //get all product
     private RecyclerView mRecyclerView;
@@ -68,6 +81,35 @@ public class HomeFragment extends Fragment {
         roundedImageView = view.findViewById(R.id.pizza);
         tvinfo = view.findViewById(R.id.tv_from);
         searchView = view.findViewById(R.id.search);
+        imgUser = view.findViewById(R.id.img_user);
+
+        // set border image
+        imgUser.setClipToOutline(true);
+
+        // ----------------------- get Url show on home fragment--------------------
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put(Contants.accessToken, "Bearer " + StoreUtil.get(getContext(), Contants.accessToken));
+
+        Call<ResponseInformationUser> loginResponeCall = ApiClient.getService().getProfile(hashMap);
+        loginResponeCall.enqueue(new Callback<ResponseInformationUser>() {
+            @Override
+            public void onResponse(Call<ResponseInformationUser> call, retrofit2.Response<ResponseInformationUser> response) {
+                InformationUser informationUser = response.body().getData().get(0);
+                String anh = informationUser.getUrl();
+
+                Picasso.with(getContext())
+                        .load(anh).fit().centerInside().into(imgUser);
+                // fill more data
+
+            }
+
+
+            @Override
+            public void onFailure(Call<ResponseInformationUser> call, Throwable t) {
+
+            }
+        });
+        // ------------------------------------
 
         // filter
         searchView.addTextChangedListener(new TextWatcher() {
@@ -99,7 +141,7 @@ public class HomeFragment extends Fragment {
 
         // recyclerview hot this month
         rcvHotThisMonth = view.findViewById(R.id.rcv_hot_this_month);
-        HotThisMonthAdapter hotThisMonthAdapter = new HotThisMonthAdapter(getContext(),hotThisMonths);
+        HotThisMonthAdapter hotThisMonthAdapter = new HotThisMonthAdapter(getContext(), hotThisMonths);
         rcvHotThisMonth.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         rcvHotThisMonth.setAdapter(hotThisMonthAdapter);
 
@@ -112,15 +154,17 @@ public class HomeFragment extends Fragment {
 
         return view;
     }
+
+    //--------------------------------
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         hotThisMonths = new ArrayList<>();
-        hotThisMonths.add(new Hot(R.drawable.hota,"Hết hạn 31-12-2021","Bữa ăn đồng giá 39k","10:00 - 23:55","rat la ngon"));
-        hotThisMonths.add(new Hot(R.drawable.hotb,"Hết hạn 26-12-2021","Combo no nê giá chỉ 99k","10:00 - 23:55","Một chiếc pizza Double chesse kết với với xúc xích Ý Peperoni, một chai pepsi 1,5L"));
-        hotThisMonths.add(new Hot(R.drawable.hotc,"Hết hạn 31-12-2021","Combo pizza Giáng sinh","10:00 - 23:55","Ăn đã đời, vui say sưa"));
-        hotThisMonths.add(new Hot(R.drawable.hota,"Hết hạn 31-12-2021","Bua an dong gia 39k","10:00 - 23:55","rat la ngon"));
-        hotThisMonths.add(new Hot(R.drawable.hota,"Hết hạn 31-12-2021","Bua an dong gia 39k","10:00 - 23:55","rat la ngon"));
+        hotThisMonths.add(new Hot(R.drawable.hota, "Hết hạn 31-12-2021", "Bữa ăn đồng giá 39k", "10:00 - 23:55", "rat la ngon"));
+        hotThisMonths.add(new Hot(R.drawable.hotb, "Hết hạn 26-12-2021", "Combo no nê giá chỉ 99k", "10:00 - 23:55", "Một chiếc pizza Double chesse kết với với xúc xích Ý Peperoni, một chai pepsi 1,5L"));
+        hotThisMonths.add(new Hot(R.drawable.hotc, "Hết hạn 31-12-2021", "Combo pizza Giáng sinh", "10:00 - 23:55", "Ăn đã đời, vui say sưa"));
+        hotThisMonths.add(new Hot(R.drawable.hota, "Hết hạn 31-12-2021", "Bua an dong gia 39k", "10:00 - 23:55", "rat la ngon"));
+        hotThisMonths.add(new Hot(R.drawable.hota, "Hết hạn 31-12-2021", "Bua an dong gia 39k", "10:00 - 23:55", "rat la ngon"));
 
         // parse json get all products
         mitemPizzasList = new ArrayList<>();
@@ -136,12 +180,11 @@ public class HomeFragment extends Fragment {
         viewFlipper.setFlipInterval(3500);
         viewFlipper.setAutoStart(true);
         viewFlipper.setInAnimation(getContext(), android.R.anim.slide_in_left);
-
-
     }
+
     // function parse json to get all product from api
     private void parseJSON() {
-        String url = "http://192.168.1.5:5000/product";
+        String url = "http://192.168.1.14:5000/product";
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -157,7 +200,7 @@ public class HomeFragment extends Fragment {
                                 int productPrice = dt.getInt("gia");
                                 String productDetail = dt.getString("chitiet");
                                 String productSize = dt.getString("size");
-                                mitemPizzasList.add(new ItemFood(productId,productName,productPrice,productImage,productDetail,productSize));
+                                mitemPizzasList.add(new ItemFood(productId, productName, productPrice, productImage, productDetail, productSize));
                             }
                             mitemPizzaAdappter = new ItemProductAdappter(getActivity(), mitemPizzasList);
                             mRecyclerView.setAdapter(mitemPizzaAdappter);
@@ -177,14 +220,15 @@ public class HomeFragment extends Fragment {
     }
 
     // filter products
-    private void filter(String text){
+    private void filter(String text) {
         ArrayList<ItemFood> filteredList = new ArrayList<>();
-        for (ItemFood item :mitemPizzasList){
-            if (item.getTensp().toLowerCase().contains(text.toLowerCase())){
+        for (ItemFood item : mitemPizzasList) {
+            if (item.getTensp().toLowerCase().contains(text.toLowerCase())) {
                 filteredList.add(item);
             }
         }
         mitemPizzaAdappter.filterList(filteredList);
     }
+
 
 }

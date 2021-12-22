@@ -160,7 +160,7 @@
         android:layout_marginRight="@dimen/_10sdp"
         android:text="GET PROMOTION"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:backgroundTint="@color/main_color" />
+        app:backgroundTint="@color/primary" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

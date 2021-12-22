@@ -3,11 +3,9 @@ package com.example.oderapp.fragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -15,16 +13,12 @@ import androidx.fragment.app.Fragment;
 
 import com.example.oderapp.R;
 import com.example.oderapp.activities.ApiClient;
-import com.example.oderapp.activities.Login;
-import com.example.oderapp.activities.SendEmailActivity;
+import com.example.oderapp.fragmentinfo.SendEmailActivity;
 import com.example.oderapp.fragmentinfo.AboutUs;
 import com.example.oderapp.fragmentinfo.Account;
 import com.example.oderapp.fragmentinfo.FAQ;
 import com.example.oderapp.fragmentinfo.Recruiment;
 import com.example.oderapp.fragmentinfo.TermsAndCondition;
-import com.example.oderapp.model.ResponseBodyDTO;
-import com.example.oderapp.model.UserRegister;
-import com.example.oderapp.model.request.UserRequest;
 import com.example.oderapp.model.response.ResponseDTO;
 import com.example.oderapp.utils.Contants;
 import com.example.oderapp.utils.StoreUtil;
@@ -68,16 +62,9 @@ public class InfoFragment extends Fragment {
         share = view.findViewById(R.id.share);
         rate = view.findViewById(R.id.rate);
         sendEmail = view.findViewById(R.id.send_email);
-
         logout = view.findViewById(R.id.logout);
 
-        logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                deleteInfo();
-                Toast.makeText(getActivity(), "aaa", Toast.LENGTH_SHORT).show();
-            }
-        });
+
 
         // open activity Account
         myaccount.setOnClickListener(new View.OnClickListener() {
@@ -158,26 +145,50 @@ public class InfoFragment extends Fragment {
                 startActivity(itsendEmail);
             }
         });
+
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                HashMap<String, String> hashMap = new HashMap<>();
+                hashMap.put(Contants.accessToken, "Bearer " + StoreUtil.get(getContext(), Contants.accessToken));
+                Call<ResponseDTO> loginResponeCall = ApiClient.getService().deleteUser(
+                        "Bearer " + StoreUtil.get(getContext(), Contants.accessToken));
+                loginResponeCall.enqueue(new Callback<ResponseDTO>() {
+                    @Override
+                    public void onResponse(Call<ResponseDTO> call, Response<ResponseDTO> response) {
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseDTO> call, Throwable t) {
+
+                    }
+                });
+            }
+        });
+
+
         return view;
     }
 
-    public void deleteInfo() {
-        HashMap<String, String> hashMap = new HashMap<>();
-        hashMap.put(Contants.requestToken, "Bearer " + StoreUtil.get(getActivity(), Contants.requestToken));
-        hashMap.put(Contants.postManToken, "<calculated when request is sent>");
-        Call<ResponseDTO> loginResponeCall = ApiClient.getService().deleteUser("Bearer " + StoreUtil.get(getActivity(), Contants.requestToken));
-        loginResponeCall.enqueue(new Callback<ResponseDTO>() {
-            @Override
-            public void onResponse(Call<ResponseDTO> call, Response<ResponseDTO> response) {
 
-            }
-
-            @Override
-            public void onFailure(Call<ResponseDTO> call, Throwable t) {
-
-            }
-        });
-    }
+//    public void deleteInfo() {
+//        HashMap<String, String> hashMap = new HashMap<>();
+//        hashMap.put(Contants.accessToken, "Bearer " + StoreUtil.get(getActivity(), Contants.accessToken));
+//        Call<ResponseDTO> loginResponeCall = ApiClient.getService().deleteUser(
+//                "Bearer " + StoreUtil.get(getActivity(), Contants.accessToken));
+//        loginResponeCall.enqueue(new Callback<ResponseDTO>() {
+//            @Override
+//            public void onResponse(Call<ResponseDTO> call, Response<ResponseDTO> response) {
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Call<ResponseDTO> call, Throwable t) {
+//
+//            }
+//        });
+//    }
 
 
 }
