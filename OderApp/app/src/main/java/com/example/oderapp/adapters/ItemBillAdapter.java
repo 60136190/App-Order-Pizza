@@ -1,13 +1,22 @@
 package com.example.oderapp.adapters;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.oderapp.R;
@@ -19,6 +28,7 @@ import com.example.oderapp.model.response.ResponseBodyCart;
 import com.example.oderapp.utils.Contants;
 import com.example.oderapp.utils.StoreUtil;
 
+import java.util.HashMap;
 import java.util.List;
 
 import retrofit2.Call;
@@ -72,6 +82,63 @@ public class ItemBillAdapter extends RecyclerView.Adapter<ItemBillAdapter.ItemVi
             }
         });
 
+        // lấy ra tất cả các bill, sau đó so sánh nếu tình trạng HD là đã nhận hàng thì show dialog để đánh giá.
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put(Contants.accessToken, "Bearer " + StoreUtil.get(mContext.getApplicationContext(), Contants.accessToken));
+
+        Call<ResponseBodyBill> responseBodyBillCall = ApiClient.getProductService().getAllBill(hashMap);
+        responseBodyBillCall.enqueue(new Callback<ResponseBodyBill>() {
+            @Override
+            public void onResponse(Call<ResponseBodyBill> call, Response<ResponseBodyBill> response) {
+                String s = "Đã nhận hàng";
+                if (tinhtrang.equals(s)){
+                    holder.lnItemBill.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            final Dialog dialog = new Dialog(v.getContext());
+                            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                            dialog.setContentView(R.layout.dialog_rating);
+
+                            Window window = dialog.getWindow();
+                            if (window == null) {
+                                return;
+                            }
+
+                            window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+                            window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                            WindowManager.LayoutParams windowAtribute = window.getAttributes();
+                            window.setAttributes(windowAtribute);
+
+
+                            EditText edtComment = dialog.findViewById(R.id.edt_comment_dialog);
+                            Button btnCancel = dialog.findViewById(R.id.btn_cancel);
+                            Button btnSave = dialog.findViewById(R.id.btn_save_address);
+
+                            btnCancel.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    dialog.dismiss();
+                                }
+                            });
+                            dialog.show();
+
+                        }
+                    });
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBodyBill> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+
+
+
+
     }
 
 
@@ -87,12 +154,14 @@ public class ItemBillAdapter extends RecyclerView.Adapter<ItemBillAdapter.ItemVi
         private TextView tvId;
         private TextView tvTinhTrangHD;
         private LinearLayout lnCancelBill;
+        private LinearLayout lnItemBill;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
             tvId = itemView.findViewById(R.id.tv_id_bill);
             tvTinhTrangHD = itemView.findViewById(R.id.tv_tinhtrangHD);
             lnCancelBill = itemView.findViewById(R.id.ln_cancel_bill);
+            lnItemBill = itemView.findViewById(R.id.ln_item_bill);
         }
     }
 

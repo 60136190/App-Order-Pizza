@@ -9,8 +9,8 @@
 
     <ImageView
         android:id="@+id/back"
-        android:layout_width="@dimen/_30sdp"
-        android:layout_height="@dimen/_30sdp"
+        android:layout_width="@dimen/_20sdp"
+        android:layout_height="@dimen/_20sdp"
         android:layout_marginLeft="@dimen/_10sdp"
         android:layout_marginTop="@dimen/_10sdp"
         android:src="@drawable/ic_baseline_keyboard_backspace_24"
@@ -35,7 +35,7 @@
         android:layout_margin="@dimen/_10sdp"
         android:paddingBottom="@dimen/_20sdp"
         android:text="We bring you the best experience of our service, not only in terms of food but also in spirit."
-        android:textColor="@color/primary"
+        android:textColor="@color/white"
         android:textSize="@dimen/_12ssp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"

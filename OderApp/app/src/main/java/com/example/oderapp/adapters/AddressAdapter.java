@@ -136,6 +136,11 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.ItemView
                         dialog.dismiss();
                     }
                 });
+                // show dialog
+                dialog.show();
+
+                // set address show on dialog
+                edtEditAddress.setText(diachi);
 
                 // save address after update on dialog
                 btnSave.setOnClickListener(new View.OnClickListener() {
@@ -163,25 +168,8 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.ItemView
                     }
                 });
                 //-----------------
-                dialog.show();
-                //------------------ get address show on dialog---------------------
 
-                HashMap<String, String> hashMap = new HashMap<>();
-                hashMap.put(Contants.accessToken, "Bearer " + StoreUtil.get(v.getContext(), Contants.accessToken));
 
-                Call<ResponseBodyAddress> responseDTOCall = ApiClient.getService().getListAddress(hashMap);
-                responseDTOCall.enqueue(new Callback<ResponseBodyAddress>() {
-                    @Override
-                    public void onResponse(Call<ResponseBodyAddress> call, Response<ResponseBodyAddress> response) {
-                        edtEditAddress.setText(diachi);
-                    }
-
-                    @Override
-                    public void onFailure(Call<ResponseBodyAddress> call, Throwable t) {
-                        t.printStackTrace();
-                    }
-                });
-                //------------------
             }
         });
 

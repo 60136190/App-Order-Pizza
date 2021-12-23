@@ -19,6 +19,7 @@ import com.example.oderapp.R;
 import com.example.oderapp.activities.ApiClient;
 import com.example.oderapp.activities.PaymentActivity;
 import com.example.oderapp.adapters.ItemCartAdappter;
+import com.example.oderapp.model.ItemCart;
 import com.example.oderapp.model.response.ResponseBodyCart;
 import com.example.oderapp.utils.Contants;
 import com.example.oderapp.utils.StoreUtil;
@@ -35,7 +36,7 @@ public class CartFragment extends Fragment {
 
 
 
-    private TextView result;
+    private TextView tvQuantily;
     private View mview;
     private Button btnCheckOut;
     private ImageView imgDeleteAllItemInCart;
@@ -53,6 +54,7 @@ public class CartFragment extends Fragment {
         mRecyclerView = mview.findViewById(R.id.rcv_cart);
         btnCheckOut = mview.findViewById(R.id.btn_check_out);
         imgDeleteAllItemInCart = mview.findViewById(R.id.img_delete_all_item_cart);
+        tvQuantily = mview.findViewById(R.id.tv_qantily);
 
         btnCheckOut.setOnClickListener(new View.OnClickListener() {
             @Override

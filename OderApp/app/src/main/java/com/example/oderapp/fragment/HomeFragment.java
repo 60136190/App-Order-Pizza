@@ -52,7 +52,7 @@ import retrofit2.Callback;
 public class HomeFragment extends Fragment {
     ViewFlipper viewFlipper;
     private RoundedImageView roundedImageView;
-    private TextView tvinfo;
+    private TextView tvHiName;
     private ImageView imgUser;
 
     // search bar
@@ -79,7 +79,7 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         roundedImageView = view.findViewById(R.id.pizza);
-        tvinfo = view.findViewById(R.id.tv_from);
+        tvHiName = view.findViewById(R.id.tv_hi_name);
         searchView = view.findViewById(R.id.search);
         imgUser = view.findViewById(R.id.img_user);
 
@@ -94,13 +94,17 @@ public class HomeFragment extends Fragment {
         loginResponeCall.enqueue(new Callback<ResponseInformationUser>() {
             @Override
             public void onResponse(Call<ResponseInformationUser> call, retrofit2.Response<ResponseInformationUser> response) {
-                InformationUser informationUser = response.body().getData().get(0);
-                String anh = informationUser.getUrl();
 
-                Picasso.with(getContext())
-                        .load(anh).fit().centerInside().into(imgUser);
-                // fill more data
+                    InformationUser informationUser = response.body().getData().get(0);
+                if (informationUser.getUrl().isEmpty()){
+                    tvHiName.setText(informationUser.getHoten());
 
+                }else{
+                    String anh = informationUser.getUrl();
+                    Picasso.with(getContext())
+                            .load(anh).fit().centerInside().into(imgUser);
+                    tvHiName.setText(informationUser.getHoten());
+                }
             }
 
 

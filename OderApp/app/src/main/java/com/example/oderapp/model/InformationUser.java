@@ -1,6 +1,8 @@
 package com.example.oderapp.model;
 
-public class InformationUser {
+import java.io.Serializable;
+
+public class InformationUser implements Serializable {
     private int id;
     private String hoten;
     private String username;
