@@ -45,8 +45,8 @@
         android:layout_margin="@dimen/_10sdp"
         android:background="@drawable/background_input"
         android:hint="Full name"
-        android:paddingStart="@dimen/_20ssp"
         android:inputType="text"
+        android:paddingStart="@dimen/_20ssp"
         android:textColor="@color/primary"
         android:textColorHint="@color/primary"
         android:textSize="@dimen/_13ssp"
@@ -89,6 +89,7 @@
         android:textSize="@dimen/_13ssp"
         app:layout_constraintStart_toStartOf="@+id/edt_ngay_sinh"
         app:layout_constraintTop_toBottomOf="@+id/edt_ho_ten" />
+
     <EditText
         android:id="@+id/edt_ngay_sinh"
         android:layout_width="@dimen/_130sdp"
@@ -170,18 +171,43 @@
         android:textSize="@dimen/_13ssp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edt_phone_number"/>
+        app:layout_constraintTop_toBottomOf="@+id/edt_phone_number" />
 
+    <ImageView
+        android:id="@+id/imgUserInfor"
+        android:layout_width="@dimen/_150sdp"
+        android:layout_height="@dimen/_150sdp"
+        android:layout_marginTop="10dp"
+        android:src="@mipmap/ic_launcher"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edt_url" />
+
+
+    <Button
+        android:id="@+id/buttonImage"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_50sdp"
+        android:layout_margin="@dimen/_10sdp"
+        android:text="Update"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_13ssp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:backgroundTint="@color/primary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
     <Button
         android:id="@+id/buttonUpdate"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_50sdp"
+        android:layout_margin="@dimen/_10sdp"
         android:text="Update"
         android:textColor="@color/white"
         android:textSize="@dimen/_13ssp"
         android:textStyle="bold"
-        android:layout_margin="@dimen/_10sdp"
         app:backgroundTint="@color/primary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"

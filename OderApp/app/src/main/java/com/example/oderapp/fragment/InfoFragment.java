@@ -151,8 +151,9 @@ public class InfoFragment extends Fragment {
             public void onClick(View v) {
                 HashMap<String, String> hashMap = new HashMap<>();
                 hashMap.put(Contants.accessToken, "Bearer " + StoreUtil.get(getContext(), Contants.accessToken));
-                Call<ResponseDTO> loginResponeCall = ApiClient.getService().deleteUser(
-                        "Bearer " + StoreUtil.get(getContext(), Contants.accessToken));
+                hashMap.put(Contants.contentType, "application/json");
+
+                Call<ResponseDTO> loginResponeCall = ApiClient.getService().deleteUser(hashMap);
                 loginResponeCall.enqueue(new Callback<ResponseDTO>() {
                     @Override
                     public void onResponse(Call<ResponseDTO> call, Response<ResponseDTO> response) {

@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.oderapp.R;
+import com.example.oderapp.SendData;
 import com.example.oderapp.adapters.AddressAdapter;
 import com.example.oderapp.adapters.ItemCartAdappter;
 import com.example.oderapp.eventbus.EventBack;
@@ -56,22 +57,23 @@ public class AddressActivity extends AppCompatActivity {
         imgAddAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent itAddress = new Intent(AddressActivity.this,AddAddressActivity.class);
+                Intent itAddress = new Intent(AddressActivity.this, AddAddressActivity.class);
                 startActivity(itAddress);
             }
         });
 //
 //
     }
-//
+
+    //
     private void initUi() {
         imgBack = findViewById(R.id.img_back);
         imgAddAddress = findViewById(R.id.img_add_address);
         mRecyclerView = findViewById(R.id.rcv_address);
     }
+
     @Override
-    public void onBackPressed()
-    {
+    public void onBackPressed() {
         // code here to show dialog
         super.onBackPressed();  // optional depending on your needs
     }
@@ -84,12 +86,20 @@ public class AddressActivity extends AppCompatActivity {
         responseDTOCall.enqueue(new Callback<ResponseBodyAddress>() {
             @Override
             public void onResponse(Call<ResponseBodyAddress> call, Response<ResponseBodyAddress> response) {
-                AddressAdapter adappter = new AddressAdapter(AddressActivity.this, response.body().getData());
+                AddressAdapter adappter = new AddressAdapter(AddressActivity.this, response.body().getData(), new SendData() {
+                    @Override
+                    public void sendData(Address address) {
+                        Intent intent = new Intent();
+                        intent.putExtra("keyName", "test");
+                        setResult(RESULT_OK, intent);
+                        finish();
+                    }
+                });
                 mRecyclerView.setAdapter(adappter);
                 mRecyclerView.setHasFixedSize(true);
                 mRecyclerView.setLayoutManager(new LinearLayoutManager(AddressActivity.this));
 
-                RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(AddressActivity.this,DividerItemDecoration.VERTICAL);
+                RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(AddressActivity.this, DividerItemDecoration.VERTICAL);
                 mRecyclerView.addItemDecoration(itemDecoration);
             }
 

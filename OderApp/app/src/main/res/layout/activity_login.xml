@@ -143,7 +143,7 @@
                     android:textSize="25sp" />
 
                 <TextView
-                    android:id="@+id/fogot"
+                    android:id="@+id/tv_forgot_password"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_10sdp"

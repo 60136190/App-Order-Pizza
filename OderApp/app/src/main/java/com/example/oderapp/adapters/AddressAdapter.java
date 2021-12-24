@@ -26,6 +26,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.oderapp.R;
+import com.example.oderapp.SendData;
 import com.example.oderapp.activities.AddressActivity;
 import com.example.oderapp.activities.ApiClient;
 import com.example.oderapp.activities.DetailActivity;
@@ -50,17 +51,20 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.ItemView
 
     List<Address> mAddressList;
     Activity mContext;
+    SendData sendData;
 
     // filter
 
-    public AddressAdapter(List<Address> mAddressList, Activity mContext) {
-        this.mAddressList = mAddressList;
-        this.mContext = mContext;
-    }
+//    public AddressAdapter(List<Address> mAddressList, Activity mContext, SendData sendData) {
+//        this.mAddressList = mAddressList;
+//        this.mContext = mContext;
+//        this.sendData = sendData;
+//    }
 
-    public AddressAdapter(AddressActivity addressActivity, List<Address> mAddressList) {
-
+    public AddressAdapter(Activity activity, List<Address> mAddressList, SendData sendData) {
+        this.mContext = activity;
         this.mAddressList = mAddressList;
+        this.sendData = sendData;
     }
 
     @Override
@@ -80,7 +84,7 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.ItemView
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              //  Log.i("TAG", "onClick: ");
+                //  Log.i("TAG", "onClick: ");
             }
         });
 
@@ -178,12 +182,9 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.ItemView
             @Override
             public void onClick(View v) {
                 Log.i("TAG", "onClick: ");
-               EventBus.getDefault().post(new EventBack(currentItem));
+                EventBus.getDefault().post(new EventBack(currentItem));
 //                mContext.onBackPressed();
-                Intent data = new Intent();
-                data.putExtra("item", currentItem);
-                mContext.setResult(10, data);
-                mContext.finish();
+                sendData.sendData(currentItem);
             }
         });
     }

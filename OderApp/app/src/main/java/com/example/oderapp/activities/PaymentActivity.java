@@ -31,7 +31,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class PaymentActivity extends AppCompatActivity {
-
     private LinearLayout lnAddress;
     private LinearLayout lnMethod;
     private ImageView imgBack;
@@ -116,7 +115,11 @@ public class PaymentActivity extends AppCompatActivity {
     public void event(EventBack eventBack) {
         if (eventBack != null) {
             Log.i("TAG", "event: " + eventBack.getAddress().getId());
-            tvAddress.setText(eventBack.getAddress().getId());
+            PaymentActivity.this.runOnUiThread(new Runnable() {
+                public void run() {
+                    tvAddress.setText(eventBack.getAddress().getId());
+                }
+            });
         }
     }
 
@@ -130,8 +133,8 @@ public class PaymentActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (resultCode == 10){
-            Address address =(Address) data.getSerializableExtra("item");
+        if (resultCode == RESULT_OK) {
+            Address address = (Address) data.getSerializableExtra("keyName");
             Log.i("TAG", "onActivityResult: 1");
         }
 

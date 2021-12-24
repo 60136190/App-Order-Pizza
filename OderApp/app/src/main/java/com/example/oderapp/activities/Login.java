@@ -27,6 +27,7 @@ public class Login extends AppCompatActivity {
 
     private Button signin;
     private TextView tvcreate_account;
+    private TextView tvForgotPassword;
 
     EditText edtEmail;
     EditText edtPass;
@@ -62,6 +63,14 @@ public class Login extends AppCompatActivity {
             }
         });
 
+        tvForgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Login.this, ForgotPassword.class);
+                startActivity(intent);
+            }
+        });
+
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -84,6 +93,7 @@ public class Login extends AppCompatActivity {
         edtEmail = findViewById(R.id.inputEmail);
         edtPass = findViewById(R.id.inputPassword);
         imgBack = findViewById(R.id.back);
+        tvForgotPassword = findViewById(R.id.tv_forgot_password);
     }
 
     public void loginUser(LoginRequest loginRequest) {

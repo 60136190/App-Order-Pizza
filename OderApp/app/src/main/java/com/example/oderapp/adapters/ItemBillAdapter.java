@@ -12,6 +12,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,8 +24,11 @@ import com.example.oderapp.R;
 import com.example.oderapp.activities.ApiClient;
 import com.example.oderapp.model.ItemBill;
 import com.example.oderapp.model.ItemCart;
+import com.example.oderapp.model.Rating;
 import com.example.oderapp.model.response.ResponseBodyBill;
 import com.example.oderapp.model.response.ResponseBodyCart;
+import com.example.oderapp.model.response.ResponseDTO;
+import com.example.oderapp.model.response.ResponseRating;
 import com.example.oderapp.utils.Contants;
 import com.example.oderapp.utils.StoreUtil;
 
@@ -91,7 +95,7 @@ public class ItemBillAdapter extends RecyclerView.Adapter<ItemBillAdapter.ItemVi
             @Override
             public void onResponse(Call<ResponseBodyBill> call, Response<ResponseBodyBill> response) {
                 String s = "Đã nhận hàng";
-                if (tinhtrang.equals(s)){
+                if (tinhtrang.equals(s)) {
                     holder.lnItemBill.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -115,7 +119,7 @@ public class ItemBillAdapter extends RecyclerView.Adapter<ItemBillAdapter.ItemVi
                             EditText edtComment = dialog.findViewById(R.id.edt_comment_dialog);
                             Button btnCancel = dialog.findViewById(R.id.btn_cancel);
                             Button btnSave = dialog.findViewById(R.id.btn_save_address);
-
+                            RatingBar ratingBar = dialog.findViewById(R.id.rating_bar);
                             btnCancel.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
@@ -123,6 +127,37 @@ public class ItemBillAdapter extends RecyclerView.Adapter<ItemBillAdapter.ItemVi
                                 }
                             });
                             dialog.show();
+
+
+                            // rating bill
+                            btnSave.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    int myRating = (int) ratingBar.getRating();
+                                    String cmt = edtComment.getText().toString();
+
+                                    Rating rating = new Rating(myRating,cmt);
+
+                                    HashMap<String, String> hashMap = new HashMap<>();
+                                    hashMap.put(Contants.accessToken, "Bearer " + StoreUtil.get(v.getContext(), Contants.accessToken));
+                                    hashMap.put(Contants.contentLength, "<calculated when request is sent>");
+                                    Call<ResponseRating> loginResponeCall = ApiClient.getService().ratingBill(id, rating,hashMap);
+                                    loginResponeCall.enqueue(new Callback<ResponseRating>() {
+                                        @Override
+                                        public void onResponse(Call<ResponseRating> call, Response<ResponseRating> response) {
+                                            Toast.makeText(mContext, "Thanks for your feedback", Toast.LENGTH_SHORT).show();
+
+                                        }
+
+                                        @Override
+                                        public void onFailure(Call<ResponseRating> call, Throwable t) {
+
+                                        }
+                                    });
+
+                                    dialog.dismiss();
+                                }
+                            });
 
                         }
                     });
@@ -135,8 +170,6 @@ public class ItemBillAdapter extends RecyclerView.Adapter<ItemBillAdapter.ItemVi
                 t.printStackTrace();
             }
         });
-
-
 
 
     }
@@ -164,8 +197,6 @@ public class ItemBillAdapter extends RecyclerView.Adapter<ItemBillAdapter.ItemVi
             lnItemBill = itemView.findViewById(R.id.ln_item_bill);
         }
     }
-
-
 
 
 }
