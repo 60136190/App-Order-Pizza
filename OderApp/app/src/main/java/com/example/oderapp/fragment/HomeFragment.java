@@ -97,13 +97,13 @@ public class HomeFragment extends Fragment {
 
                     InformationUser informationUser = response.body().getData().get(0);
                 if (informationUser.getUrl().isEmpty()){
-                    tvHiName.setText(informationUser.getHoten());
+                    tvHiName.setText(informationUser.getUsername());
 
                 }else{
                     String anh = informationUser.getUrl();
                     Picasso.with(getContext())
                             .load(anh).fit().centerInside().into(imgUser);
-                    tvHiName.setText(informationUser.getHoten());
+                    tvHiName.setText(informationUser.getUsername());
                 }
             }
 
@@ -188,7 +188,7 @@ public class HomeFragment extends Fragment {
 
     // function parse json to get all product from api
     private void parseJSON() {
-        String url = "http://192.168.1.14:5000/product";
+        String url = "http://192.168.1.5:5000/product";
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override

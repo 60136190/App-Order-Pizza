@@ -3,13 +3,17 @@ package com.example.oderapp.api;
 import com.example.oderapp.activities.LoginRequest;
 import com.example.oderapp.activities.LoginRespone;
 import com.example.oderapp.model.Address;
+import com.example.oderapp.model.ItemBill;
 import com.example.oderapp.model.Rating;
 import com.example.oderapp.model.request.ChangePasswordRequest;
 import com.example.oderapp.model.request.ForgotPasswordRequest;
 import com.example.oderapp.model.request.UserRequest;
 import com.example.oderapp.model.response.ReponseUrl;
 import com.example.oderapp.model.response.ResponseBodyAddress;
+import com.example.oderapp.model.response.ResponseBodyBill;
+import com.example.oderapp.model.response.ResponseBodyCart;
 import com.example.oderapp.model.response.ResponseBodyMethodOfPayment;
+import com.example.oderapp.model.response.ResponseBodyRating;
 import com.example.oderapp.model.response.ResponseChangePasswordDTO;
 import com.example.oderapp.model.response.ResponseDTO;
 import com.example.oderapp.model.response.ResponseForgotPassword;
@@ -19,6 +23,7 @@ import com.example.oderapp.model.response.ResponseRating;
 import java.util.HashMap;
 
 import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -74,11 +79,21 @@ public interface UserService {
     @GET("/payment/{id}")
     Call<ResponseBodyMethodOfPayment> getMethodOfPayment(@Path("id") int id,@HeaderMap HashMap<String, String> hashMap);
 
+    @POST("/bill/create")
+    Call<ResponseBodyBill> createBill(@HeaderMap HashMap<String, String> hashMap, @Body ItemBill itemBill);
+
     @POST("/rating/add/{id}")
     Call<ResponseRating> ratingBill(@Path("id") int id, @Body Rating rating, @HeaderMap HashMap<String, String> hashMap);
 
+    // get history rating with author
+    @GET("/rating/history")
+    Call<ResponseBodyRating> getHistoryRating(@Header("Authorization") String authorization);
+
+    @PATCH("/rating/update/{id}")
+    Call<ResponseRating> updateRating(@Path("id") int id, @Body Rating rating,@HeaderMap HashMap<String, String> hashMap);
+
     @Multipart
     @POST("/cloud/uploadUserImage/customer")
-    Call<ReponseUrl> uploadImage(@HeaderMap HashMap<String,String> hashMap,@Part MultipartBody.Part imgFile );
+    Call<ReponseUrl> uploadImage(@HeaderMap HashMap<String,String> hashMap, @Part MultipartBody.Part file);
 }
 

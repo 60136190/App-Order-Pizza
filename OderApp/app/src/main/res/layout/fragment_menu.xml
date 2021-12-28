@@ -6,7 +6,6 @@
     android:id="@+id/fragment_container_a"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragment.MenuFragment">
-
     <com.shrikanthravi.customnavigationdrawer2.widget.SNavigationDrawer
         android:id="@+id/navigationDrawer"
         android:layout_width="match_parent"

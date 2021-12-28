@@ -1,11 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragment.CartFragment">
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <com.jetradarmobile.snowfall.SnowfallView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:snowflakeImage="@drawable/lantern"
+        app:snowflakeSizeMax="25dp"
+        app:snowflakeSizeMin="3dp"
+        app:snowflakeSpeedMax="2"
+        app:snowflakeSpeedMin="1"
+        app:snowflakesAlreadyFalling="false"
+        app:snowflakesFadingEnabled="false"
+        app:snowflakesNum="30" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <TextView
         android:id="@+id/a"
         android:layout_width="wrap_content"
@@ -27,7 +45,14 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/a" />
-
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/refresh"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/c"
+        app:layout_constraintTop_toBottomOf="@+id/b">
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcv_cart"
         android:layout_width="match_parent"
@@ -38,7 +63,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/b"
         app:layout_constraintVertical_bias="0.0" />
-
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     <LinearLayout
         android:id="@+id/c"
         android:layout_width="match_parent"
@@ -79,34 +104,6 @@
                  />
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_15sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:layout_marginEnd="@dimen/_15sdp"
-            android:layout_marginBottom="@dimen/_5sdp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Items total:"
-                android:textColor="@color/primary_dark"
-                android:textSize="@dimen/_14ssp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tv_qantily"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="15"
-                android:textColor="@color/primary_dark"
-                android:textSize="@dimen/_14ssp" />
-        </LinearLayout>
-
-
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
@@ -123,21 +120,7 @@
             android:layout_marginBottom="@dimen/_5sdp"
             android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Total:"
-                android:textColor="@color/primary_dark"
-                android:textSize="@dimen/_16ssp"
-                android:textStyle="bold" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="250.000 VNĐ"
-                android:textColor="@color/main_color"
-                android:textSize="@dimen/_14ssp" />
         </LinearLayout>
     </LinearLayout>
 
@@ -154,4 +137,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
+</LinearLayout>

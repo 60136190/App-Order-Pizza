@@ -18,6 +18,7 @@ import com.example.oderapp.R;
 import com.example.oderapp.api.ApiService;
 import com.example.oderapp.model.UserRegister;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.List;
 import java.util.regex.Pattern;
@@ -28,14 +29,19 @@ import retrofit2.Response;
 
 
 public class SignUp extends AppCompatActivity {
-
-    private TextView tvsignin;
     private MaterialButton btnSignup;
+
+    TextInputLayout tilFullName;
+    TextInputLayout tilUserName;
+    TextInputLayout tilDateofBirth;
+    TextInputLayout tilPhoneNumber;
+    TextInputLayout tilEmail;
+    TextInputLayout tilPassword;
+    TextInputLayout tilConfirmPassword;
 
     private EditText edtHoTen;
     private EditText edtUserName;
     private EditText edtNgaySinh;
-    private TextView edtGioiTinh;
     private EditText edtDienThoai;
     private EditText edtEmail;
     private EditText edtPassword;
@@ -73,24 +79,58 @@ public class SignUp extends AppCompatActivity {
                 if (TextUtils.isEmpty(edtHoTen.getText().toString()) || TextUtils.isEmpty(edtUserName.getText().toString()) ||
                         TextUtils.isEmpty(edtNgaySinh.getText().toString()) ||
                         TextUtils.isEmpty(edtDienThoai.getText().toString()) || TextUtils.isEmpty(edtEmail.getText().toString()) ||
-                        TextUtils.isEmpty(edtPassword.getText().toString()) || TextUtils.isEmpty(edtConfrimPassword.getText().toString())) {
-                    String message = "Try again";
-                    Toast.makeText(SignUp.this, message, Toast.LENGTH_SHORT).show();
-                } else {
+                        TextUtils.isEmpty(edtPassword.getText().toString()) || TextUtils.isEmpty(edtConfrimPassword.getText().toString())){
 
+                    if (TextUtils.isEmpty(edtEmail.getText().toString())){
+                        tilEmail.setError("Email is blank");
+                    }else{
+                        tilEmail.setHelperText("Valid");
+                    }
+
+                    if (TextUtils.isEmpty(edtPassword.getText().toString())){
+                        tilPassword.setError("Password is blank");
+                    }else{
+                        tilPassword.setHelperText("Valid");
+                    }
+
+                    if (TextUtils.isEmpty(edtConfrimPassword.getText().toString())){
+                        tilConfirmPassword.setError("Confirm password is blank");
+                    }else{
+                        tilConfirmPassword.setHelperText("Valid");
+                    }
+
+                    if (TextUtils.isEmpty(edtHoTen.getText().toString())){
+                        tilFullName.setError("Full name is blank");
+                    }else{
+                        tilFullName.setHelperText("Valid");
+                    }
+
+                    if (TextUtils.isEmpty(edtUserName.getText().toString())){
+                        tilUserName.setError("User name is blank");
+                    }else{
+                        tilUserName.setHelperText("Valid");
+                    }
+
+                    if (TextUtils.isEmpty(edtNgaySinh.getText().toString())){
+                        tilDateofBirth.setError("Date of birth is bla nk");
+                    }else{
+                        tilDateofBirth.setHelperText("Valid");
+                    }
+
+                    if (TextUtils.isEmpty(edtDienThoai.getText().toString())){
+                        tilPhoneNumber.setError("Phone number is blank");
+                    }else{
+                        tilPhoneNumber.setHelperText("Valid");
+                    }
+
+
+                } else {
                     registerUser();
                 }
 
             }
         });
 
-        tvsignin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(SignUp.this, Login.class);
-                startActivity(intent);
-            }
-        });
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -106,7 +146,6 @@ public class SignUp extends AppCompatActivity {
     }
 
     public void initUi() {
-        tvsignin = findViewById(R.id.tvSignIn);
         btnSignup = findViewById(R.id.buttonSignUp);
 
         edtHoTen = findViewById(R.id.edt_ho_ten);
@@ -118,6 +157,14 @@ public class SignUp extends AppCompatActivity {
         edtConfrimPassword = findViewById(R.id.edt_confirm_password);
         imgBack = findViewById(R.id.back);
         radioGroup = findViewById(R.id.radioGroup);
+
+        tilFullName = findViewById(R.id.til_full_name);
+        tilUserName = findViewById(R.id.til_username);
+        tilDateofBirth = findViewById(R.id.til_date_of_birth);
+        tilPhoneNumber = findViewById(R.id.til_phone_number);
+        tilEmail = findViewById(R.id.til_email);
+        tilPassword = findViewById(R.id.til_pass);
+        tilConfirmPassword = findViewById(R.id.til_confirm_pass);
     }
 
     private void registerUser() {

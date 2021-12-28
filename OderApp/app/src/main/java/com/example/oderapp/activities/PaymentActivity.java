@@ -1,25 +1,29 @@
 package com.example.oderapp.activities;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.oderapp.R;
-import com.example.oderapp.eventbus.EventBack;
-import com.example.oderapp.fragment.CartFragment;
+import com.example.oderapp.eventbus.EvenbusAddress;
+import com.example.oderapp.eventbus.EvenbusMethodPayment;
 import com.example.oderapp.model.Address;
-import com.example.oderapp.model.ItemFood;
-import com.example.oderapp.model.response.ResponseBodyAddress;
+import com.example.oderapp.model.InformationUser;
+import com.example.oderapp.model.ItemBill;
+import com.example.oderapp.model.MethodOfPayment;
+import com.example.oderapp.model.response.ResponseBodyBill;
+import com.example.oderapp.model.response.ResponseInformationUser;
 import com.example.oderapp.utils.Contants;
 import com.example.oderapp.utils.StoreUtil;
-import com.squareup.picasso.Picasso;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -34,50 +38,29 @@ public class PaymentActivity extends AppCompatActivity {
     private LinearLayout lnAddress;
     private LinearLayout lnMethod;
     private ImageView imgBack;
-    private TextView tvAddress;
-    Address address;
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        if (!EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().register(this);
-        }
-    }
+    private TextView tvAddress;
+    private TextView tvIdAddress;
+    private TextView tvNameOfMethodOfPayment;
+    private TextView tvIdMethod;
+
+    private TextView tvFullName;
+    private TextView tvSdt;
+
+    private Button btnBuyNow;
+    Address address;
+    ItemBill itemBill;
+    MethodOfPayment methodOfPayment;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment);
         initUi();
+        getData();
 
-        HashMap<String, String> hashMap = new HashMap<>();
-        hashMap.put(Contants.accessToken, "Bearer " + StoreUtil.get(getApplicationContext(), Contants.accessToken));
-
-        Call<ResponseBodyAddress> responseDTOCall = ApiClient.getService()
-                .getAddress(10, hashMap);
-        responseDTOCall.enqueue(new Callback<ResponseBodyAddress>() {
-            @Override
-            public void onResponse(Call<ResponseBodyAddress> call, Response<ResponseBodyAddress> response) {
-                // tvAddress.setText(response.body().getData().get(0).getDiachi());
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBodyAddress> call, Throwable t) {
-                t.printStackTrace();
-            }
-        });
-
-
-//        Intent iin= getIntent();
-//        Bundle b = iin.getExtras();
-//
-//
-//        if(b!=null)
-//        {
-//            String j =(String) b.get("name");
-//            tvAddress.setText(j);
-//        }
+        EventBus.getDefault().register(this);
 
         lnAddress.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,42 +85,82 @@ public class PaymentActivity extends AppCompatActivity {
         });
 
 
+        btnBuyNow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (TextUtils.isEmpty(tvIdAddress.getText().toString().trim()) && TextUtils.isEmpty(tvIdMethod.getText().toString().trim()) ) {
+                    Toast.makeText(PaymentActivity.this, "Your address or method is blank", Toast.LENGTH_SHORT).show();
+                } else {
+                    int IdAddress = Integer.parseInt(tvIdAddress.getText().toString());
+                    int IdMethod = Integer.parseInt(tvIdMethod.getText().toString());
+                    itemBill = new ItemBill(IdMethod, IdAddress);
+                    HashMap<String, String> hashMap = new HashMap<>();
+                    hashMap.put(Contants.contentLength, "<calculated when request is sent>");
+                    hashMap.put(Contants.accessToken, "Bearer " + StoreUtil.get(PaymentActivity.this, Contants.accessToken));
+                    Call<ResponseBodyBill> responseBodyBillCall = ApiClient.getService().createBill(hashMap, itemBill);
+
+                    responseBodyBillCall.enqueue(new Callback<ResponseBodyBill>() {
+                        @Override
+                        public void onResponse(Call<ResponseBodyBill> call, Response<ResponseBodyBill> response) {
+                        }
+
+                        @Override
+                        public void onFailure(Call<ResponseBodyBill> call, Throwable t) {
+
+                        }
+                    });
+                }
+            }
+        });
+
+
     }
 
-    private void initUi() {
+    public void initUi() {
         lnAddress = findViewById(R.id.ln_choose_address);
         lnMethod = findViewById(R.id.ln_choose_method);
         imgBack = findViewById(R.id.img_back);
+
         tvAddress = findViewById(R.id.tv_address);
+        tvIdAddress = findViewById(R.id.tv_id_address);
+        tvNameOfMethodOfPayment = findViewById(R.id.tv_name_of_method);
+        tvIdMethod = findViewById(R.id.tv_id_method);
+
+        tvFullName = findViewById(R.id.tv_full_name);
+        tvSdt = findViewById(R.id.tv_sdt);
+        btnBuyNow = findViewById(R.id.btn_buy_now);
+    }
+
+    public void getData() {
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put(Contants.accessToken, "Bearer " + StoreUtil.get(PaymentActivity.this, Contants.accessToken));
+        Call<ResponseInformationUser> loginResponeCall = ApiClient.getService().getProfile(hashMap);
+        loginResponeCall.enqueue(new Callback<ResponseInformationUser>() {
+            @Override
+            public void onResponse(Call<ResponseInformationUser> call, Response<ResponseInformationUser> response) {
+                InformationUser informationUser = response.body().getData().get(0);
+                tvFullName.setText(informationUser.getHoten());
+                tvSdt.setText(informationUser.getDienthoai());
+            }
+
+            @Override
+            public void onFailure(Call<ResponseInformationUser> call, Throwable t) {
+
+            }
+        });
+    }
+    @Subscribe
+    public void onEvent(EvenbusMethodPayment event){
+        Log.d("hehe","Even" + event.getId() + event.getName());
+        tvIdMethod.setText(String.valueOf(event.getId()));
+        tvNameOfMethodOfPayment.setText(event.getName());
     }
 
     @Subscribe
-    public void event(EventBack eventBack) {
-        if (eventBack != null) {
-            Log.i("TAG", "event: " + eventBack.getAddress().getId());
-            PaymentActivity.this.runOnUiThread(new Runnable() {
-                public void run() {
-                    tvAddress.setText(eventBack.getAddress().getId());
-                }
-            });
-        }
+    public void onEvent(EvenbusAddress event){
+        Log.d("hehe","Even" + event.getId() + event.getName());
+        tvIdAddress.setText(String.valueOf(event.getId()));
+        tvAddress.setText(event.getName());
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (resultCode == RESULT_OK) {
-            Address address = (Address) data.getSerializableExtra("keyName");
-            Log.i("TAG", "onActivityResult: 1");
-        }
-
-        Log.i("TAG", "onActivityResult: ");
-    }
 }

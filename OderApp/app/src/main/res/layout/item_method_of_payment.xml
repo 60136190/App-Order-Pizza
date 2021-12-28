@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardCornerRadius="@dimen/_5sdp"
+    app:cardCornerRadius="@dimen/_10sdp"
     android:layout_margin="@dimen/_5sdp"
     >
     <LinearLayout
@@ -15,9 +15,9 @@
         android:orientation="horizontal">
         <ImageView
             android:id="@+id/img_method"
-            android:layout_width="@dimen/_100sdp"
-            android:layout_height="@dimen/_100sdp"
-            android:layout_weight="3"
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_weight="1"
             android:src="@drawable/cod"/>
 
     <TextView

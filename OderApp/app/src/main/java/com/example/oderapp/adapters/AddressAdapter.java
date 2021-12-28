@@ -3,12 +3,8 @@ package com.example.oderapp.adapters;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.media.metrics.Event;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,17 +17,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.oderapp.R;
-import com.example.oderapp.SendData;
-import com.example.oderapp.activities.AddressActivity;
 import com.example.oderapp.activities.ApiClient;
-import com.example.oderapp.activities.DetailActivity;
-import com.example.oderapp.activities.PaymentActivity;
-import com.example.oderapp.eventbus.EventBack;
+import com.example.oderapp.eventbus.EvenbusAddress;
 import com.example.oderapp.model.Address;
 import com.example.oderapp.model.response.ResponseBodyAddress;
 import com.example.oderapp.model.response.ResponseDTO;
@@ -50,21 +40,12 @@ import retrofit2.Response;
 public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.ItemViewHolder> {
 
     List<Address> mAddressList;
-    Activity mContext;
-    SendData sendData;
+    Context mContext;
 
-    // filter
 
-//    public AddressAdapter(List<Address> mAddressList, Activity mContext, SendData sendData) {
-//        this.mAddressList = mAddressList;
-//        this.mContext = mContext;
-//        this.sendData = sendData;
-//    }
-
-    public AddressAdapter(Activity activity, List<Address> mAddressList, SendData sendData) {
-        this.mContext = activity;
+    public AddressAdapter(List<Address> mAddressList, Context mContext) {
         this.mAddressList = mAddressList;
-        this.sendData = sendData;
+        this.mContext = mContext;
     }
 
     @Override
@@ -81,13 +62,6 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.ItemView
         int id = currentItem.getId();
         String diachi = currentItem.getDiachi();
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //  Log.i("TAG", "onClick: ");
-            }
-        });
-
         holder.tvDiaChi.setText(diachi);
         holder.imgDeleteAddress.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,7 +73,7 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.ItemView
                 responseBodyAddressCall.enqueue(new Callback<ResponseBodyAddress>() {
                     @Override
                     public void onResponse(Call<ResponseBodyAddress> call, Response<ResponseBodyAddress> response) {
-                        Toast.makeText(v.getContext(), "Added in cart", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(v.getContext(), "Deleted your address", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
@@ -181,10 +155,32 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.ItemView
         holder.lnAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i("TAG", "onClick: ");
-                EventBus.getDefault().post(new EventBack(currentItem));
-//                mContext.onBackPressed();
-                sendData.sendData(currentItem);
+
+                HashMap<String, String> hashMap = new HashMap<>();
+                hashMap.put(Contants.accessToken, "Bearer " + StoreUtil.get(v.getContext(), Contants.accessToken));
+                Call<ResponseBodyAddress> responseBodyAddressCall = ApiClient.getService().getAddress(id,
+                        hashMap);
+                responseBodyAddressCall.enqueue(new Callback<ResponseBodyAddress>() {
+                    @Override
+                    public void onResponse(Call<ResponseBodyAddress> call, Response<ResponseBodyAddress> response) {
+                        Toast.makeText(v.getContext(), "Added your address", Toast.LENGTH_SHORT).show();
+                        Address address = response.body().getData().get(0);
+                        int mt = address.getId();
+                        String nameMT = address.getDiachi();
+                        EvenbusAddress event = new EvenbusAddress();
+                        event.setId(Integer.parseInt(String.valueOf(mt)));
+                        event.setName(String.valueOf(nameMT));
+                        EventBus.getDefault().post(event);
+
+                        ((Activity)mContext).finish();
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBodyAddress> call, Throwable t) {
+
+                    }
+                });
+
             }
         });
     }

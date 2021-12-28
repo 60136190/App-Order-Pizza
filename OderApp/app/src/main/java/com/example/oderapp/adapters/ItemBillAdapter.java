@@ -64,27 +64,38 @@ public class ItemBillAdapter extends RecyclerView.Adapter<ItemBillAdapter.ItemVi
 
         int id = currentItem.getId();
         String tinhtrang = currentItem.getTinhtrangHD();
-
+        int tongSoLuong = currentItem.getTong_sl();
+        int tongHoaDon = currentItem.getTong_hd();
         holder.tvId.setText(Integer.toString(id));
         holder.tvTinhTrangHD.setText(tinhtrang);
+        holder.tvTongSl.setText(Integer.toString(tongSoLuong));
+        holder.tvTongHd.setText(Integer.toString(tongHoaDon));
+
+
         holder.lnCancelBill.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String c = "Đã nhận hàng";
+                if (tinhtrang.equals(c)){
+                    Toast.makeText(v.getContext(), "Bạn đã nhận được hàng", Toast.LENGTH_SHORT).show();
+                }else {
+                    Call<ResponseBodyBill> responseBodyBillCall = ApiClient.getProductService().cancelBill(id,
+                            "Bearer " + StoreUtil.get(v.getContext(), Contants.accessToken));
+                    responseBodyBillCall.enqueue(new Callback<ResponseBodyBill>() {
+                        @Override
+                        public void onResponse(Call<ResponseBodyBill> call, Response<ResponseBodyBill> response) {
+                        }
 
-                Call<ResponseBodyBill> responseBodyBillCall = ApiClient.getProductService().cancelBill(id,
-                        "Bearer " + StoreUtil.get(v.getContext(), Contants.accessToken));
-                responseBodyBillCall.enqueue(new Callback<ResponseBodyBill>() {
-                    @Override
-                    public void onResponse(Call<ResponseBodyBill> call, Response<ResponseBodyBill> response) {
-                    }
+                        @Override
+                        public void onFailure(Call<ResponseBodyBill> call, Throwable t) {
 
-                    @Override
-                    public void onFailure(Call<ResponseBodyBill> call, Throwable t) {
-
-                    }
-                });
+                        }
+                    });
+                }
             }
         });
+
+
 
         // lấy ra tất cả các bill, sau đó so sánh nếu tình trạng HD là đã nhận hàng thì show dialog để đánh giá.
         HashMap<String, String> hashMap = new HashMap<>();
@@ -136,12 +147,12 @@ public class ItemBillAdapter extends RecyclerView.Adapter<ItemBillAdapter.ItemVi
                                     int myRating = (int) ratingBar.getRating();
                                     String cmt = edtComment.getText().toString();
 
-                                    Rating rating = new Rating(myRating,cmt);
+                                    Rating rating = new Rating(myRating, cmt);
 
                                     HashMap<String, String> hashMap = new HashMap<>();
                                     hashMap.put(Contants.accessToken, "Bearer " + StoreUtil.get(v.getContext(), Contants.accessToken));
                                     hashMap.put(Contants.contentLength, "<calculated when request is sent>");
-                                    Call<ResponseRating> loginResponeCall = ApiClient.getService().ratingBill(id, rating,hashMap);
+                                    Call<ResponseRating> loginResponeCall = ApiClient.getService().ratingBill(id, rating, hashMap);
                                     loginResponeCall.enqueue(new Callback<ResponseRating>() {
                                         @Override
                                         public void onResponse(Call<ResponseRating> call, Response<ResponseRating> response) {
@@ -186,13 +197,18 @@ public class ItemBillAdapter extends RecyclerView.Adapter<ItemBillAdapter.ItemVi
 
         private TextView tvId;
         private TextView tvTinhTrangHD;
+        private TextView tvTongSl;
+        private TextView tvTongHd;
         private LinearLayout lnCancelBill;
         private LinearLayout lnItemBill;
+
 
         public ItemViewHolder(View itemView) {
             super(itemView);
             tvId = itemView.findViewById(R.id.tv_id_bill);
             tvTinhTrangHD = itemView.findViewById(R.id.tv_tinhtrangHD);
+            tvTongSl = itemView.findViewById(R.id.tv_tong_sl);
+            tvTongHd = itemView.findViewById(R.id.tv_tong_hd);
             lnCancelBill = itemView.findViewById(R.id.ln_cancel_bill);
             lnItemBill = itemView.findViewById(R.id.ln_item_bill);
         }

@@ -71,8 +71,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResponseChangePasswordDTO> call, Response<ResponseChangePasswordDTO> response) {
                 if (response.isSuccessful() && response.body().getStatus()==200){
-                    Intent intent = new Intent(getApplicationContext(), Login.class);
-                    startActivity(intent);
+                    onBackPressed();
                 }else
                 {
                     Toast.makeText(ChangePasswordActivity.this, "Change password is wrong", Toast.LENGTH_SHORT).show();

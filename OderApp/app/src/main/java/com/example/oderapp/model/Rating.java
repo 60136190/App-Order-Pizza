@@ -3,6 +3,8 @@ package com.example.oderapp.model;
 import java.io.Serializable;
 
 public class Rating implements Serializable {
+    private int id;
+    private int id_hd;
     private int diem_danhgia;
     private String binhluan;
 
@@ -26,5 +28,21 @@ public class Rating implements Serializable {
 
     public void setBinhluan(String binhluan) {
         this.binhluan = binhluan;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId_hd() {
+        return id_hd;
+    }
+
+    public void setId_hd(int id_hd) {
+        this.id_hd = id_hd;
     }
 }

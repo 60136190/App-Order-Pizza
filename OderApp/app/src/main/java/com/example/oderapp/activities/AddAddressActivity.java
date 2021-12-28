@@ -2,6 +2,7 @@ package com.example.oderapp.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.oderapp.R;
+import com.example.oderapp.adapters.AddressAdapter;
 import com.example.oderapp.model.Address;
 import com.example.oderapp.model.ResponseBodyDTO;
 import com.example.oderapp.model.response.ResponseBodyAddress;
@@ -25,6 +27,7 @@ public class AddAddressActivity extends AppCompatActivity {
     private ImageView imgBack;
     private Button btnAddAddress;
     Address address;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,15 +50,15 @@ public class AddAddressActivity extends AppCompatActivity {
 //                address = new Address(strAddress);
 //                addAddress(address);
                 addAddress();
-
                 Toast.makeText(AddAddressActivity.this, "Added your address", Toast.LENGTH_LONG).show();
+
             }
         });
     }
 
     private void initUi() {
         edtAddAddress = findViewById(R.id.edt_add_address);
-        imgBack = findViewById(R.id.img_back);
+        imgBack = findViewById(R.id.img_back_add_address);
         btnAddAddress = findViewById(R.id.btn_add_address);
     }
 

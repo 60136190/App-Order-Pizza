@@ -1,10 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragmentinfo.optionaccount.UpdateInformationActivity">
+
+    <com.jetradarmobile.snowfall.SnowfallView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:snowflakeSizeMax="25dp"
+        app:snowflakeSizeMin="3dp"
+        app:snowflakeSpeedMax="2"
+        app:snowflakeSpeedMin="1"
+        app:snowflakesNum="30"
+        app:snowflakeImage="@drawable/lantern"
+        app:snowflakesAlreadyFalling="false"
+        app:snowflakesFadingEnabled="false" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
 
     <ImageView
         android:id="@+id/back"
@@ -37,64 +53,66 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/a" />
 
-
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_full_name"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_10sdp"
+        app:startIconDrawable="@drawable/ic_baseline_person_outline_24"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/a"
+        app:startIconTint="@color/primary">
     <EditText
         android:id="@+id/edt_ho_ten"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_50sdp"
-        android:layout_margin="@dimen/_10sdp"
+        android:layout_height="wrap_content"
         android:background="@drawable/background_input"
         android:hint="Full name"
         android:inputType="text"
-        android:paddingStart="@dimen/_20ssp"
         android:textColor="@color/primary"
         android:textColorHint="@color/primary"
         android:textSize="@dimen/_13ssp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/a" />
+         />
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <TextView
-        android:id="@+id/w"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_username"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_10sdp"
-        android:text="User name"
-        android:textColor="@color/primary"
-        android:textSize="@dimen/_13ssp"
-        app:layout_constraintStart_toStartOf="@+id/edt_username"
-        app:layout_constraintTop_toBottomOf="@+id/edt_ho_ten" />
-
+        app:startIconDrawable="@drawable/ic_baseline_person_outline_24"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/til_full_name"
+        app:startIconTint="@color/primary">
     <EditText
         android:id="@+id/edt_username"
         android:layout_width="@dimen/_130sdp"
-        android:layout_height="@dimen/_50sdp"
-        android:layout_margin="@dimen/_10sdp"
+        android:layout_height="wrap_content"
         android:background="@drawable/background_input"
         android:hint="User name"
-        android:paddingStart="@dimen/_20ssp"
         android:textColor="@color/primary"
         android:textColorHint="@color/primary"
         android:textSize="@dimen/_13ssp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/r" />
+         />
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <TextView
-        android:id="@+id/r"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_date_of_birth"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_10sdp"
-        android:text="yyyy-mm-dd"
-        android:textColor="@color/primary"
-        android:textSize="@dimen/_13ssp"
-        app:layout_constraintStart_toStartOf="@+id/edt_ngay_sinh"
-        app:layout_constraintTop_toBottomOf="@+id/edt_ho_ten" />
-
+        app:startIconDrawable="@drawable/ic_baseline_calendar_month_24"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/til_full_name"
+        app:startIconTint="@color/primary">
     <EditText
         android:id="@+id/edt_ngay_sinh"
         android:layout_width="@dimen/_130sdp"
-        android:layout_height="@dimen/_50sdp"
-        android:layout_margin="@dimen/_10sdp"
+        android:layout_height="wrap_content"
         android:background="@drawable/background_input"
         android:hint="Date of birth"
         android:inputType="date"
@@ -102,11 +120,8 @@
         android:textColor="@color/primary"
         android:textColorHint="@color/primary"
         android:textSize="@dimen/_13ssp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/r"
-
         />
-
+    </com.google.android.material.textfield.TextInputLayout>
     <TextView
         android:id="@+id/b"
         android:layout_width="wrap_content"
@@ -118,7 +133,7 @@
         android:textSize="@dimen/_13ssp"
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edt_username" />
+        app:layout_constraintTop_toBottomOf="@+id/til_username" />
 
     <RadioGroup
         android:id="@+id/radioGroup"
@@ -144,44 +159,62 @@
             android:textColor="@color/primary" />
     </RadioGroup>
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_phone_number"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_10sdp"
+        app:startIconDrawable="@drawable/ic_baseline_local_phone_24"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/til_date_of_birth"
+        app:startIconTint="@color/primary">
     <EditText
         android:id="@+id/edt_phone_number"
         android:layout_width="@dimen/_130sdp"
-        android:layout_height="@dimen/_50sdp"
-        android:layout_margin="@dimen/_10sdp"
+        android:layout_height="wrap_content"
         android:background="@drawable/background_input"
         android:hint="Phone number"
         android:paddingStart="@dimen/_20ssp"
         android:textColor="@color/primary"
         android:textColorHint="@color/primary"
         android:textSize="@dimen/_13ssp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edt_ngay_sinh" />
+        />
+    </com.google.android.material.textfield.TextInputLayout>
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_url"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_10sdp"
+        app:startIconDrawable="@drawable/ic_baseline_link_24"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/til_phone_number"
+        app:startIconTint="@color/primary">
     <EditText
         android:id="@+id/edt_url"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_50sdp"
-        android:layout_margin="@dimen/_10sdp"
+        android:layout_height="wrap_content"
         android:background="@drawable/background_input"
         android:hint="Url your image"
         android:paddingStart="@dimen/_20ssp"
         android:textColor="@color/primary"
         android:textColorHint="@color/primary"
         android:textSize="@dimen/_13ssp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edt_phone_number" />
-
-    <ImageView
+         />
+    </com.google.android.material.textfield.TextInputLayout>
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imgUserInfor"
         android:layout_width="@dimen/_150sdp"
         android:layout_height="@dimen/_150sdp"
-        android:layout_marginTop="10dp"
-        android:src="@mipmap/ic_launcher"
+        android:layout_marginTop="@dimen/_30sdp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/loadimage"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/edt_url" />
+        app:layout_constraintTop_toBottomOf="@id/til_url" />
 
 
     <Button
@@ -212,5 +245,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>

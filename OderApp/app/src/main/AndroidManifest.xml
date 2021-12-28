@@ -4,12 +4,13 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/pizza_cheese"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/pizza_cheese"
         android:supportsRtl="true"
         android:theme="@style/Theme.OderApp"
         android:usesCleartextTraffic="true">
@@ -66,9 +67,9 @@
         </activity>
         <activity android:name=".activities.MainActivity" />
 
-        <meta-data
-            android:name="CLOUDINARY_URL"
-            android:value="CLOUDINARY_URL=cloudinary://887187822811327:weQfCg8Ix_Yo6kjddazodw-1h2A@order-food" />
+<!--        <meta-data-->
+<!--            android:name="CLOUDINARY_URL"-->
+<!--            android:value="CLOUDINARY_URL=cloudinary://887187822811327:weQfCg8Ix_Yo6kjddazodw-1h2A@order-food" />-->
     </application>
 
 </manifest>

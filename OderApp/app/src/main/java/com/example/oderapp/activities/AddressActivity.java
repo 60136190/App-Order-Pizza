@@ -2,44 +2,34 @@ package com.example.oderapp.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.oderapp.R;
-import com.example.oderapp.SendData;
 import com.example.oderapp.adapters.AddressAdapter;
-import com.example.oderapp.adapters.ItemCartAdappter;
-import com.example.oderapp.eventbus.EventBack;
-import com.example.oderapp.model.Address;
 import com.example.oderapp.model.response.ResponseBodyAddress;
-import com.example.oderapp.model.response.ResponseBodyCart;
 import com.example.oderapp.utils.Contants;
 import com.example.oderapp.utils.StoreUtil;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AddressActivity extends AppCompatActivity {
+public class AddressActivity extends AppCompatActivity{
     private RecyclerView mRecyclerView;
-
-    Address address;
-
     private ImageView imgBack;
     private ImageView imgAddAddress;
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private AddressAdapter adappter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +37,7 @@ public class AddressActivity extends AppCompatActivity {
         setContentView(R.layout.activity_address);
         initUi();
         getListAddress();
+
 
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,6 +52,19 @@ public class AddressActivity extends AppCompatActivity {
                 startActivity(itAddress);
             }
         });
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getListAddress();
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+                },1000);
+            }
+        });
 //
 //
     }
@@ -70,6 +74,7 @@ public class AddressActivity extends AppCompatActivity {
         imgBack = findViewById(R.id.img_back);
         imgAddAddress = findViewById(R.id.img_add_address);
         mRecyclerView = findViewById(R.id.rcv_address);
+        swipeRefreshLayout = findViewById(R.id.refresh);
     }
 
     @Override
@@ -86,21 +91,15 @@ public class AddressActivity extends AppCompatActivity {
         responseDTOCall.enqueue(new Callback<ResponseBodyAddress>() {
             @Override
             public void onResponse(Call<ResponseBodyAddress> call, Response<ResponseBodyAddress> response) {
-                AddressAdapter adappter = new AddressAdapter(AddressActivity.this, response.body().getData(), new SendData() {
-                    @Override
-                    public void sendData(Address address) {
-                        Intent intent = new Intent();
-                        intent.putExtra("keyName", "test");
-                        setResult(RESULT_OK, intent);
-                        finish();
-                    }
-                });
+                adappter = new AddressAdapter( response.body().getData(),AddressActivity.this);
+
                 mRecyclerView.setAdapter(adappter);
                 mRecyclerView.setHasFixedSize(true);
                 mRecyclerView.setLayoutManager(new LinearLayoutManager(AddressActivity.this));
-
                 RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(AddressActivity.this, DividerItemDecoration.VERTICAL);
                 mRecyclerView.addItemDecoration(itemDecoration);
+
+
             }
 
             @Override
@@ -109,4 +108,5 @@ public class AddressActivity extends AppCompatActivity {
             }
         });
     }
+
 }

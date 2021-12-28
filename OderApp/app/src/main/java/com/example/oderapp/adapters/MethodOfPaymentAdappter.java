@@ -1,12 +1,12 @@
 package com.example.oderapp.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,13 +14,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.oderapp.R;
 import com.example.oderapp.activities.ApiClient;
-import com.example.oderapp.activities.MethodPaymentActivity;
+import com.example.oderapp.eventbus.EvenbusMethodPayment;
 import com.example.oderapp.model.MethodOfPayment;
-import com.example.oderapp.model.response.ResponseBodyAddress;
 import com.example.oderapp.model.response.ResponseBodyMethodOfPayment;
 import com.example.oderapp.utils.Contants;
 import com.example.oderapp.utils.StoreUtil;
 import com.squareup.picasso.Picasso;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.HashMap;
 import java.util.List;
@@ -51,16 +52,13 @@ public class MethodOfPaymentAdappter extends RecyclerView.Adapter<MethodOfPaymen
 
     @Override
     public void onBindViewHolder(MethodOfPaymentAdappter.ItemViewHolder holder, int position) {
-
         MethodOfPayment currentItem = mMethodList.get(position);
         int id = currentItem.getId();
         String nameMethod = currentItem.getTen_hinhthuc();
         String urlMethod = currentItem.getUrl();
-
         Picasso.with(mContext)
                 .load(urlMethod).fit().centerInside().into(holder.urlMethod);
         holder.tvNameMethod.setText(nameMethod);
-//        holder.urlMethod.setImageResource(Integer.parseInt(urlMethod));
         holder.lnMethod.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,7 +69,16 @@ public class MethodOfPaymentAdappter extends RecyclerView.Adapter<MethodOfPaymen
                 responseBodyMethodOfPaymentCall.enqueue(new Callback<ResponseBodyMethodOfPayment>() {
                     @Override
                     public void onResponse(Call<ResponseBodyMethodOfPayment> call, Response<ResponseBodyMethodOfPayment> response) {
-                        Toast.makeText(v.getContext(), "OK", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(v.getContext(), "Added your method of payment", Toast.LENGTH_SHORT).show();
+                        MethodOfPayment  methodOfPayment = response.body().getData().get(0);
+                        int mt = methodOfPayment.getId();
+                        String nameMT = methodOfPayment.getTen_hinhthuc();
+                        EvenbusMethodPayment event = new EvenbusMethodPayment();
+                        event.setId(Integer.parseInt(String.valueOf(mt)));
+                        event.setName(String.valueOf(nameMT));
+                        EventBus.getDefault().post(event);
+
+                        ((Activity)mContext).finish();
 
                     }
 
@@ -102,11 +109,6 @@ public class MethodOfPaymentAdappter extends RecyclerView.Adapter<MethodOfPaymen
             tvNameMethod = itemView.findViewById(R.id.tv_method);
             urlMethod = itemView.findViewById(R.id.img_method);
             lnMethod = itemView.findViewById(R.id.ln_method);
-
         }
     }
-
-
-
-
 }

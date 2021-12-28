@@ -103,22 +103,10 @@ public class Login extends AppCompatActivity {
             public void onResponse(Call<LoginRespone> call, Response<LoginRespone> response) {
                 if (response.body().getStatus() == 200) {
                     StoreUtil.save(Login.this, Contants.accessToken, response.body().getAccessToken());
-
-                }
-                int a = 200;
-                if ((response.isSuccessful()) && (response.body().getStatus() == a)) {
-
-                    try {
-                        JWTUtils.decodeJWT(response.body().getAccessToken());
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
                     Intent intentslide = new Intent(Login.this, SliderActivity.class);
                     startActivity(intentslide);
                 } else {
-                    String message = "Email or password is wrong";
+                    String message = response.body().getMessage();
                     Toast.makeText(Login.this, message, Toast.LENGTH_SHORT).show();
                 }
 

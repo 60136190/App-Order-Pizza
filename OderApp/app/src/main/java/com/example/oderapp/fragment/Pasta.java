@@ -52,7 +52,7 @@ public class Pasta extends Fragment {
         return view;
     }
     private void parseJSON() {
-        String url = "http://192.168.1.14:5000/category/17";
+        String url = "http://192.168.1.5:5000/category/17";
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override

@@ -3,9 +3,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
     android:orientation="vertical"
     tools:context=".fragmentinfo.Account">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <com.jetradarmobile.snowfall.SnowfallView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:snowflakeSizeMax="25dp"
+        app:snowflakeSizeMin="3dp"
+        app:snowflakeSpeedMax="2"
+        app:snowflakeSpeedMin="1"
+        app:snowflakesNum="30"
+        app:snowflakeImage="@drawable/lantern"
+        app:snowflakesAlreadyFalling="false"
+        app:snowflakesFadingEnabled="false" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
     <TextView
         android:layout_width="wrap_content"
@@ -85,5 +106,6 @@
             android:layout_height="@dimen/_25sdp"
             android:src="@drawable/ic_right" />
     </LinearLayout>
-
+    </LinearLayout>
+    </FrameLayout>
 </LinearLayout>

@@ -1,22 +1,20 @@
-package com.example.oderapp.fragment;
+package com.example.oderapp.fragment.BillAndRating;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
 import com.example.oderapp.R;
 import com.example.oderapp.activities.ApiClient;
 import com.example.oderapp.adapters.ItemBillAdapter;
-import com.example.oderapp.adapters.ItemCartAdappter;
-import com.example.oderapp.model.ItemBill;
 import com.example.oderapp.model.response.ResponseBodyBill;
-import com.example.oderapp.model.response.ResponseBodyCart;
 import com.example.oderapp.utils.Contants;
 import com.example.oderapp.utils.StoreUtil;
 
@@ -31,6 +29,7 @@ public class BillFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
     private View mview;
+
     public BillFragment() {
         // Required empty public constructor
     }
@@ -40,12 +39,12 @@ public class BillFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-         mview= inflater.inflate(R.layout.fragment_bill, container, false);
+        mview = inflater.inflate(R.layout.fragment_bill, container, false);
         mRecyclerView = mview.findViewById(R.id.rcv_bill);
         getAllBill();
         return mview;
-
     }
+
     private void getAllBill() {
         HashMap<String, String> hashMap = new HashMap<>();
         hashMap.put(Contants.accessToken, "Bearer " + StoreUtil.get(getActivity(), Contants.accessToken));
@@ -59,7 +58,7 @@ public class BillFragment extends Fragment {
                 mRecyclerView.setHasFixedSize(true);
                 mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-                RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL);
+                RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
                 mRecyclerView.addItemDecoration(itemDecoration);
             }
 
