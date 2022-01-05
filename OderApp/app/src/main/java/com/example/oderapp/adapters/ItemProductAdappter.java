@@ -3,23 +3,40 @@ package com.example.oderapp.adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.oderapp.R;
+import com.example.oderapp.activities.ApiClient;
 import com.example.oderapp.activities.DetailActivity;
 import com.example.oderapp.model.ItemFood;
+import com.example.oderapp.model.Note;
+import com.example.oderapp.model.ResponseBodyDTO;
+import com.example.oderapp.utils.Contants;
+import com.example.oderapp.utils.StoreUtil;
+import com.github.ybq.android.spinkit.sprite.Sprite;
+import com.github.ybq.android.spinkit.style.DoubleBounce;
+import com.github.ybq.android.spinkit.style.FoldingCube;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ItemProductAdappter extends RecyclerView.Adapter<ItemProductAdappter.ItemViewHolder>{
 
@@ -68,11 +85,50 @@ public class ItemProductAdappter extends RecyclerView.Adapter<ItemProductAdappte
                 mContext.startActivity(i);
             } 
         });
-    }
 
-    private void onClickgotoDetail(ItemFood pz) {
+        holder.btnAddProduct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Sprite foldingCube = new FoldingCube();
+                holder.progressBar.setIndeterminateDrawable(foldingCube);
+                holder.progressBar.setVisibility(View.VISIBLE);
+
+                CountDownTimer countDownTimer = new CountDownTimer(3000,1000) {
+                    @Override
+                    public void onTick(long millisUntilFinished) {
+                        int current = holder.progressBar.getProgress();
+                        if (current >= holder.progressBar.getMax()){
+                            current = 0;
+                        }
+                        holder.progressBar.setProgress(current + 10);
+                    }
+                    @Override
+                    public void onFinish() {
+                        holder.progressBar.setVisibility(View.INVISIBLE);
+                    }
+                };
+                countDownTimer.start();
 
 
+
+                String note = "";
+                Note nt = new Note(note);
+                Call<ResponseBodyDTO> loginResponeCall = ApiClient.getProductService().insertCart(currentItem.getId(),
+                        "Bearer " + StoreUtil.get(mContext, Contants.accessToken),nt);
+                loginResponeCall.enqueue(new Callback<ResponseBodyDTO>() {
+                    @Override
+                    public void onResponse(Call<ResponseBodyDTO> call, Response<ResponseBodyDTO> response) {
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBodyDTO> call, Throwable t) {
+
+                    }
+                });
+
+            }
+        });
     }
 
     @Override
@@ -86,14 +142,18 @@ public class ItemProductAdappter extends RecyclerView.Adapter<ItemProductAdappte
         public ImageView itemImage;
         public TextView itemprice;
         public TextView itemname;
+        private Button btnAddProduct;
+        private ProgressBar progressBar;
 
-        LinearLayout layoutItem;
+        ConstraintLayout layoutItem;
         public ItemViewHolder( View itemView) {
             super(itemView);
             layoutItem = itemView.findViewById(R.id.layout_item);
             itemImage=itemView.findViewById(R.id.itemImage);
             itemprice=itemView.findViewById(R.id.tv_price);
             itemname=itemView.findViewById(R.id.tv_name);
+            btnAddProduct = itemView.findViewById(R.id.btn_add_product);
+             progressBar = (ProgressBar)itemView.findViewById(R.id.spin_kit);
         }
     }
     public void filterList(ArrayList<ItemFood> filteredList){

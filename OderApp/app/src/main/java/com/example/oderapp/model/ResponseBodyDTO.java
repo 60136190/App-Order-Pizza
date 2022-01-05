@@ -1,5 +1,6 @@
 package com.example.oderapp.model;
 
+import com.example.oderapp.model.response.ResponseBodyCart;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -14,7 +15,7 @@ public class ResponseBodyDTO {
     private String message;
     @SerializedName("data")
     @Expose
-    private List<UserRegister> data = null;
+    private List<ResponseBodyCart> data = null;
 
     public Integer getStatus() {
         return status;
@@ -32,11 +33,11 @@ public class ResponseBodyDTO {
         this.message = message;
     }
 
-    public List<UserRegister> getData() {
+    public List<ResponseBodyCart> getData() {
         return data;
     }
 
-    public void setData(List<UserRegister> data) {
+    public void setData(List<ResponseBodyCart> data) {
         this.data = data;
     }
 }

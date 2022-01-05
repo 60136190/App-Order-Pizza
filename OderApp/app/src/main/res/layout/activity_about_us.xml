@@ -44,17 +44,18 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Có mặt tại hơn 118 quốc gia với chuỗi 35,000 nhà hàng tại khắp các châu lục, mỗi ngày, McDonald’s toàn cầu phục vụ hơn 70 triệu người tiêu dùng, không chỉ đảm bảo mang đến cho họ những bữa ăn ngon, an toàn vệ sinh, mà còn làm họ hài lòng với dịch vụ của McDonald’s."
-            android:textSize="@dimen/_12ssp"
-            android:textColor="@color/black"
             android:layout_marginTop="@dimen/_20sdp"
-            android:layout_marginBottom="@dimen/_20sdp"/>
+            android:layout_marginBottom="@dimen/_20sdp"
+            android:text="Có mặt tại hơn 118 quốc gia với chuỗi 35,000 nhà hàng tại khắp các châu lục, mỗi ngày, McDonald’s toàn cầu phục vụ hơn 70 triệu người tiêu dùng, không chỉ đảm bảo mang đến cho họ những bữa ăn ngon, an toàn vệ sinh, mà còn làm họ hài lòng với dịch vụ của McDonald’s."
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12ssp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Nắm bắt nhu cầu của người tiêu dùng Việt Nam hiện nay, chúng tôi mong muốn phục vụ những bữa ăn nhanh nhưng hợp vệ sinh, đầy đủ dưỡng chất cùng với cung cách phục vụ chuyên nghiệp, McDonald’s cam kết sẽ làm bạn hài lòng với dòng sản phẩm nổi tiếng khắp thế giới của chúng tôi như Big Mac, Chicken McNuggets, Egg McMuffin. Không chỉ nổi tiếng về thức ăn ngon, McDonald’s còn nổi tiếng về chuỗi tiêu chuẩn Chất Lượng, Dịch Vụ, Vệ Sinh và Giá trị."
             android:textSize="@dimen/_12ssp"
+
             android:textColor="@color/black"
             android:layout_marginBottom="@dimen/_20sdp"/>
 
@@ -94,6 +95,7 @@
             android:layout_height="wrap_content"
             android:text="Thức ăn ngon: chúng tôi phục vụ thức ăn ngon từ nguồn nguyên vật liệu chất lượng nhất và được chế biến theo từng yêu cầu của khách hàng."
             android:textSize="@dimen/_12ssp"
+
             android:textColor="@color/black"
             android:layout_marginTop="@dimen/_20sdp"
             />
@@ -112,6 +114,7 @@
             android:layout_height="wrap_content"
             android:text="Thành viên tốt của cộng đồng: Chúng tôi luôn quan tâm đến cộng đồng, đặc biệt là trẻ em và các gia đình; chúng tôi mang đến niềm vui và làm phong phú hơn cuộc sống của mọi người."
             android:textSize="@dimen/_12ssp"
+
             android:textColor="@color/black"
             android:layout_marginTop="@dimen/_20sdp"
             />

@@ -4,7 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -14,6 +14,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.OderApp"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name=".activities.RegisterGoogleActivity"
+            android:exported="false" />
+        <activity
+            android:name=".tess"
+            android:exported="false" />
+        <activity
+            android:name=".activities.DetailBillActivity"
+            android:exported="false" />
         <activity
             android:name=".activities.ForgotPassword"
             android:exported="false" />
@@ -44,7 +53,6 @@
         <activity
             android:name=".activities.HotThisMonthDetail"
             android:exported="false" />
-        <activity android:name=".activities.SecondScreenActivity" />
         <activity android:name=".activities.DetailActivity" />
         <activity android:name=".activities.Login" />
         <activity android:name=".fragmentinfo.AboutUs" />
@@ -67,9 +75,9 @@
         </activity>
         <activity android:name=".activities.MainActivity" />
 
-<!--        <meta-data-->
-<!--            android:name="CLOUDINARY_URL"-->
-<!--            android:value="CLOUDINARY_URL=cloudinary://887187822811327:weQfCg8Ix_Yo6kjddazodw-1h2A@order-food" />-->
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

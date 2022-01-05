@@ -10,6 +10,7 @@ public class ItemCart implements Serializable {
     private int id_sp;
     private int don_gia;
     private int soluong;
+    private String ghi_chu;
     private int tong_gia;
     private String createdAt;
     private String updatedAt;
@@ -30,12 +31,13 @@ public class ItemCart implements Serializable {
         this.updatedAt = updatedAt;
     }
 
-    public ItemCart(int id, int id_nd, int id_sp, int don_gia, int soluong, int tong_gia) {
+    public ItemCart(int id, int id_nd, int id_sp, int don_gia, int soluong, String ghi_chu, int tong_gia) {
         this.id = id;
         this.id_nd = id_nd;
         this.id_sp = id_sp;
         this.don_gia = don_gia;
         this.soluong = soluong;
+        this.ghi_chu = ghi_chu;
         this.tong_gia = tong_gia;
     }
 
@@ -85,5 +87,13 @@ public class ItemCart implements Serializable {
 
     public void setTong_gia(int tong_gia) {
         this.tong_gia = tong_gia;
+    }
+
+    public String getGhi_chu() {
+        return ghi_chu;
+    }
+
+    public void setGhi_chu(String ghi_chu) {
+        this.ghi_chu = ghi_chu;
     }
 }

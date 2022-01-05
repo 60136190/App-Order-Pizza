@@ -14,7 +14,8 @@
     <color name="secondary_text">#757575</color>
     <color name="input_background">#ECECEC</color>
     <color name="icon_background">#20FFFFFF</color>
-    <color name="error">#B00020</color>
+    <color name="error">#FA655A</color>
+    <color name="pink">#FBC9C6</color>
     <color name="recived_message_background">#090D16</color>
     <color name="main_color">#FAC252</color>
 <!--    <color name="main_color">#ff785b</color>-->
@@ -22,4 +23,5 @@
     <color name="blue">#4482af</color>
     <color name="yellow">#EDDF92</color>
     <color name="red_dark">#b0313f</color>
+    <color name="green">#07750C</color>
 </resources>

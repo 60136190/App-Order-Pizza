@@ -1,29 +1,50 @@
 package com.example.oderapp.fragment;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
 import com.example.oderapp.R;
+import com.example.oderapp.activities.AddAddressActivity;
 import com.example.oderapp.activities.ApiClient;
+import com.example.oderapp.activities.FirstScreenActivity;
+import com.example.oderapp.activities.Login;
+import com.example.oderapp.activities.PaymentActivity;
 import com.example.oderapp.fragmentinfo.SendEmailActivity;
 import com.example.oderapp.fragmentinfo.AboutUs;
 import com.example.oderapp.fragmentinfo.Account;
 import com.example.oderapp.fragmentinfo.FAQ;
 import com.example.oderapp.fragmentinfo.Recruiment;
 import com.example.oderapp.fragmentinfo.TermsAndCondition;
+import com.example.oderapp.model.response.RefreshTokenRespone;
+import com.example.oderapp.model.response.ResponseBodyAddress;
+import com.example.oderapp.model.response.ResponseBodyCart;
 import com.example.oderapp.model.response.ResponseDTO;
 import com.example.oderapp.utils.Contants;
 import com.example.oderapp.utils.StoreUtil;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -149,20 +170,59 @@ public class InfoFragment extends Fragment {
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                HashMap<String, String> hashMap = new HashMap<>();
-                hashMap.put(Contants.accessToken, "Bearer " + StoreUtil.get(getContext(), Contants.accessToken));
-                hashMap.put(Contants.contentType, "application/json");
+//                HashMap<String, String> hashMap = new HashMap<>();
+//                hashMap.put(Contants.refreshToken, "Bearer " + StoreUtil.get(getContext(), Contants.refreshToken));
+//                hashMap.put(Contants.contentType, "application/json");
 
-                Call<ResponseDTO> loginResponeCall = ApiClient.getService().deleteUser(hashMap);
-                loginResponeCall.enqueue(new Callback<ResponseDTO>() {
+//                Call<ResponseDTO> loginResponeCall = ApiClient.getService().deleteUser();
+//                loginResponeCall.enqueue(new Callback<ResponseDTO>() {
+//                    @Override
+//                    public void onResponse(Call<ResponseDTO> call, Response<ResponseDTO> response) {
+//                        Toast.makeText(getContext(), "OK", Toast.LENGTH_SHORT).show();
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<ResponseDTO> call, Throwable t) {
+//                        Toast.makeText(getContext(), "ERROR", Toast.LENGTH_SHORT).show();
+//
+//                    }
+//                });
+
+
+
+                final Dialog dialog = new Dialog(v.getContext());
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.setContentView(R.layout.dialog_confirm_logout);
+
+                Window window = dialog.getWindow();
+                if (window == null) {
+                    return;
+                }
+
+                window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+                window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                WindowManager.LayoutParams windowAtribute = window.getAttributes();
+                window.setAttributes(windowAtribute);
+
+
+                Button btnCancel = dialog.findViewById(R.id.btn_cancel);
+                Button btnLogout = dialog.findViewById(R.id.btn_logout);
+
+                btnCancel.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onResponse(Call<ResponseDTO> call, Response<ResponseDTO> response) {
-
+                    public void onClick(View v) {
+                        dialog.dismiss();
                     }
-
+                });
+                // show dialog
+                dialog.show();
+                btnLogout.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onFailure(Call<ResponseDTO> call, Throwable t) {
-
+                    public void onClick(View v) {
+                        SharedPreferences settings = getContext().getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
+                        settings.edit().clear().commit();
+                        getActivity().finish();
                     }
                 });
             }

@@ -217,10 +217,8 @@ public class UpdateInformationActivity extends AppCompatActivity {
 
     // get data user profile
     public void getData() {
-        HashMap<String, String> hashMap = new HashMap<>();
-        hashMap.put(Contants.accessToken, "Bearer " + StoreUtil.get(UpdateInformationActivity.this, Contants.accessToken));
-
-        Call<ResponseInformationUser> loginResponeCall = ApiClient.getService().getProfile(hashMap);
+        Call<ResponseInformationUser> loginResponeCall = ApiClient.getService().getProfile(
+                "Bearer "+ StoreUtil.get(UpdateInformationActivity.this,"Authorization"));
         loginResponeCall.enqueue(new Callback<ResponseInformationUser>() {
             @Override
             public void onResponse(Call<ResponseInformationUser> call, Response<ResponseInformationUser> response) {
@@ -244,8 +242,6 @@ public class UpdateInformationActivity extends AppCompatActivity {
                             .load(informationUser.getUrl())
                             .into(imgInfo);
                 }
-//
-
             }
 
             @Override

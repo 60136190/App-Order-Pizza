@@ -13,64 +13,55 @@
         android:layout_height="@dimen/_140sdp"
         android:background="@drawable/border_first_screen"
         android:orientation="vertical"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent">
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <com.jetradarmobile.snowfall.SnowfallView
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:snowflakeSizeMax="25dp"
-            app:snowflakeSizeMin="3dp"
-            app:snowflakeSpeedMax="2"
-            app:snowflakeSpeedMin="1"
-            app:snowflakesNum="30"
-            app:snowflakeImage="@drawable/lantern"
-            app:snowflakesAlreadyFalling="false"
-            app:snowflakesFadingEnabled="false" />
+            android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+            <com.jetradarmobile.snowfall.SnowfallView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:snowflakeImage="@drawable/lantern"
+                app:snowflakeSizeMax="25dp"
+                app:snowflakeSizeMin="3dp"
+                app:snowflakeSpeedMax="2"
+                app:snowflakeSpeedMin="1"
+                app:snowflakesAlreadyFalling="false"
+                app:snowflakesFadingEnabled="false"
+                app:snowflakesNum="30" />
 
-    <ImageView
-        android:id="@+id/back"
-        android:layout_width="@dimen/_20sdp"
-        android:layout_height="@dimen/_20sdp"
-        android:layout_marginLeft="@dimen/_10sdp"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:src="@drawable/ic_baseline_keyboard_backspace_24"
-        />
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Sign In"
-        android:textColor="@color/primary"
-        android:textSize="@dimen/_20ssp"
-        android:textStyle="bold"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_10sdp"
+                android:orientation="vertical">
 
-       />
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Sign In"
+                    android:textColor="@color/primary"
+                    android:textSize="@dimen/_20ssp"
+                    android:textStyle="bold"
 
-    <TextView
-        android:id="@+id/hi"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_10sdp"
-        android:layout_gravity="center"
-        android:textStyle="bold"
-        android:text="We bring you the best experience of our service, not only in terms of food but also in spirit."
-        android:textColor="@color/white"
-        android:textSize="@dimen/_12ssp"
-        />
-    </LinearLayout>
-    </FrameLayout>
+                    />
+
+                <TextView
+                    android:id="@+id/hi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="@dimen/_10sdp"
+                    android:text="We bring you the best experience of our service, not only in terms of food but also in spirit."
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_14ssp" />
+            </LinearLayout>
+        </FrameLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -86,58 +77,49 @@
         app:layout_constraintVertical_bias="0">
 
         <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:endIconMode="clear_text"
-            app:endIconTint="@color/primary"
-            app:helperText="Mandatoty*"
-            app:startIconTint="@color/primary"
-            app:startIconDrawable="@drawable/ic_baseline_email_24"
-            app:helperTextTextColor="@color/teal_700"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
-        <EditText
-            android:id="@+id/inputEmail"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_50sdp"
-            android:layout_marginTop="@dimen/_50sdp"
-            android:background="@drawable/background_input"
-            android:hint="@string/email"
-            android:imeOptions="actionNext"
-            android:importantForAutofill="no"
-            android:inputType="textEmailAddress"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:textColor="@color/primary"
-            android:textColorHint="@color/black"
-            android:textSize="@dimen/_14ssp" />
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/inputEmail"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_marginTop="@dimen/_50sdp"
+                android:background="@drawable/background_input"
+                android:hint="@string/email"
+                android:imeOptions="actionNext"
+                android:importantForAutofill="no"
+                android:inputType="textEmailAddress"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:textColor="@color/primary"
+                android:textColorHint="@color/black"
+                android:textSize="@dimen/_14ssp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_15sdp"
-            app:passwordToggleEnabled="true"
-            app:passwordToggleTint="@color/primary"
-            app:helperText="Mandatoty*"
-            app:startIconTint="@color/primary"
-            app:startIconDrawable="@drawable/ic_baseline_lock_24"
-            app:helperTextTextColor="@color/teal_700"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
-        <EditText
-            android:id="@+id/inputPassword"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_50sdp"
-            android:background="@drawable/background_input"
-            android:hint="@string/password"
-            android:inputType="textPassword"
-            android:imeOptions="actionDone"
-            android:importantForAutofill="no"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:textColor="@color/primary"
-            android:textColorHint="@color/black"
-            android:textSize="@dimen/_14ssp" />
+            android:layout_marginTop="@dimen/_15sdp">
+
+            <EditText
+                android:id="@+id/inputPassword"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_50sdp"
+                android:background="@drawable/background_input"
+                android:hint="@string/password"
+                android:imeOptions="actionDone"
+                android:importantForAutofill="no"
+                android:inputType="textPassword"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:textColor="@color/primary"
+                android:textColorHint="@color/black"
+                android:textSize="@dimen/_14ssp" />
         </com.google.android.material.textfield.TextInputLayout>
+
         <FrameLayout
             android:id="@+id/frame"
             android:layout_width="match_parent"
@@ -154,8 +136,7 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/_13ssp"
                 android:textStyle="bold"
-                app:backgroundTint="@color/primary"
-                 />
+                app:backgroundTint="@color/primary" />
 
             <ProgressBar
                 android:id="@+id/progressBar"
@@ -165,16 +146,17 @@
                 android:visibility="invisible" />
         </FrameLayout>
 
-        <RelativeLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <LinearLayout
+                android:id="@+id/a"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
                 android:gravity="center"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toTopOf="@+id/b">
 
                 <TextView
                     android:id="@+id/tvCreateNewAccount"
@@ -205,13 +187,39 @@
                     android:textStyle="bold" />
 
             </LinearLayout>
-        </RelativeLayout>
-    </LinearLayout>
-<FrameLayout
-    android:id="@+id/content_frame"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintLeft_toLeftOf="parent"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"/>
 
+            <LinearLayout
+                android:id="@+id/b"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="9"
+                android:layout_marginLeft="@dimen/_50sdp"
+                android:layout_marginRight="@dimen/_50sdp"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+                <ImageView
+                    android:id="@+id/img_register_google"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_15sdp"
+                    android:layout_weight="3"
+                    android:layout_gravity="right"
+                    android:src="@drawable/google" />
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_15sdp"
+                    android:layout_weight="3"
+                    android:src="@drawable/facebook" />
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_15sdp"
+                    android:layout_weight="3"
+                    android:src="@drawable/twitter" />
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

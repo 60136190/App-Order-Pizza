@@ -3,8 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/_100sdp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/background_input"
-    android:layout_margin="@dimen/_10sdp"
+    android:background="@drawable/border_background_itemcart"
+    android:layout_margin="@dimen/_5sdp"
     app:mode="same_level"
     app:dragEdge="right"
     >
@@ -39,14 +39,14 @@
                 android:layout_width="@dimen/_50sdp"
                 android:layout_height="@dimen/_50sdp"
                 android:layout_margin="@dimen/_10sdp"
-                android:src="@drawable/rating"
+                android:src="@drawable/ratinga"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
             <TextView
                 android:id="@+id/a"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Mã hóa đơn:"
+                android:text="Bill code:"
                 android:textSize="@dimen/_16ssp"
                 android:layout_margin="@dimen/_5sdp"
                 android:textColor="@color/primary"
@@ -57,7 +57,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="15"
-                android:textColor="@color/primary"
+                android:textColor="@color/main_color"
                 android:textSize="@dimen/_16ssp"
                 android:layout_margin="@dimen/_5sdp"
                 app:layout_constraintTop_toTopOf="parent"
@@ -69,7 +69,7 @@
                 android:text="3"
                 android:layout_margin="@dimen/_5sdp"
                 android:textSize="@dimen/_16ssp"
-                android:textColor="@color/primary"
+                android:textColor="@color/main_color"
                 app:layout_constraintTop_toBottomOf="@+id/a"
                 app:layout_constraintLeft_toRightOf="@+id/img_bill"/>
             <TextView

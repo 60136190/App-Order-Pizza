@@ -28,7 +28,9 @@ import com.example.oderapp.activities.ApiClient;
 import com.example.oderapp.activities.PaymentActivity;
 import com.example.oderapp.adapters.ItemCartAdappter;
 import com.example.oderapp.model.ItemCart;
+import com.example.oderapp.model.QuantilyAndPrice;
 import com.example.oderapp.model.response.ResponseBodyCart;
+import com.example.oderapp.model.response.ResponseBodyQuantilyAndPrice;
 import com.example.oderapp.utils.Contants;
 import com.example.oderapp.utils.StoreUtil;
 
@@ -42,10 +44,9 @@ import retrofit2.Response;
 
 public class CartFragment extends Fragment {
     private RecyclerView mRecyclerView;
-
-
-
+    ItemCartAdappter adappter;
     private TextView tvQuantily;
+    private TextView tvPrice;
     private View mview;
     private Button btnCheckOut;
     private ImageView imgDeleteAllItemInCart;
@@ -60,17 +61,22 @@ public class CartFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mview = inflater.inflate(R.layout.fragment_cart, container, false);
+        initUi();
         getCart();
-        mRecyclerView = mview.findViewById(R.id.rcv_cart);
-        btnCheckOut = mview.findViewById(R.id.btn_check_out);
-        imgDeleteAllItemInCart = mview.findViewById(R.id.img_delete_all_item_cart);
-        swipeRefreshLayout = mview.findViewById(R.id.refresh);
+        getQuantilyAndPrice();
+
+
 
         btnCheckOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), PaymentActivity.class);
-                startActivity(intent);
+                if (adappter.getItemCount() != 0){
+                    Intent intent = new Intent(getContext(), PaymentActivity.class);
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(getContext(), "Cart is blank", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -143,6 +149,15 @@ public class CartFragment extends Fragment {
         return mview;
     }
 
+    private void initUi() {
+        mRecyclerView = mview.findViewById(R.id.rcv_cart);
+        btnCheckOut = mview.findViewById(R.id.btn_check_out);
+        imgDeleteAllItemInCart = mview.findViewById(R.id.img_delete_all_item_cart);
+        swipeRefreshLayout = mview.findViewById(R.id.refresh);
+        tvPrice = mview.findViewById(R.id.tv_price);
+        tvQuantily = mview.findViewById(R.id.tv_quantily);
+    }
+
     private void getCart() {
         HashMap<String, String> hashMap = new HashMap<>();
         hashMap.put(Contants.accessToken, "Bearer " + StoreUtil.get(getActivity(), Contants.accessToken));
@@ -151,17 +166,33 @@ public class CartFragment extends Fragment {
         responseDTOCall.enqueue(new Callback<ResponseBodyCart>() {
             @Override
             public void onResponse(Call<ResponseBodyCart> call, Response<ResponseBodyCart> response) {
-                ItemCartAdappter adappter = new ItemCartAdappter(getContext(), response.body().getData());
+               adappter = new ItemCartAdappter(getContext(), response.body().getData());
                 mRecyclerView.setAdapter(adappter);
                 mRecyclerView.setHasFixedSize(true);
                 mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-                RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL);
-                mRecyclerView.addItemDecoration(itemDecoration);
             }
 
             @Override
             public void onFailure(Call<ResponseBodyCart> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+    }
+    public void getQuantilyAndPrice(){
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put(Contants.accessToken, "Bearer " + StoreUtil.get(getContext(), Contants.accessToken));
+
+        Call<ResponseBodyQuantilyAndPrice> responseDTOCall = ApiClient.getProductService().getQuantilyAndPrice(hashMap);
+        responseDTOCall.enqueue(new Callback<ResponseBodyQuantilyAndPrice>() {
+            @Override
+            public void onResponse(Call<ResponseBodyQuantilyAndPrice> call, Response<ResponseBodyQuantilyAndPrice> response) {
+                QuantilyAndPrice quantilyAndPrice = response.body().getData().get(0);
+                tvPrice.setText(String.valueOf(quantilyAndPrice.getTongtien_gh()));
+                tvQuantily.setText(String.valueOf(quantilyAndPrice.getTong_sl()));
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBodyQuantilyAndPrice> call, Throwable t) {
                 t.printStackTrace();
             }
         });

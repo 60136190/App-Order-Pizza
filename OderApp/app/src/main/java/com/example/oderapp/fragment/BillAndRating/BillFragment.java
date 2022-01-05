@@ -57,9 +57,6 @@ public class BillFragment extends Fragment {
                 mRecyclerView.setAdapter(adappter);
                 mRecyclerView.setHasFixedSize(true);
                 mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-                RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
-                mRecyclerView.addItemDecoration(itemDecoration);
             }
 
             @Override

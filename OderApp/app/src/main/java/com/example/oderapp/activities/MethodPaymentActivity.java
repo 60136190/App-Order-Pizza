@@ -72,9 +72,6 @@ public class MethodPaymentActivity extends AppCompatActivity {
                 mRecyclerView.setAdapter(adappter);
                 mRecyclerView.setHasFixedSize(true);
                 mRecyclerView.setLayoutManager(new LinearLayoutManager(MethodPaymentActivity.this));
-
-                RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(MethodPaymentActivity.this, DividerItemDecoration.VERTICAL);
-                mRecyclerView.addItemDecoration(itemDecoration);
             }
 
             @Override

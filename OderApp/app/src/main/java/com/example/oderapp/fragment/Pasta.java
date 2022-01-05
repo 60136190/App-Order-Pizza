@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -21,6 +22,9 @@ import com.android.volley.toolbox.Volley;
 import com.example.oderapp.R;
 import com.example.oderapp.adapters.ItemProductAdappter;
 import com.example.oderapp.model.ItemFood;
+import com.github.ybq.android.spinkit.sprite.Sprite;
+import com.github.ybq.android.spinkit.style.DoubleBounce;
+import com.github.ybq.android.spinkit.style.FoldingCube;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -48,6 +52,9 @@ public class Pasta extends Fragment {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
         mRecyclerView.setLayoutManager(gridLayoutManager);
+
+
+
 
         return view;
     }

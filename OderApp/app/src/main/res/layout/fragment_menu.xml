@@ -6,6 +6,7 @@
     android:id="@+id/fragment_container_a"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragment.MenuFragment">
+
     <com.shrikanthravi.customnavigationdrawer2.widget.SNavigationDrawer
         android:id="@+id/navigationDrawer"
         android:layout_width="match_parent"
@@ -15,7 +16,7 @@
             android:id="@+id/frameLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/_68sdp" />
+            android:layout_marginBottom="@dimen/_67sdp" />
 
     </com.shrikanthravi.customnavigationdrawer2.widget.SNavigationDrawer>
 

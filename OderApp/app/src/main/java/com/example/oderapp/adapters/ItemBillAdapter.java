@@ -2,8 +2,10 @@ package com.example.oderapp.adapters;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +13,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -22,6 +25,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.oderapp.R;
 import com.example.oderapp.activities.ApiClient;
+import com.example.oderapp.activities.DetailActivity;
+import com.example.oderapp.activities.DetailBillActivity;
 import com.example.oderapp.model.ItemBill;
 import com.example.oderapp.model.ItemCart;
 import com.example.oderapp.model.Rating;
@@ -66,6 +71,7 @@ public class ItemBillAdapter extends RecyclerView.Adapter<ItemBillAdapter.ItemVi
         String tinhtrang = currentItem.getTinhtrangHD();
         int tongSoLuong = currentItem.getTong_sl();
         int tongHoaDon = currentItem.getTong_hd();
+
         holder.tvId.setText(Integer.toString(id));
         holder.tvTinhTrangHD.setText(tinhtrang);
         holder.tvTongSl.setText(Integer.toString(tongSoLuong));
@@ -107,7 +113,8 @@ public class ItemBillAdapter extends RecyclerView.Adapter<ItemBillAdapter.ItemVi
             public void onResponse(Call<ResponseBodyBill> call, Response<ResponseBodyBill> response) {
                 String s = "Đã nhận hàng";
                 if (tinhtrang.equals(s)) {
-                    holder.lnItemBill.setOnClickListener(new View.OnClickListener() {
+                    holder.imgRatingBill.setVisibility(View.VISIBLE);
+                    holder.imgRatingBill.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
 
@@ -172,6 +179,8 @@ public class ItemBillAdapter extends RecyclerView.Adapter<ItemBillAdapter.ItemVi
 
                         }
                     });
+                }else{
+                    holder.imgRatingBill.setVisibility(View.INVISIBLE);
                 }
 
             }
@@ -181,6 +190,17 @@ public class ItemBillAdapter extends RecyclerView.Adapter<ItemBillAdapter.ItemVi
                 t.printStackTrace();
             }
         });
+        holder.imgBill.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(mContext, DetailBillActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("bill",currentItem);
+                i.putExtras( bundle);
+                mContext.startActivity(i);
+            }
+        });
+
 
 
     }
@@ -199,8 +219,13 @@ public class ItemBillAdapter extends RecyclerView.Adapter<ItemBillAdapter.ItemVi
         private TextView tvTinhTrangHD;
         private TextView tvTongSl;
         private TextView tvTongHd;
+        private ImageView imgBill;
+        private ImageView imgRatingBill;
+
         private LinearLayout lnCancelBill;
         private LinearLayout lnItemBill;
+
+
 
 
         public ItemViewHolder(View itemView) {
@@ -209,6 +234,9 @@ public class ItemBillAdapter extends RecyclerView.Adapter<ItemBillAdapter.ItemVi
             tvTinhTrangHD = itemView.findViewById(R.id.tv_tinhtrangHD);
             tvTongSl = itemView.findViewById(R.id.tv_tong_sl);
             tvTongHd = itemView.findViewById(R.id.tv_tong_hd);
+            imgBill = itemView.findViewById(R.id.img_bill);
+            imgRatingBill = itemView.findViewById(R.id.img_rating_bill);
+
             lnCancelBill = itemView.findViewById(R.id.ln_cancel_bill);
             lnItemBill = itemView.findViewById(R.id.ln_item_bill);
         }

@@ -1,12 +1,17 @@
 package com.example.oderapp.fragment;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -26,6 +31,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.oderapp.R;
 import com.example.oderapp.activities.ApiClient;
+import com.example.oderapp.activities.FirstScreenActivity;
 import com.example.oderapp.adapters.HotThisMonthAdapter;
 import com.example.oderapp.adapters.ItemProductAdappter;
 import com.example.oderapp.fragmentinfo.optionaccount.UpdateInformationActivity;
@@ -78,6 +84,8 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+        getActivity().getWindow().setSoftInputMode(
+                WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         roundedImageView = view.findViewById(R.id.pizza);
         tvHiName = view.findViewById(R.id.tv_hi_name);
         searchView = view.findViewById(R.id.search);
@@ -87,10 +95,10 @@ public class HomeFragment extends Fragment {
         imgUser.setClipToOutline(true);
 
         // ----------------------- get Url show on home fragment--------------------
-        HashMap<String, String> hashMap = new HashMap<>();
-        hashMap.put(Contants.accessToken, "Bearer " + StoreUtil.get(getContext(), Contants.accessToken));
-
-        Call<ResponseInformationUser> loginResponeCall = ApiClient.getService().getProfile(hashMap);
+//        HashMap<String, String> hashMap = new HashMap<>();
+//        hashMap.put(Contants.accessToken, "Bearer " + StoreUtil.get(getContext(), Contants.accessToken));
+        Call<ResponseInformationUser> loginResponeCall = ApiClient.getService().getProfile(
+                "Bearer "+ StoreUtil.get(getContext(),"Authorization"));
         loginResponeCall.enqueue(new Callback<ResponseInformationUser>() {
             @Override
             public void onResponse(Call<ResponseInformationUser> call, retrofit2.Response<ResponseInformationUser> response) {
@@ -149,15 +157,10 @@ public class HomeFragment extends Fragment {
         rcvHotThisMonth.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         rcvHotThisMonth.setAdapter(hotThisMonthAdapter);
 
-        // recyclerview all products
-        mRecyclerView = view.findViewById(R.id.rcv_menu);
-        mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
-        mRecyclerView.setLayoutManager(gridLayoutManager);
-
         return view;
     }
+
+
 
     //--------------------------------
     @Override
@@ -173,7 +176,7 @@ public class HomeFragment extends Fragment {
         // parse json get all products
         mitemPizzasList = new ArrayList<>();
         mRequestQueue = Volley.newRequestQueue(getContext());
-        parseJSON();
+//        parseJSON();
     }
 
     // function Slider promotion
@@ -184,43 +187,6 @@ public class HomeFragment extends Fragment {
         viewFlipper.setFlipInterval(3500);
         viewFlipper.setAutoStart(true);
         viewFlipper.setInAnimation(getContext(), android.R.anim.slide_in_left);
-    }
-
-    // function parse json to get all product from api
-    private void parseJSON() {
-        String url = "http://192.168.1.5:5000/product";
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            JSONArray jsonArray = response.getJSONArray("data");
-
-                            for (int i = 0; i < jsonArray.length(); i++) {
-                                JSONObject dt = jsonArray.getJSONObject(i);
-                                int productId = dt.getInt("id");
-                                String productName = dt.getString("tensp");
-                                String productImage = dt.getString("url");
-                                int productPrice = dt.getInt("gia");
-                                String productDetail = dt.getString("chitiet");
-                                String productSize = dt.getString("size");
-                                mitemPizzasList.add(new ItemFood(productId, productName, productPrice, productImage, productDetail, productSize));
-                            }
-                            mitemPizzaAdappter = new ItemProductAdappter(getActivity(), mitemPizzasList);
-                            mRecyclerView.setAdapter(mitemPizzaAdappter);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        error.printStackTrace();
-                    }
-                });
-        mRequestQueue.add(request);
     }
 
     // filter products

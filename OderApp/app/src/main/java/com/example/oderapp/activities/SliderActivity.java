@@ -7,12 +7,20 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.oderapp.R;
 import com.example.oderapp.adapters.SliderAdapter;
+import com.example.oderapp.model.response.RefreshTokenRespone;
+import com.example.oderapp.utils.Contants;
+import com.example.oderapp.utils.StoreUtil;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class SliderActivity extends AppCompatActivity {
@@ -39,9 +47,12 @@ public class SliderActivity extends AppCompatActivity {
         mNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 mSlideviewPager.setCurrentItem(mCurrentPage + 1);
                 String fi = mNext.getText().toString();
                 if( mNext.isClickable()){
+
+
                     Intent intent4 = new Intent(SliderActivity.this,MainActivity.class);
                     startActivity(intent4);
                     finish();
@@ -50,16 +61,11 @@ public class SliderActivity extends AppCompatActivity {
             }
         });
 
-//        skip.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent5 = new Intent(SliderActivity.this,MainActivity.class);
-//                startActivity(intent5);
-//
-//            }
-//        });
 
     }
+
+
+
     public void initUi(){
         mSlideviewPager = (ViewPager)findViewById(R.id.slideviewpager);
         mDotLayout = (LinearLayout) findViewById(R.id.linearLayout);

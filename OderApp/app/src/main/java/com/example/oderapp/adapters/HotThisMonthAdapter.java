@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.oderapp.R;
@@ -77,7 +78,7 @@ public class HotThisMonthAdapter extends RecyclerView.Adapter<HotThisMonthAdapte
         public TextView itemTime;
         public TextView itemName;
 
-        LinearLayout layoutHotThisMonth;
+        ConstraintLayout layoutHotThisMonth;
         public ItemViewHolder( View itemView) {
             super(itemView);
             layoutHotThisMonth = itemView.findViewById(R.id.layout_hot_this_month);

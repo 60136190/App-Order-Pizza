@@ -3,6 +3,7 @@ package com.example.oderapp.adapters;
 import android.content.ClipData;
 import android.content.Context;
 import android.media.Image;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.chauthai.swipereveallayout.SwipeRevealLayout;
 import com.example.oderapp.R;
 import com.example.oderapp.activities.ApiClient;
+import com.example.oderapp.eventbus.EvenbusAddress;
+import com.example.oderapp.eventbus.EvenbusiSizeListCart;
 import com.example.oderapp.model.Currency;
 import com.example.oderapp.model.GetItemCart;
 import com.example.oderapp.model.ItemCart;
@@ -31,6 +34,8 @@ import com.example.oderapp.model.response.ResponseBodyProduct;
 import com.example.oderapp.utils.Contants;
 import com.example.oderapp.utils.StoreUtil;
 import com.squareup.picasso.Picasso;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -69,10 +74,12 @@ public class ItemCartAdappter extends RecyclerView.Adapter<ItemCartAdappter.Item
         int dongia = currentItem.getDon_gia();
         int soluong = currentItem.getSoluong();
         int tonggia = currentItem.getTong_gia();
+        String ghichu = currentItem.getGhi_chu();
 
         holder.tvDonGia.setText(Integer.toString(dongia));
         holder.tvSoLuong.setText(Integer.toString(soluong));
         holder.tvTongGia.setText(Integer.toString(tonggia));
+        holder.tvNote.setText(ghichu);
 
         int sl = Integer.parseInt(holder.tvSoLuong.getText().toString());
         if (sl >= 10) {
@@ -140,7 +147,6 @@ public class ItemCartAdappter extends RecyclerView.Adapter<ItemCartAdappter.Item
                     @Override
                     public void onResponse(Call<ResponseBodyCart> call, Response<ResponseBodyCart> response) {
 
-
                     }
 
                     @Override
@@ -148,6 +154,8 @@ public class ItemCartAdappter extends RecyclerView.Adapter<ItemCartAdappter.Item
                         t.printStackTrace();
                     }
                 });
+
+
             }
         });
 
@@ -169,6 +177,7 @@ public class ItemCartAdappter extends RecyclerView.Adapter<ItemCartAdappter.Item
 
                     }
                 });
+
             }
         });
 
@@ -180,6 +189,7 @@ public class ItemCartAdappter extends RecyclerView.Adapter<ItemCartAdappter.Item
             public void onResponse(Call<ResponseBodyProduct> call, Response<ResponseBodyProduct> response) {
                 ItemFood itemFood = response.body().getData().get(0);
                 String anh = itemFood.getUrl();
+//                holder.tv_nameProduct.setText(itemFood.getTensp());
                 holder.tv_nameProduct.setText(itemFood.getTensp());
 
                 Picasso.with(mContext.getApplicationContext())
@@ -193,15 +203,25 @@ public class ItemCartAdappter extends RecyclerView.Adapter<ItemCartAdappter.Item
         });
         //-----------------------------------------
 
+//getsize();
 
     }
 
 
     @Override
     public int getItemCount() {
-
-        return mItemCartList.size();
+        if (mItemCartList != null){
+            return mItemCartList.size();
+        }
+        return 0;
     }
+//    public void getsize(){
+//        EvenbusiSizeListCart event = new EvenbusiSizeListCart();
+//        event.setSize(getItemCount());
+//        EventBus.getDefault().post(event);
+//
+//        Log.e(String.valueOf(getItemCount()),"nam");
+//    }
 
 
     public class ItemViewHolder extends RecyclerView.ViewHolder {
@@ -212,6 +232,7 @@ public class ItemCartAdappter extends RecyclerView.Adapter<ItemCartAdappter.Item
         private Button btnTru;
         private TextView tvSoLuong;
         private TextView tv_nameProduct;
+        private TextView tvNote;
 
         private SwipeRevealLayout swipeRevealLayout;
         private LinearLayout lnDelete;
@@ -225,6 +246,7 @@ public class ItemCartAdappter extends RecyclerView.Adapter<ItemCartAdappter.Item
             btnCong = itemView.findViewById(R.id.btn_cong);
             tvSoLuong = itemView.findViewById(R.id.tv_soluong);
             tv_nameProduct = itemView.findViewById(R.id.tv_nameProduct);
+            tvNote = itemView.findViewById(R.id.tv_note);
 
             lnDelete = itemView.findViewById(R.id.ln_delete);
             swipeRevealLayout = itemView.findViewById(R.id.swipereveallayout);

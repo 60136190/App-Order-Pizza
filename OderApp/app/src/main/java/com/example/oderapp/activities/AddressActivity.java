@@ -96,10 +96,6 @@ public class AddressActivity extends AppCompatActivity{
                 mRecyclerView.setAdapter(adappter);
                 mRecyclerView.setHasFixedSize(true);
                 mRecyclerView.setLayoutManager(new LinearLayoutManager(AddressActivity.this));
-                RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(AddressActivity.this, DividerItemDecoration.VERTICAL);
-                mRecyclerView.addItemDecoration(itemDecoration);
-
-
             }
 
             @Override

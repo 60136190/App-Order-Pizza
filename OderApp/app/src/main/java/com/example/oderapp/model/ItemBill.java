@@ -9,14 +9,16 @@ public class ItemBill implements Serializable {
     private int id_diachi;
     private int tong_sl;
     private int tong_hd;
+    private int tongtien_gh;
+    private String id_voucher;
     private String ngaydathang;
     private String tinhtrangHD;
 
 
-    public ItemBill(int id_thanhtoan, int id_diachi) {
+    public ItemBill(int id_thanhtoan, int id_diachi, String id_voucher) {
         this.id_thanhtoan = id_thanhtoan;
         this.id_diachi = id_diachi;
-
+        this.id_voucher = id_voucher;
     }
 
     public int getId() {
@@ -81,5 +83,21 @@ public class ItemBill implements Serializable {
 
     public void setTong_hd(int tong_hd) {
         this.tong_hd = tong_hd;
+    }
+
+    public int getTongtien_gh() {
+        return tongtien_gh;
+    }
+
+    public void setTongtien_gh(int tongtien_gh) {
+        this.tongtien_gh = tongtien_gh;
+    }
+
+    public String getId_voucher() {
+        return id_voucher;
+    }
+
+    public void setId_voucher(String id_voucher) {
+        this.id_voucher = id_voucher;
     }
 }
