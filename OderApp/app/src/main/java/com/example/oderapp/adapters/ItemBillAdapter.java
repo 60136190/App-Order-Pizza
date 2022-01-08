@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,6 +38,8 @@ import com.example.oderapp.model.response.ResponseDTO;
 import com.example.oderapp.model.response.ResponseRating;
 import com.example.oderapp.utils.Contants;
 import com.example.oderapp.utils.StoreUtil;
+import com.github.ybq.android.spinkit.sprite.Sprite;
+import com.github.ybq.android.spinkit.style.FoldingCube;
 
 import java.util.HashMap;
 import java.util.List;
@@ -133,7 +137,7 @@ public class ItemBillAdapter extends RecyclerView.Adapter<ItemBillAdapter.ItemVi
                             WindowManager.LayoutParams windowAtribute = window.getAttributes();
                             window.setAttributes(windowAtribute);
 
-
+                            ProgressBar progressBar=  dialog.findViewById(R.id.spin_kit);
                             EditText edtComment = dialog.findViewById(R.id.edt_comment_dialog);
                             Button btnCancel = dialog.findViewById(R.id.btn_cancel);
                             Button btnSave = dialog.findViewById(R.id.btn_save_address);
@@ -153,30 +157,52 @@ public class ItemBillAdapter extends RecyclerView.Adapter<ItemBillAdapter.ItemVi
                                 public void onClick(View v) {
                                     int myRating = (int) ratingBar.getRating();
                                     String cmt = edtComment.getText().toString();
+                                    if (cmt.isEmpty()) {
+                                        Toast.makeText(v.getContext(), "Please write your feedback", Toast.LENGTH_SHORT).show();
+                                    } else {
 
-                                    Rating rating = new Rating(myRating, cmt);
+                                        Rating rating = new Rating(myRating, cmt);
 
-                                    HashMap<String, String> hashMap = new HashMap<>();
-                                    hashMap.put(Contants.accessToken, "Bearer " + StoreUtil.get(v.getContext(), Contants.accessToken));
-                                    hashMap.put(Contants.contentLength, "<calculated when request is sent>");
-                                    Call<ResponseRating> loginResponeCall = ApiClient.getService().ratingBill(id, rating, hashMap);
-                                    loginResponeCall.enqueue(new Callback<ResponseRating>() {
-                                        @Override
-                                        public void onResponse(Call<ResponseRating> call, Response<ResponseRating> response) {
-                                            Toast.makeText(mContext, "Thanks for your feedback", Toast.LENGTH_SHORT).show();
+                                        HashMap<String, String> hashMap = new HashMap<>();
+                                        hashMap.put(Contants.accessToken, "Bearer " + StoreUtil.get(v.getContext(), Contants.accessToken));
+                                        hashMap.put(Contants.contentLength, "<calculated when request is sent>");
+                                        Call<ResponseRating> loginResponeCall = ApiClient.getService().ratingBill(id, rating, hashMap);
+                                        loginResponeCall.enqueue(new Callback<ResponseRating>() {
+                                            @Override
+                                            public void onResponse(Call<ResponseRating> call, Response<ResponseRating> response) {
+                                                if (response.isSuccessful()) {
+                                                    Sprite foldingCube = new FoldingCube();
+                                                    progressBar.setIndeterminateDrawable(foldingCube);
+                                                    progressBar.setVisibility(View.VISIBLE);
 
-                                        }
+                                                    CountDownTimer countDownTimer = new CountDownTimer(3000, 1000) {
+                                                        @Override
+                                                        public void onTick(long millisUntilFinished) {
+                                                            int current = progressBar.getProgress();
+                                                            if (current >= progressBar.getMax()) {
+                                                                current = 0;
+                                                            }
+                                                            progressBar.setProgress(current + 10);
+                                                        }
 
-                                        @Override
-                                        public void onFailure(Call<ResponseRating> call, Throwable t) {
+                                                        @Override
+                                                        public void onFinish() {
+                                                            progressBar.setVisibility(View.INVISIBLE);
+                                                            dialog.dismiss();
+                                                        }
+                                                    };
+                                                    countDownTimer.start();
+                                                }
+                                            }
 
-                                        }
-                                    });
+                                            @Override
+                                            public void onFailure(Call<ResponseRating> call, Throwable t) {
 
-                                    dialog.dismiss();
+                                            }
+                                        });
+                                    }
                                 }
                             });
-
                         }
                     });
                 }else{

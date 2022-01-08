@@ -4,20 +4,26 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.oderapp.R;
 import com.example.oderapp.activities.ApiClient;
+import com.example.oderapp.activities.ForgotPassword;
 import com.example.oderapp.activities.Login;
 import com.example.oderapp.model.request.ChangePasswordRequest;
 import com.example.oderapp.model.response.ResponseChangePasswordDTO;
 import com.example.oderapp.model.response.ResponseDTO;
 import com.example.oderapp.utils.Contants;
 import com.example.oderapp.utils.StoreUtil;
+import com.github.ybq.android.spinkit.sprite.Sprite;
+import com.github.ybq.android.spinkit.style.FoldingCube;
 
 import java.util.HashMap;
 
@@ -30,6 +36,8 @@ public class ChangePasswordActivity extends AppCompatActivity {
     private EditText edtNewPassword;
     private EditText edtConfirmNewPassword;
     private Button btnSavePassword;
+    private ProgressBar progressBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +62,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
         });
 
     }
+
     @Override
     public void onBackPressed() {
         // code here to show dialog
@@ -65,31 +74,51 @@ public class ChangePasswordActivity extends AppCompatActivity {
         hashMap.put(Contants.accessToken, "Bearer " + StoreUtil.get(ChangePasswordActivity.this, Contants.accessToken));
         hashMap.put(Contants.contentType, "application/json");
         hashMap.put(Contants.contentLength, "<calculated when request is sent>");
-        Call<ResponseChangePasswordDTO> responseDTOCall = ApiClient.getService().changePasswordUser(hashMap,changePasswordRequest);
+        if (TextUtils.isEmpty(edtNewPassword.getText().toString()) || TextUtils.isEmpty(edtConfirmNewPassword.getText().toString())) {
+            String message = "Email or password blank...";
+            Toast.makeText(ChangePasswordActivity.this, message, Toast.LENGTH_SHORT).show();
+        } else {
+            Call<ResponseChangePasswordDTO> responseDTOCall = ApiClient.getService().changePasswordUser(hashMap, changePasswordRequest);
+            responseDTOCall.enqueue(new Callback<ResponseChangePasswordDTO>() {
+                @Override
+                public void onResponse(Call<ResponseChangePasswordDTO> call, Response<ResponseChangePasswordDTO> response) {
+                    btnSavePassword.setVisibility(View.INVISIBLE);
+                    Sprite foldingCube = new FoldingCube();
+                    progressBar.setIndeterminateDrawable(foldingCube);
+                    progressBar.setVisibility(View.VISIBLE);
 
-        responseDTOCall.enqueue(new Callback<ResponseChangePasswordDTO>() {
-            @Override
-            public void onResponse(Call<ResponseChangePasswordDTO> call, Response<ResponseChangePasswordDTO> response) {
-                if (response.isSuccessful() && response.body().getStatus()==200){
-                    onBackPressed();
-                }else
-                {
-                    Toast.makeText(ChangePasswordActivity.this, "Change password is wrong", Toast.LENGTH_SHORT).show();
+                    CountDownTimer countDownTimer = new CountDownTimer(3000, 1000) {
+                        @Override
+                        public void onTick(long millisUntilFinished) {
+                            int current = progressBar.getProgress();
+                            if (current >= progressBar.getMax()) {
+                                current = 0;
+                            }
+                            progressBar.setProgress(current + 10);
+                        }
+
+                        @Override
+                        public void onFinish() {
+                            progressBar.setVisibility(View.INVISIBLE);
+                            onBackPressed();
+                        }
+                    };
+                    countDownTimer.start();
+                }
+
+                @Override
+                public void onFailure(Call<ResponseChangePasswordDTO> call, Throwable t) {
 
                 }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseChangePasswordDTO> call, Throwable t) {
-
-            }
-        });
+            });
+        }
     }
 
-    public void initUi(){
+    public void initUi() {
         imgBack = findViewById(R.id.back);
         edtNewPassword = findViewById(R.id.edt_new_password);
         edtConfirmNewPassword = findViewById(R.id.edt_confirm_new_password);
         btnSavePassword = findViewById(R.id.btn_save_new_password);
+        progressBar = (ProgressBar) findViewById(R.id.spin_kit);
     }
 }

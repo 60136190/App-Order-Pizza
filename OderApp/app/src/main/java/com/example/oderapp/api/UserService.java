@@ -49,6 +49,10 @@ public interface UserService {
     @POST("/customer/login")
     Call<LoginRespone> loginUser(@HeaderMap HashMap<String, String> hashMap,@Body LoginRequest loginRequest);
 
+    // register with google
+    @GET("auth/google")
+    Call<LoginRespone> registerUsingGoogle();
+
     @GET("/customer/refreshToken")
     Call<RefreshTokenRespone> refreshToken(@Header("Cookie") String refreshToken);
 
@@ -112,6 +116,6 @@ public interface UserService {
 
     @Multipart
     @POST("/cloud/uploadUserImage/customer")
-    Call<ReponseUrl> uploadImage(@HeaderMap HashMap<String,String> hashMap, @Part MultipartBody.Part file);
+    Call<ReponseUrl> uploadImage(@HeaderMap HashMap<String,String> hashMap,@Part MultipartBody.Part file);
 }
 

@@ -7,8 +7,10 @@ import com.example.oderapp.model.Note;
 import com.example.oderapp.model.ResponseBodyDTO;
 import com.example.oderapp.model.request.QualityProduct;
 import com.example.oderapp.model.response.ResponseBodyAddress;
+import com.example.oderapp.model.response.ResponseBodyAllProduct;
 import com.example.oderapp.model.response.ResponseBodyBill;
 import com.example.oderapp.model.response.ResponseBodyCart;
+import com.example.oderapp.model.response.ResponseBodyCategory;
 import com.example.oderapp.model.response.ResponseBodyProduct;
 import com.example.oderapp.model.response.ResponseBodyQuantilyAndPrice;
 import com.example.oderapp.model.response.ResponseDTO;
@@ -43,7 +45,42 @@ public interface ProductServer {
 
     // get product with id, then show name's product.
     @GET("/product/{id}")
-    Call<ResponseBodyProduct> getDescription(@Path("id") int id, @Header("Authorization") String authorization);
+    Call<ResponseBodyAllProduct> getDescription(@Path("id") int id, @Header("Authorization") String authorization);
+
+    //get category
+    @GET("/category/")
+    Call<ResponseBodyCategory> getCategory(@Header("Authorization") String authorization);
+
+    // get pizza
+    @GET("/category/16")
+    Call<ResponseBodyProduct> getPizza(@Header("Authorization") String authorization);
+
+    // get pasta
+    @GET("/category/17")
+    Call<ResponseBodyProduct> getPasta(@Header("Authorization") String authorization);
+
+    // get salad
+    @GET("/category/18")
+    Call<ResponseBodyProduct> getSalad(@Header("Authorization") String authorization);
+
+    // get appetizer
+    @GET("/category/19")
+    Call<ResponseBodyProduct> getAppetizer(@Header("Authorization") String authorization);
+
+    // get drink
+    @GET("/category/20")
+    Call<ResponseBodyProduct> getDrink(@Header("Authorization") String authorization);
+    //get all product
+    @GET("/product/")
+    Call<ResponseBodyAllProduct> getAllProduct(@Header("Authorization") String authorization);
+
+    // Sort product -->
+    @GET("/product/sort/asc")
+    Call<ResponseBodyAllProduct> sortProductAsc (@Header("Authorization") String authorization);
+
+    // Sort product <--
+    @GET("product/sort/desc")
+    Call<ResponseBodyAllProduct> sortProductDesc (@Header("Authorization") String authorization);
 
     // delete item in cart with id
     @DELETE("/cart/delete/{id}")

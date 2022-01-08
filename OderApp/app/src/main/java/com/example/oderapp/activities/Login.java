@@ -70,7 +70,21 @@ public class Login extends AppCompatActivity {
         imgRegisterGoogle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                HashMap<String, String> hashMap = new HashMap<>();
+//                hashMap.put("Host", "<calculated when request is sent>");
+//                hashMap.put("Cookie","refreshToken=" +StoreUtil.get(Login.this, Contants.refreshToken));
+                Call<LoginRespone> refreshTokenResponeCall = ApiClient.getService().registerUsingGoogle();
+                refreshTokenResponeCall.enqueue(new Callback<LoginRespone>() {
+                    @Override
+                    public void onResponse(Call<LoginRespone> call, Response<LoginRespone> response) {
 
+                    }
+
+                    @Override
+                    public void onFailure(Call<LoginRespone> call, Throwable t) {
+
+                    }
+                });
             }
         });
     }

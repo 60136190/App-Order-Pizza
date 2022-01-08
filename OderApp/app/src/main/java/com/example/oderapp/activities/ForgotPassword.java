@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -34,6 +35,7 @@ public class ForgotPassword extends AppCompatActivity {
     private Button btnSend;
     private ImageView imgBack;
     private ProgressBar progressBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,8 +61,26 @@ public class ForgotPassword extends AppCompatActivity {
                         @Override
                         public void onResponse(Call<ResponseForgotPassword> call, Response<ResponseForgotPassword> response) {
                             btnSend.setVisibility(View.INVISIBLE);
-                            Toast.makeText(ForgotPassword.this, "Sent to your email", Toast.LENGTH_SHORT).show();
-//
+                            Sprite foldingCube = new FoldingCube();
+                            progressBar.setIndeterminateDrawable(foldingCube);
+                            progressBar.setVisibility(View.VISIBLE);
+
+                            CountDownTimer countDownTimer = new CountDownTimer(3000,1000) {
+                                @Override
+                                public void onTick(long millisUntilFinished) {
+                                    int current = progressBar.getProgress();
+                                    if (current >= progressBar.getMax()){
+                                        current = 0;
+                                    }
+                                    progressBar.setProgress(current + 10);
+                                }
+                                @Override
+                                public void onFinish() {
+                                    progressBar.setVisibility(View.INVISIBLE);
+                                    onBackPressed();
+                                }
+                            };
+                            countDownTimer.start();
                         }
 
                         @Override
@@ -84,6 +104,6 @@ public class ForgotPassword extends AppCompatActivity {
         edtEmail = findViewById(R.id.inputEmail);
         btnSend = findViewById(R.id.btn_send);
         imgBack = findViewById(R.id.back);
-//        progressBar = findViewById(R.id.progress_forgot_pw);
+        progressBar = (ProgressBar)findViewById(R.id.spin_kit);
     }
 }

@@ -18,11 +18,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.oderapp.R;
 import com.example.oderapp.activities.ApiClient;
 import com.example.oderapp.activities.DetailActivity;
-import com.example.oderapp.model.Category;
+import com.example.oderapp.model.ItemAllFood;
 import com.example.oderapp.model.ItemFood;
 import com.example.oderapp.model.Note;
 import com.example.oderapp.model.ResponseBodyDTO;
-import com.example.oderapp.model.response.ResponseBodyCategory;
 import com.example.oderapp.utils.Contants;
 import com.example.oderapp.utils.StoreUtil;
 import com.github.ybq.android.spinkit.sprite.Sprite;
@@ -30,19 +29,18 @@ import com.github.ybq.android.spinkit.style.FoldingCube;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ItemProductAdappter extends RecyclerView.Adapter<ItemProductAdappter.ItemViewHolder>{
+public class ItemAllProductAdappter extends RecyclerView.Adapter<ItemAllProductAdappter.ItemViewHolder>{
 
     private Context mContext;
-     List<ItemFood> mItemFoodList;
+     ArrayList<ItemAllFood> mItemFoodList;
     // filter
 
-    public ItemProductAdappter(Context context, List<ItemFood> mItemFoodList) {
+    public ItemAllProductAdappter(Context context, ArrayList<ItemAllFood> mItemFoodList) {
         this.mContext = context;
         this.mItemFoodList = mItemFoodList;
     }
@@ -50,28 +48,32 @@ public class ItemProductAdappter extends RecyclerView.Adapter<ItemProductAdappte
     @Override
     public ItemViewHolder onCreateViewHolder( ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_product,parent,false);
+                .inflate(R.layout.item,parent,false);
         return new ItemViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder( ItemViewHolder holder, int position) {
 
-        ItemFood currentItem = mItemFoodList.get(position);
+        ItemAllFood currentItem = mItemFoodList.get(position);
 
         String imageUrl = currentItem.getUrl();
         String tenSp = currentItem.getTensp();
         int tien = currentItem.getGia();
+        String category = currentItem.getTendm();
         Picasso.with(mContext)
                 .load(imageUrl).error(R.drawable.pizza_cheese).fit().centerInside().into(holder.itemImage);
         holder.itemname.setText(tenSp);
         holder.itemprice.setText(Integer.toString(tien));
+        holder.itemCategory.setText(category);
 
-
+//        holder.tvdetail.setText(itemScfi.getDetail());
 
         holder.layoutItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                onClickgotoDetail(currentItem);
+
                 Intent i = new Intent(mContext,DetailActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("object",currentItem);
@@ -104,6 +106,7 @@ public class ItemProductAdappter extends RecyclerView.Adapter<ItemProductAdappte
                 countDownTimer.start();
 
 
+
                 String note = "";
                 Note nt = new Note(note);
                 Call<ResponseBodyDTO> loginResponeCall = ApiClient.getProductService().insertCart(currentItem.getId(),
@@ -122,7 +125,6 @@ public class ItemProductAdappter extends RecyclerView.Adapter<ItemProductAdappte
 
             }
         });
-
     }
 
     @Override
@@ -152,7 +154,7 @@ public class ItemProductAdappter extends RecyclerView.Adapter<ItemProductAdappte
              progressBar = (ProgressBar)itemView.findViewById(R.id.spin_kit);
         }
     }
-    public void filterList(ArrayList<ItemFood> filteredList){
+    public void filterList(ArrayList<ItemAllFood> filteredList){
         mItemFoodList = filteredList;
         notifyDataSetChanged();
     }

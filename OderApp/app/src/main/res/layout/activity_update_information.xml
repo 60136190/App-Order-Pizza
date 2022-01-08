@@ -218,21 +218,6 @@
 
 
     <Button
-        android:id="@+id/buttonImage"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_50sdp"
-        android:layout_margin="@dimen/_10sdp"
-        android:text="Update"
-        android:textColor="@color/white"
-        android:textSize="@dimen/_13ssp"
-        android:textStyle="bold"
-        android:visibility="gone"
-        app:backgroundTint="@color/primary"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
-
-    <Button
         android:id="@+id/buttonUpdate"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_50sdp"

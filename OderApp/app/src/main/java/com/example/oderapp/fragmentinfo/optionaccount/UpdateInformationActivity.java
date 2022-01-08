@@ -70,9 +70,6 @@ public class UpdateInformationActivity extends AppCompatActivity {
     private Button btnUpdate;
     private ImageView imgInfo;
     private Uri mUri;
-    private ProgressDialog mProgressDialog;
-
-    Button btnImage;
 
 //    private static final String TAG = "Upload ###";
 //    private static int IMAGE_REQ = 1;
@@ -114,8 +111,6 @@ public class UpdateInformationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_information);
         initUi();
-        mProgressDialog = new ProgressDialog(this);
-        mProgressDialog.setMessage("Please wait");
         getData();
 //        initCongif();
 
@@ -142,20 +137,22 @@ public class UpdateInformationActivity extends AppCompatActivity {
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String hoten = edtHoTen.getText().toString();
-                String username = edtUserName.getText().toString();
-                String ngaySinh = edtNgaySinh.getText().toString();
-                String sdt = edtDienThoai.getText().toString();
-                String url = edtUrl.getText().toString();
+//                String hoten = edtHoTen.getText().toString();
+//                String username = edtUserName.getText().toString();
+//                String ngaySinh = edtNgaySinh.getText().toString();
+//                String sdt = edtDienThoai.getText().toString();
+//                String url = edtUrl.getText().toString();
+//
+//                UserRequest userRequest = new UserRequest(hoten, username, ngaySinh, male, sdt, url);
+//                updateInfo(userRequest);
 
-                UserRequest userRequest = new UserRequest(hoten, username, ngaySinh, male, sdt, url);
-                updateInfo(userRequest);
 
+                if (mUri!= null){
+                    uploadImage();
 
-                if (mUri != null) {
-                    callApiRegisterAccount();
                 }
-                onBackPressed();
+
+//                onBackPressed();
 
             }
         });
@@ -166,10 +163,10 @@ public class UpdateInformationActivity extends AppCompatActivity {
             }
         });
 
+
     }
 
     private void initUi() {
-        btnImage = findViewById(R.id.buttonImage);
         imgInfo = findViewById(R.id.imgUserInfor);
         btnUpdate = findViewById(R.id.buttonUpdate);
         edtHoTen = findViewById(R.id.edt_ho_ten);
@@ -184,11 +181,6 @@ public class UpdateInformationActivity extends AppCompatActivity {
         imgBack = findViewById(R.id.back);
     }
 
-    @Override
-    public void onBackPressed() {
-        // code here to show dialog
-        super.onBackPressed();  // optional depending on your needs
-    }
 
     // update
     public void updateInfo(UserRequest userRequest) {
@@ -208,14 +200,14 @@ public class UpdateInformationActivity extends AppCompatActivity {
             }
         });
 
-        if (mUri != null){
-            callApiRegisterAccount();
-        }
+//        if (mUri != null){
+//            callApiRegisterAccount();
+//        }
 
     }
 
 
-    // get data user profile
+//     get data user profile
     public void getData() {
         Call<ResponseInformationUser> loginResponeCall = ApiClient.getService().getProfile(
                 "Bearer "+ StoreUtil.get(UpdateInformationActivity.this,"Authorization"));
@@ -282,36 +274,33 @@ public class UpdateInformationActivity extends AppCompatActivity {
         mActivityResultLauncher.launch(Intent.createChooser(intent, "Select picture"));
     }
 
-    private void callApiRegisterAccount() {
+    public void uploadImage() {
 //        mProgressDialog.show();
         HashMap<String, String> hashMap = new HashMap<>();
-        hashMap.put(Contants.accessToken,"Bearer " + StoreUtil.get(UpdateInformationActivity.this, Contants.accessToken));
-        hashMap.put(Contants.contentType, "multipart/form-data; boundary=<calculated when request is sent>");
+        hashMap.put("Postman-Token", "<calculated when request is sent>");
+        hashMap.put("Cookie", "refreshToken=" + StoreUtil.get(UpdateInformationActivity.this,Contants.refreshToken));
+        hashMap.put(Contants.contentType, "boundary=<calculated when request is sent>");
         hashMap.put(Contants.contentLength, "<calculated when request is sent>");
+        hashMap.put(Contants.accessToken,"Bearer " + StoreUtil.get(UpdateInformationActivity.this, Contants.accessToken));
 
         String strRealPath = RealPathUtil.getRealPath(this, mUri);
-        Log.e("Thainam", strRealPath);
-        File file = new File(strRealPath);
-        RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-
-        MultipartBody.Part multipartBody = MultipartBody.Part.createFormData(Const.KEY_FILE, file.getName(), requestBody);
-        Call<ReponseUrl> responseDTOCall = ApiClient.getService().uploadImage(hashMap, multipartBody);
+        File fileImage = new File(strRealPath);
+        RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"),fileImage);
+        MultipartBody.Part multipartBody = MultipartBody.Part.createFormData("file", fileImage.getName(),requestBody);
+        Call<ReponseUrl> responseDTOCall = ApiClient.getService().uploadImage(hashMap,multipartBody);
         responseDTOCall.enqueue(new Callback<ReponseUrl>() {
             @Override
             public void onResponse(Call<ReponseUrl> call, Response<ReponseUrl> response) {
-                mProgressDialog.dismiss();
-//                ReponseUrl reponseUrl = response.body();
-//                if (reponseUrl != null) {
-//                    Glide.with(UpdateInformationActivity.this)
-//                            .load(reponseUrl.getUrl())
-//                            .into(imgInfo);
-//                }
+
+                if (response.isSuccessful()){
+                    Toast.makeText(UpdateInformationActivity.this, "OK", Toast.LENGTH_SHORT).show();
+                    Log.e("Thainam", response.message());
+                }
             }
 
             @Override
             public void onFailure(Call<ReponseUrl> call, Throwable t) {
-                mProgressDialog.dismiss();
-                Toast.makeText(UpdateInformationActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                t.printStackTrace();
             }
         });
     }

@@ -170,6 +170,7 @@ public class CartFragment extends Fragment {
                 mRecyclerView.setAdapter(adappter);
                 mRecyclerView.setHasFixedSize(true);
                 mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                adappter.notifyDataSetChanged();
             }
 
             @Override

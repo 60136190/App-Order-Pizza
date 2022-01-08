@@ -3,23 +3,23 @@ package com.example.oderapp.model;
 
 import java.io.Serializable;
 
-public class ItemFood implements Serializable {
+public class ItemAllFood implements Serializable {
     private int id;
     private String tensp;
     private int gia;
     private String url;
     private String chitiet;
     private String size;
-    private int id_dm;
+    private String tendm;
 
-    public ItemFood(int id, String tensp, int gia, String url, String chitiet, String size, int id_dm) {
+    public ItemAllFood(int id, String tensp, int gia, String url, String chitiet, String size, String tendm) {
         this.id = id;
         this.tensp = tensp;
         this.gia = gia;
         this.url = url;
         this.chitiet = chitiet;
         this.size = size;
-        this.id_dm = id_dm;
+        this.tendm = tendm;
     }
 
     public int getId() {
@@ -70,11 +70,11 @@ public class ItemFood implements Serializable {
         this.size = size;
     }
 
-    public int getId_dm() {
-        return id_dm;
+    public String getTendm() {
+        return tendm;
     }
 
-    public void setId_dm(int id_dm) {
-        this.id_dm = id_dm;
+    public void setTendm(String tendm) {
+        this.tendm = tendm;
     }
 }
