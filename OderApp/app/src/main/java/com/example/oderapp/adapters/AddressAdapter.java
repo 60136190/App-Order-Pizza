@@ -130,46 +130,52 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.ItemView
                     @Override
                     public void onClick(View v) {
                         String strAddress = edtEditAddress.getText().toString();
-                        int id = currentItem.getId();
-                        Address address = new Address(strAddress);
+                        if (strAddress.isEmpty()) {
+                            Toast.makeText(v.getContext(), "Please insert your address", Toast.LENGTH_SHORT).show();
+                        } else {
 
-                        HashMap<String, String> hashMap = new HashMap<>();
-                        hashMap.put(Contants.accessToken, "Bearer " + StoreUtil.get(v.getContext(), Contants.accessToken));
-                        hashMap.put(Contants.contentLength, "<calculated when request is sent>");
-                        Call<ResponseDTO> loginResponeCall = ApiClient.getService().updateAddress(id, address, hashMap);
-                        loginResponeCall.enqueue(new Callback<ResponseDTO>() {
-                            @Override
-                            public void onResponse(Call<ResponseDTO> call, Response<ResponseDTO> response) {
-                                if (response.isSuccessful()) {
-                                    Sprite foldingCube = new FoldingCube();
-                                    progressBar.setIndeterminateDrawable(foldingCube);
-                                    progressBar.setVisibility(View.VISIBLE);
+                            int id = currentItem.getId();
+                            Address address = new Address(strAddress);
 
-                                    CountDownTimer countDownTimer = new CountDownTimer(3000, 1000) {
-                                        @Override
-                                        public void onTick(long millisUntilFinished) {
-                                            int current = progressBar.getProgress();
-                                            if (current >= progressBar.getMax()) {
-                                                current = 0;
+                            HashMap<String, String> hashMap = new HashMap<>();
+                            hashMap.put(Contants.accessToken, "Bearer " + StoreUtil.get(v.getContext(), Contants.accessToken));
+                            hashMap.put(Contants.contentLength, "<calculated when request is sent>");
+                            Call<ResponseDTO> loginResponeCall = ApiClient.getService().updateAddress(id, address, hashMap);
+                            loginResponeCall.enqueue(new Callback<ResponseDTO>() {
+                                @Override
+                                public void onResponse(Call<ResponseDTO> call, Response<ResponseDTO> response) {
+                                    if (response.isSuccessful()) {
+                                        Sprite foldingCube = new FoldingCube();
+                                        progressBar.setIndeterminateDrawable(foldingCube);
+                                        progressBar.setVisibility(View.VISIBLE);
+
+                                        CountDownTimer countDownTimer = new CountDownTimer(3000, 1000) {
+                                            @Override
+                                            public void onTick(long millisUntilFinished) {
+                                                int current = progressBar.getProgress();
+                                                if (current >= progressBar.getMax()) {
+                                                    current = 0;
+                                                }
+                                                progressBar.setProgress(current + 10);
                                             }
-                                            progressBar.setProgress(current + 10);
-                                        }
 
-                                        @Override
-                                        public void onFinish() {
-                                            progressBar.setVisibility(View.INVISIBLE);
-                                            dialog.dismiss();
-                                        }
+                                            @Override
+                                            public void onFinish() {
+                                                progressBar.setVisibility(View.INVISIBLE);
+                                                dialog.dismiss();
+                                            }
 
-                                    };
-                                    countDownTimer.start();
+                                        };
+                                        countDownTimer.start();
+                                    }
+
                                 }
 
-                            }
-                            @Override
-                            public void onFailure(Call<ResponseDTO> call, Throwable t) {
-                            }
-                        });
+                                @Override
+                                public void onFailure(Call<ResponseDTO> call, Throwable t) {
+                                }
+                            });
+                        }
                     }
                 });
             }

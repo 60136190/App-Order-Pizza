@@ -5,10 +5,11 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public class ReponseUrl{
+public class ReponseUrl implements Serializable{
     @SerializedName("public_id")
     @Expose
     private String publicId;
+
     @SerializedName("url")
     @Expose
     private String url;

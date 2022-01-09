@@ -35,10 +35,13 @@ import com.cloudinary.android.callback.ErrorInfo;
 import com.cloudinary.android.callback.UploadCallback;
 import com.example.oderapp.R;
 import com.example.oderapp.activities.ApiClient;
+import com.example.oderapp.activities.Login;
 import com.example.oderapp.api.ApiService;
 import com.example.oderapp.api.Const;
 import com.example.oderapp.model.InformationUser;
+import com.example.oderapp.model.request.DeleteImage;
 import com.example.oderapp.model.request.UserRequest;
+import com.example.oderapp.model.response.ReponseDeleteImage;
 import com.example.oderapp.model.response.ReponseUrl;
 import com.example.oderapp.model.response.ResponseDTO;
 import com.example.oderapp.model.response.ResponseInformationUser;
@@ -59,7 +62,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class UpdateInformationActivity extends AppCompatActivity {
-    private static final int MY_REQUEST_CODE = 10;
+    private static final int MY_REQUEST_CODE = 23;
     public static final String TAG = UpdateInformationActivity.class.getName();
     private EditText edtHoTen;
     private EditText edtUserName;
@@ -70,6 +73,7 @@ public class UpdateInformationActivity extends AppCompatActivity {
     private Button btnUpdate;
     private ImageView imgInfo;
     private Uri mUri;
+    RequestBody requestBody;
 
 //    private static final String TAG = "Upload ###";
 //    private static int IMAGE_REQ = 1;
@@ -111,6 +115,7 @@ public class UpdateInformationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_information);
         initUi();
+
         getData();
 //        initCongif();
 
@@ -137,22 +142,110 @@ public class UpdateInformationActivity extends AppCompatActivity {
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                String hoten = edtHoTen.getText().toString();
-//                String username = edtUserName.getText().toString();
-//                String ngaySinh = edtNgaySinh.getText().toString();
-//                String sdt = edtDienThoai.getText().toString();
-//                String url = edtUrl.getText().toString();
-//
-//                UserRequest userRequest = new UserRequest(hoten, username, ngaySinh, male, sdt, url);
-//                updateInfo(userRequest);
+//                deleteImage();
+                if (mUri != null) {
+                    String strRealPath = RealPathUtil.getRealPath(getApplicationContext(), mUri);
+                    File fileImage = new File(strRealPath);
+                    requestBody = RequestBody.create(MediaType.parse(getContentResolver().getType(mUri)), fileImage);
+                    MultipartBody.Part multipartBody = MultipartBody.Part.createFormData("file", fileImage.getName(), requestBody);
 
+                    // get profile to get data public_id and url
+                    Call<ResponseInformationUser> loginResponeCall = ApiClient.getService().getProfile(
+                            "Bearer " + StoreUtil.get(UpdateInformationActivity.this, "Authorization"));
+                    loginResponeCall.enqueue(new Callback<ResponseInformationUser>() {
+                        @Override
+                        public void onResponse(Call<ResponseInformationUser> call, retrofit2.Response<ResponseInformationUser> response) {
+                            InformationUser informationUser = response.body().getData().get(0);
+                            String url = informationUser.getUrl();
+                            String public_id = informationUser.getPublic_id();
+                            if (url.isEmpty() || public_id.isEmpty()) {
+                                // upload image
+                                Call<ReponseUrl> responseDTOCall = ApiClient.getService().uploadImage(
+                                        "Bearer " + StoreUtil.get(UpdateInformationActivity.this, Contants.accessToken),
+                                        multipartBody);
+                                responseDTOCall.enqueue(new Callback<ReponseUrl>() {
+                                    @Override
+                                    public void onResponse(Call<ReponseUrl> call, Response<ReponseUrl> response) {
+                                        String urll = response.body().getUrl();
+                                        String public_id = response.body().getPublicId();
+                                        String hoten = edtHoTen.getText().toString();
+                                        String username = edtUserName.getText().toString();
+                                        String ngaySinh = edtNgaySinh.getText().toString();
+                                        String sdt = edtDienThoai.getText().toString();
+                                        //upload information profile
+                                        UserRequest userRequest = new UserRequest(hoten, username, ngaySinh, male, sdt, public_id, urll);
+                                        updateInfo(userRequest);
+                                    }
 
-                if (mUri!= null){
-                    uploadImage();
+                                    @Override
+                                    public void onFailure(Call<ReponseUrl> call, Throwable t) {
+                                        t.printStackTrace();
+                                    }
+                                });
+                            }
+                            // if public_id and url on server not null (have data), then delete this image and then upload new image.
+                            else {
+                                //delete image
+                                deleteImage();
+
+                                // upload new image
+                                Call<ReponseUrl> responseDTOCall = ApiClient.getService().uploadImage(
+                                        "Bearer " + StoreUtil.get(UpdateInformationActivity.this, Contants.accessToken),
+                                        multipartBody);
+                                responseDTOCall.enqueue(new Callback<ReponseUrl>() {
+                                    @Override
+                                    public void onResponse(Call<ReponseUrl> call, Response<ReponseUrl> response) {
+                                        String urll = response.body().getUrl();
+                                        String public_id = response.body().getPublicId();
+                                        String hoten = edtHoTen.getText().toString();
+                                        String username = edtUserName.getText().toString();
+                                        String ngaySinh = edtNgaySinh.getText().toString();
+                                        String sdt = edtDienThoai.getText().toString();
+
+                                        UserRequest userRequest = new UserRequest(hoten, username, ngaySinh, male, sdt, public_id, urll);
+                                        updateInfo(userRequest);
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<ReponseUrl> call, Throwable t) {
+                                        t.printStackTrace();
+                                    }
+                                });
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ResponseInformationUser> call, Throwable t) {
+
+                        }
+                    });
+
+                } else {
+                    Call<ResponseInformationUser> loginResponeCall = ApiClient.getService().getProfile(
+                            "Bearer " + StoreUtil.get(UpdateInformationActivity.this, "Authorization"));
+                    loginResponeCall.enqueue(new Callback<ResponseInformationUser>() {
+                        @Override
+                        public void onResponse(Call<ResponseInformationUser> call, retrofit2.Response<ResponseInformationUser> response) {
+
+                            InformationUser informationUser = response.body().getData().get(0);
+                            String hoten = edtHoTen.getText().toString();
+                            String username = edtUserName.getText().toString();
+                            String ngaySinh = edtNgaySinh.getText().toString();
+                            String sdt = edtDienThoai.getText().toString();
+                            String url = informationUser.getUrl();
+                            String public_id = informationUser.getPublic_id();
+
+                            UserRequest userRequest = new UserRequest(hoten, username, ngaySinh, male, sdt, public_id, url);
+                            updateInfo(userRequest);
+                        }
+
+                        @Override
+                        public void onFailure(Call<ResponseInformationUser> call, Throwable t) {
+
+                        }
+                    });
 
                 }
-
-//                onBackPressed();
 
             }
         });
@@ -162,7 +255,6 @@ public class UpdateInformationActivity extends AppCompatActivity {
                 onClickRequestPermission();
             }
         });
-
 
     }
 
@@ -177,10 +269,8 @@ public class UpdateInformationActivity extends AppCompatActivity {
         radioGroup = findViewById(R.id.radioGroup);
         rdbMale = findViewById(R.id.Male);
         rdbFemale = findViewById(R.id.Female);
-
         imgBack = findViewById(R.id.back);
     }
-
 
     // update
     public void updateInfo(UserRequest userRequest) {
@@ -199,18 +289,12 @@ public class UpdateInformationActivity extends AppCompatActivity {
 
             }
         });
-
-//        if (mUri != null){
-//            callApiRegisterAccount();
-//        }
-
     }
 
-
-//     get data user profile
+    //     get data user profile
     public void getData() {
         Call<ResponseInformationUser> loginResponeCall = ApiClient.getService().getProfile(
-                "Bearer "+ StoreUtil.get(UpdateInformationActivity.this,"Authorization"));
+                "Bearer " + StoreUtil.get(UpdateInformationActivity.this, "Authorization"));
         loginResponeCall.enqueue(new Callback<ResponseInformationUser>() {
             @Override
             public void onResponse(Call<ResponseInformationUser> call, Response<ResponseInformationUser> response) {
@@ -220,19 +304,18 @@ public class UpdateInformationActivity extends AppCompatActivity {
                 edtNgaySinh.setText(informationUser.getNgaysinh());
                 edtDienThoai.setText(informationUser.getDienthoai());
                 edtUrl.setText(informationUser.getUrl());
+                String im = informationUser.getUrl();
+                if (im.isEmpty()) {
+                    imgInfo.setImageResource(R.drawable.loadimage);
+                }else{
+                    Glide.with(getApplicationContext())
+                            .load(im)
+                            .into(imgInfo);
+                }
                 if (informationUser.getGioitinh() == 1) {
                     rdbMale.setChecked(true);
                 } else {
                     rdbFemale.setChecked(true);
-                }
-
-                String im="";
-                if (informationUser.getUrl().equals(im)) {
-                    imgInfo.setImageResource(R.drawable.loadimage);
-                }else{
-                    Glide.with(getApplicationContext())
-                            .load(informationUser.getUrl())
-                            .into(imgInfo);
                 }
             }
 
@@ -274,34 +357,40 @@ public class UpdateInformationActivity extends AppCompatActivity {
         mActivityResultLauncher.launch(Intent.createChooser(intent, "Select picture"));
     }
 
-    public void uploadImage() {
-//        mProgressDialog.show();
-        HashMap<String, String> hashMap = new HashMap<>();
-        hashMap.put("Postman-Token", "<calculated when request is sent>");
-        hashMap.put("Cookie", "refreshToken=" + StoreUtil.get(UpdateInformationActivity.this,Contants.refreshToken));
-        hashMap.put(Contants.contentType, "boundary=<calculated when request is sent>");
-        hashMap.put(Contants.contentLength, "<calculated when request is sent>");
-        hashMap.put(Contants.accessToken,"Bearer " + StoreUtil.get(UpdateInformationActivity.this, Contants.accessToken));
+    public void deleteImage() {
 
-        String strRealPath = RealPathUtil.getRealPath(this, mUri);
-        File fileImage = new File(strRealPath);
-        RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"),fileImage);
-        MultipartBody.Part multipartBody = MultipartBody.Part.createFormData("file", fileImage.getName(),requestBody);
-        Call<ReponseUrl> responseDTOCall = ApiClient.getService().uploadImage(hashMap,multipartBody);
-        responseDTOCall.enqueue(new Callback<ReponseUrl>() {
+        Call<ResponseInformationUser> loginResponeCall = ApiClient.getService().getProfile(
+                "Bearer " + StoreUtil.get(UpdateInformationActivity.this, "Authorization"));
+        loginResponeCall.enqueue(new Callback<ResponseInformationUser>() {
             @Override
-            public void onResponse(Call<ReponseUrl> call, Response<ReponseUrl> response) {
+            public void onResponse(Call<ResponseInformationUser> call, retrofit2.Response<ResponseInformationUser> response) {
+                InformationUser informationUser = response.body().getData().get(0);
+                String public_id = informationUser.getPublic_id();
+                DeleteImage deleteImage = new DeleteImage(public_id);
+                Call<ReponseDeleteImage> responseDTOCall = ApiClient.getService().deleteImage(
+                        "Bearer " + StoreUtil.get(UpdateInformationActivity.this, Contants.accessToken)
+                        , deleteImage);
+                responseDTOCall.enqueue(new Callback<ReponseDeleteImage>() {
+                    @Override
+                    public void onResponse(Call<ReponseDeleteImage> call, Response<ReponseDeleteImage> response) {
 
-                if (response.isSuccessful()){
-                    Toast.makeText(UpdateInformationActivity.this, "OK", Toast.LENGTH_SHORT).show();
-                    Log.e("Thainam", response.message());
-                }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ReponseDeleteImage> call, Throwable t) {
+                        t.printStackTrace();
+                    }
+                });
+
             }
 
+
             @Override
-            public void onFailure(Call<ReponseUrl> call, Throwable t) {
-                t.printStackTrace();
+            public void onFailure(Call<ResponseInformationUser> call, Throwable t) {
+
             }
         });
+
+
     }
 }

@@ -6,10 +6,12 @@ import com.example.oderapp.model.Address;
 import com.example.oderapp.model.ItemBill;
 import com.example.oderapp.model.Rating;
 import com.example.oderapp.model.request.ChangePasswordRequest;
+import com.example.oderapp.model.request.DeleteImage;
 import com.example.oderapp.model.request.ForgotPasswordRequest;
 import com.example.oderapp.model.request.UserRequest;
 import com.example.oderapp.model.request.VoucherRequest;
 import com.example.oderapp.model.response.RefreshTokenRespone;
+import com.example.oderapp.model.response.ReponseDeleteImage;
 import com.example.oderapp.model.response.ReponseUrl;
 import com.example.oderapp.model.response.ResponseBodyAddress;
 import com.example.oderapp.model.response.ResponseBodyBill;
@@ -72,7 +74,7 @@ public interface UserService {
     Call<ResponseInformationUser> getProfile(@Header("Authorization") String authorization);
 
     @DELETE("/customer/logout")
-    Call<ResponseDTO> deleteUser();
+    Call<ResponseDTO> deleteUser(@Header("Cookie") String refreshToken);
 
     @POST("/address/add")
     Call<ResponseBodyAddress> insertAddress(@Header("Authorization") String authorization,@Body Address address);
@@ -116,6 +118,9 @@ public interface UserService {
 
     @Multipart
     @POST("/cloud/uploadUserImage/customer")
-    Call<ReponseUrl> uploadImage(@HeaderMap HashMap<String,String> hashMap,@Part MultipartBody.Part file);
+    Call<ReponseUrl> uploadImage(@Header("Authorization") String authorization,@Part MultipartBody.Part file);
+
+    @POST("/cloud/destroy/customer")
+    Call<ReponseDeleteImage> deleteImage(@Header("Authorization") String authorization, @Body DeleteImage deleteImage);
 }
 

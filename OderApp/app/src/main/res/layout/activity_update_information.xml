@@ -111,7 +111,7 @@
         app:startIconTint="@color/primary">
     <EditText
         android:id="@+id/edt_ngay_sinh"
-        android:layout_width="@dimen/_130sdp"
+        android:layout_width="@dimen/_140sdp"
         android:layout_height="wrap_content"
         android:background="@drawable/background_input"
         android:hint="Date of birth"
@@ -171,7 +171,7 @@
         app:startIconTint="@color/primary">
     <EditText
         android:id="@+id/edt_phone_number"
-        android:layout_width="@dimen/_130sdp"
+        android:layout_width="@dimen/_140sdp"
         android:layout_height="wrap_content"
         android:background="@drawable/background_input"
         android:hint="Phone number"
