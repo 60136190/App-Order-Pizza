@@ -4,30 +4,20 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.chauthai.swipereveallayout.SwipeRevealLayout;
 import com.example.oderapp.R;
 import com.example.oderapp.activities.ApiClient;
-import com.example.oderapp.model.ItemAllFood;
-import com.example.oderapp.model.ItemCart;
 import com.example.oderapp.model.ItemDetailBill;
 import com.example.oderapp.model.ItemFood;
-import com.example.oderapp.model.request.QualityProduct;
-import com.example.oderapp.model.response.ResponseBodyAllProduct;
-import com.example.oderapp.model.response.ResponseBodyCart;
 import com.example.oderapp.model.response.ResponseBodyProduct;
 import com.example.oderapp.utils.Contants;
 import com.example.oderapp.utils.StoreUtil;
 import com.squareup.picasso.Picasso;
 
-import java.util.HashMap;
 import java.util.List;
 
 import retrofit2.Call;
@@ -71,12 +61,12 @@ public class ItemDetailBillAdappter extends RecyclerView.Adapter<ItemDetailBillA
 
 
         //---------------------------------------------
-        Call<ResponseBodyAllProduct> responseBodyProductCall = ApiClient.getProductService().getDescription(id_sp,
+        Call<ResponseBodyProduct> responseBodyProductCall = ApiClient.getProductService().getDescription(id_sp,
                 "Bearer " + StoreUtil.get(mContext.getApplicationContext(), Contants.accessToken));
-        responseBodyProductCall.enqueue(new Callback<ResponseBodyAllProduct>() {
+        responseBodyProductCall.enqueue(new Callback<ResponseBodyProduct>() {
             @Override
-            public void onResponse(Call<ResponseBodyAllProduct> call, Response<ResponseBodyAllProduct> response) {
-                ItemAllFood itemFood = response.body().getData().get(0);
+            public void onResponse(Call<ResponseBodyProduct> call, Response<ResponseBodyProduct> response) {
+                ItemFood itemFood = response.body().getData().get(0);
                 String anh = itemFood.getUrl();
                 holder.tv_nameProduct.setText(itemFood.getTensp());
 
@@ -85,7 +75,7 @@ public class ItemDetailBillAdappter extends RecyclerView.Adapter<ItemDetailBillA
             }
 
             @Override
-            public void onFailure(Call<ResponseBodyAllProduct> call, Throwable t) {
+            public void onFailure(Call<ResponseBodyProduct> call, Throwable t) {
                 t.printStackTrace();
             }
         });

@@ -170,6 +170,16 @@
                         android:text="Female"
                         android:textColor="@color/primary" />
                 </RadioGroup>
+                <TextView
+                    android:id="@+id/tv_validateSex"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/teal_700"
+                    android:layout_marginLeft="@dimen/_15sdp"
+                    android:textSize="@dimen/_11ssp"
+                    app:layout_constraintLeft_toLeftOf="@+id/radioGroup"
+                    app:layout_constraintTop_toBottomOf="@+id/radioGroup"/>
+
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/til_phone_number"
@@ -191,6 +201,7 @@
                         android:background="@drawable/background_input"
                         android:hint="Phone number"
                         android:inputType="number"
+                        android:maxLength="10"
                         android:paddingStart="@dimen/_20ssp"
                         android:textColor="@color/primary"
                         android:textColorHint="@color/primary"

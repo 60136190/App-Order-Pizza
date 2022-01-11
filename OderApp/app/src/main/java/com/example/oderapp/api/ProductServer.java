@@ -1,33 +1,25 @@
 package com.example.oderapp.api;
 
-import com.example.oderapp.model.ItemBill;
-import com.example.oderapp.model.ItemCart;
-import com.example.oderapp.model.ItemFood;
 import com.example.oderapp.model.Note;
 import com.example.oderapp.model.ResponseBodyDTO;
 import com.example.oderapp.model.request.QualityProduct;
-import com.example.oderapp.model.response.ResponseBodyAddress;
-import com.example.oderapp.model.response.ResponseBodyAllProduct;
 import com.example.oderapp.model.response.ResponseBodyBill;
 import com.example.oderapp.model.response.ResponseBodyCart;
 import com.example.oderapp.model.response.ResponseBodyCategory;
 import com.example.oderapp.model.response.ResponseBodyProduct;
 import com.example.oderapp.model.response.ResponseBodyQuantilyAndPrice;
-import com.example.oderapp.model.response.ResponseDTO;
 
 import java.util.HashMap;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
-import retrofit2.http.Field;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.HeaderMap;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
-import retrofit2.http.Query;
 
 public interface ProductServer {
     @POST("/cart/addCartItem/{id_sp}")
@@ -45,7 +37,7 @@ public interface ProductServer {
 
     // get product with id, then show name's product.
     @GET("/product/{id}")
-    Call<ResponseBodyAllProduct> getDescription(@Path("id") int id, @Header("Authorization") String authorization);
+    Call<ResponseBodyProduct> getDescription(@Path("id") int id, @Header("Authorization") String authorization);
 
     //get category
     @GET("/category/")
@@ -70,17 +62,14 @@ public interface ProductServer {
     // get drink
     @GET("/category/20")
     Call<ResponseBodyProduct> getDrink(@Header("Authorization") String authorization);
-    //get all product
-    @GET("/product/")
-    Call<ResponseBodyAllProduct> getAllProduct(@Header("Authorization") String authorization);
 
     // Sort product -->
     @GET("/product/sort/asc")
-    Call<ResponseBodyAllProduct> sortProductAsc (@Header("Authorization") String authorization);
+    Call<ResponseBodyProduct> sortProductAsc (@Header("Authorization") String authorization);
 
     // Sort product <--
     @GET("product/sort/desc")
-    Call<ResponseBodyAllProduct> sortProductDesc (@Header("Authorization") String authorization);
+    Call<ResponseBodyProduct> sortProductDesc (@Header("Authorization") String authorization);
 
     // delete item in cart with id
     @DELETE("/cart/delete/{id}")

@@ -5,6 +5,7 @@ import com.example.oderapp.activities.LoginRespone;
 import com.example.oderapp.model.Address;
 import com.example.oderapp.model.ItemBill;
 import com.example.oderapp.model.Rating;
+import com.example.oderapp.model.UserRegister;
 import com.example.oderapp.model.request.ChangePasswordRequest;
 import com.example.oderapp.model.request.DeleteImage;
 import com.example.oderapp.model.request.ForgotPasswordRequest;
@@ -48,12 +49,13 @@ import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 
 public interface UserService {
+    // register
+    @POST("customer/register")
+    Call<UserRegister> sendPost(@Body UserRegister userRegister);
+
     @POST("/customer/login")
     Call<LoginRespone> loginUser(@HeaderMap HashMap<String, String> hashMap,@Body LoginRequest loginRequest);
 
-    // register with google
-    @GET("auth/google")
-    Call<LoginRespone> registerUsingGoogle();
 
     @GET("/customer/refreshToken")
     Call<RefreshTokenRespone> refreshToken(@Header("Cookie") String refreshToken);

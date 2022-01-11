@@ -17,6 +17,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.oderapp.R;
 import com.example.oderapp.api.ApiService;
 import com.example.oderapp.model.UserRegister;
+import com.example.oderapp.utils.Contants;
+import com.example.oderapp.utils.StoreUtil;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -42,6 +44,7 @@ public class SignUp extends AppCompatActivity {
     private EditText edtHoTen;
     private EditText edtUserName;
     private EditText edtNgaySinh;
+    private TextView tvValidateSex;
     private EditText edtDienThoai;
     private EditText edtEmail;
     private EditText edtPassword;
@@ -49,6 +52,8 @@ public class SignUp extends AppCompatActivity {
     private ImageView imgBack;
 
     private RadioGroup radioGroup;
+    private RadioButton rdbMale;
+    private RadioButton rdbFemale;
     int sex = 0;
 
     @Override
@@ -76,58 +81,7 @@ public class SignUp extends AppCompatActivity {
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (TextUtils.isEmpty(edtHoTen.getText().toString()) || TextUtils.isEmpty(edtUserName.getText().toString()) ||
-                        TextUtils.isEmpty(edtNgaySinh.getText().toString()) ||
-                        TextUtils.isEmpty(edtDienThoai.getText().toString()) || TextUtils.isEmpty(edtEmail.getText().toString()) ||
-                        TextUtils.isEmpty(edtPassword.getText().toString()) || TextUtils.isEmpty(edtConfrimPassword.getText().toString())){
-
-                    if (TextUtils.isEmpty(edtEmail.getText().toString())){
-                        tilEmail.setError("Email is blank");
-                    }else{
-                        tilEmail.setHelperText("Valid");
-                    }
-
-                    if (TextUtils.isEmpty(edtPassword.getText().toString())){
-                        tilPassword.setError("Password is blank");
-                    }else{
-                        tilPassword.setHelperText("Valid");
-                    }
-
-                    if (TextUtils.isEmpty(edtConfrimPassword.getText().toString())){
-                        tilConfirmPassword.setError("Confirm password is blank");
-                    }else{
-                        tilConfirmPassword.setHelperText("Valid");
-                    }
-
-                    if (TextUtils.isEmpty(edtHoTen.getText().toString())){
-                        tilFullName.setError("Full name is blank");
-                    }else{
-                        tilFullName.setHelperText("Valid");
-                    }
-
-                    if (TextUtils.isEmpty(edtUserName.getText().toString())){
-                        tilUserName.setError("User name is blank");
-                    }else{
-                        tilUserName.setHelperText("Valid");
-                    }
-
-                    if (TextUtils.isEmpty(edtNgaySinh.getText().toString())){
-                        tilDateofBirth.setError("Date of birth is bla nk");
-                    }else{
-                        tilDateofBirth.setHelperText("Valid");
-                    }
-
-                    if (TextUtils.isEmpty(edtDienThoai.getText().toString())){
-                        tilPhoneNumber.setError("Phone number is blank");
-                    }else{
-                        tilPhoneNumber.setHelperText("Valid");
-                    }
-
-
-                } else {
                     registerUser();
-                }
-
             }
         });
 
@@ -151,12 +105,15 @@ public class SignUp extends AppCompatActivity {
         edtHoTen = findViewById(R.id.edt_ho_ten);
         edtUserName = findViewById(R.id.edt_username);
         edtNgaySinh = findViewById(R.id.edt_ngay_sinh);
+        tvValidateSex = findViewById(R.id.tv_validateSex);
         edtDienThoai = findViewById(R.id.edt_phone_number);
         edtEmail = findViewById(R.id.edt_email);
         edtPassword = findViewById(R.id.edt_password);
         edtConfrimPassword = findViewById(R.id.edt_confirm_password);
         imgBack = findViewById(R.id.back);
         radioGroup = findViewById(R.id.radioGroup);
+        rdbMale = findViewById(R.id.Male);
+        rdbFemale = findViewById(R.id.Female);
 
         tilFullName = findViewById(R.id.til_full_name);
         tilUserName = findViewById(R.id.til_username);
@@ -168,7 +125,6 @@ public class SignUp extends AppCompatActivity {
     }
 
     private void registerUser() {
-
         String hoTen = edtHoTen.getText().toString().trim();
         String userName = edtUserName.getText().toString().trim();
         String ngaySinh = edtNgaySinh.getText().toString().trim();
@@ -177,27 +133,162 @@ public class SignUp extends AppCompatActivity {
         String password = edtPassword.getText().toString().trim();
         String confirmPassword = edtConfrimPassword.getText().toString();
 
-
-        UserRegister userRegister = new UserRegister(hoTen, userName, ngaySinh, sex, dienThoai, email, password);
-        ApiService.apiservice.sendPost(userRegister).enqueue(new Callback<UserRegister>() {
-            @Override
-            public void onResponse(Call<UserRegister> call, Response<UserRegister> response) {
-                if (response.isSuccessful()) {
-                    String message = "Sign up Successfully";
-                    Toast.makeText(SignUp.this, message, Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(SignUp.this, Login.class));
-                    finish();
-                } else {
-                    String message = "Try again....";
-                    Toast.makeText(SignUp.this, message, Toast.LENGTH_SHORT).show();
+        if (validateFullName() && validateUsername() && validateDateofBirth() && validateSex()
+            && validatePhoneNumber() && validateEmail() && validatePassword() && validateConfirmPassword()) {
+            UserRegister userRegister = new UserRegister(hoTen, userName, ngaySinh, sex, dienThoai, email, password);
+            Call<UserRegister> loginResponeCall = ApiClient.getService().sendPost(userRegister);
+            loginResponeCall.enqueue(new Callback<UserRegister>() {
+                @Override
+                public void onResponse(Call<UserRegister> call, Response<UserRegister> response) {
+                    if (response.isSuccessful()) {
+                        String message = "Sign up Successfully";
+                        Toast.makeText(SignUp.this, message, Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(SignUp.this, Login.class));
+                        finish();
+                    } else {
+                        String message = "Try again....";
+                        Toast.makeText(SignUp.this, message, Toast.LENGTH_SHORT).show();
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<UserRegister> call, Throwable t) {
-                Toast.makeText(SignUp.this, "Call Api Error", Toast.LENGTH_SHORT);
-            }
-        });
+                @Override
+                public void onFailure(Call<UserRegister> call, Throwable t) {
+                    Toast.makeText(SignUp.this, "Call Api Error", Toast.LENGTH_SHORT);
+                }
+            });
+        }
+
+    }
+    private boolean validateFullName() {
+        String fullname = edtHoTen.getText().toString().trim();
+        if (fullname.length() < 8){
+            tilFullName.setError("Minimum 8 Chac");
+            return false;
+        }else if (!fullname.matches(".*[A-Z].*")){
+            tilFullName.setError("Must contain 1 upper-case Character");
+            return false;
+        }else if (!fullname.matches(".*[a-z].*")) {
+            tilFullName.setError("Must contain 1 Lower-case Character");
+            return false;
+        }else if (fullname.matches(".*[0-9].*")) {
+            tilFullName.setError("Not number");
+            return false;
+        }else if (fullname.matches(".*[@!#$%^&*()_+=<>?/|].*")) {
+            tilFullName.setError("Not special character");
+            return false;
+        }
+        else {
+            tilFullName.setError(null);
+            return true;
+        }
+    }
+    private boolean validateUsername() {
+        String userName = edtUserName.getText().toString().trim();
+        if (userName.length() < 6){
+            tilUserName.setError("Minimum 6 Character");
+            return false;
+        }else if (!userName.matches(".*[a-z].*")) {
+            tilUserName.setError("Contain 1 a-z");
+            return false;
+        }
+        else {
+            tilUserName.setError(null);
+            return true;
+        }
+    }
+    private boolean validateDateofBirth() {
+        String dateofbirth = edtNgaySinh.getText().toString().trim();
+        if (dateofbirth.length() < 10){
+            tilDateofBirth.setError("Minimum 10 Chac");
+            return false;
+        }
+        else {
+            tilDateofBirth.setError(null);
+            return true;
+        }
+    }
+    private boolean validateSex() {
+        if (!rdbMale.isChecked() && !rdbFemale.isChecked()){
+            tvValidateSex.setError("");
+            return false;
+        }
+        else {
+            tvValidateSex.setError(null);
+            return true;
+        }
+    }
+    private boolean validatePhoneNumber() {
+        String phonenumber = edtDienThoai.getText().toString().trim();
+        if (phonenumber.length() < 10){
+            tilPhoneNumber.setError("Minimum 10 Chac");
+            return false;
+        }else if (phonenumber.matches(".*[-,._].*")) {
+            tilPhoneNumber.setError("Not special character");
+            return false;
+        }else if (phonenumber.matches(".*[A-Z].*")) {
+            tilPhoneNumber.setError("Not character");
+            return false;
+        }else if (phonenumber.matches(".*[a-z].*")) {
+            tilPhoneNumber.setError("Not character");
+            return false;
+        }
+        else {
+            tilPhoneNumber.setError(null);
+            return true;
+        }
+    }
+    private boolean validateEmail() {
+        String email = edtEmail.getText().toString().trim();
+        if (email.isEmpty()){
+            tilEmail.setError("Email can't empty");
+            return false;
+        }else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            tilEmail.setError("Please enter a valid email address");
+            return false;
+        }
+        else {
+            tilEmail.setError(null);
+            return true;
+        }
+    }
+    private boolean validatePassword() {
+        String pass = edtPassword.getText().toString().trim();
+        if (pass.length() < 8){
+            tilPassword.setError("Minimum 8 Chac");
+            return false;
+        }else if (!pass.matches(".*[A-Z].*")){
+            tilPassword.setError("Must contain 1 upper-case Character");
+            return false;
+        }else if (!pass.matches(".*[a-z].*")) {
+            tilPassword.setError("Must contain 1 Lower-case Character");
+            return false;
+        }else if (!pass.matches(".*[@!#$%^&*()_+=<>?/|].*")) {
+            tilPassword.setError("Must contain 1 special character (@!#$%^&*()_+=<>?/|)");
+            return false;
+        }else if (!pass.matches(".*[0-9].*")) {
+            tilPassword.setError("Must contain at least 1 number");
+            return false;
+        }
+        else if (!pass.matches("\\S+$")) {
+            tilPassword.setError("Must be no white space");
+            return false;
+        }
+        else {
+            tilPassword.setError(null);
+            return true;
+        }
+    }
+    private boolean validateConfirmPassword() {
+        String password = edtPassword.getText().toString().trim();
+        String confirmPass = edtConfrimPassword.getText().toString().trim();
+        if (confirmPass.equals(password)){
+            tilConfirmPassword.setError(null);
+            return true;
+        }
+        else {
+            tilConfirmPassword.setError("Password and Confirm are not match");
+            return false;
+        }
     }
 
 }

@@ -1,9 +1,6 @@
 package com.example.oderapp.adapters;
 
-import android.content.ClipData;
 import android.content.Context;
-import android.media.Image;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,33 +10,20 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chauthai.swipereveallayout.SwipeRevealLayout;
 import com.example.oderapp.R;
 import com.example.oderapp.activities.ApiClient;
-import com.example.oderapp.eventbus.EvenbusAddress;
-import com.example.oderapp.eventbus.EvenbusiSizeListCart;
-import com.example.oderapp.model.Currency;
-import com.example.oderapp.model.GetItemCart;
-import com.example.oderapp.model.ItemAllFood;
 import com.example.oderapp.model.ItemCart;
 import com.example.oderapp.model.ItemFood;
-import com.example.oderapp.model.UserRegister;
 import com.example.oderapp.model.request.QualityProduct;
-import com.example.oderapp.model.response.ResponseBodyAddress;
-import com.example.oderapp.model.response.ResponseBodyAllProduct;
 import com.example.oderapp.model.response.ResponseBodyCart;
 import com.example.oderapp.model.response.ResponseBodyProduct;
 import com.example.oderapp.utils.Contants;
 import com.example.oderapp.utils.StoreUtil;
 import com.squareup.picasso.Picasso;
 
-import org.greenrobot.eventbus.EventBus;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -183,12 +167,12 @@ public class ItemCartAdappter extends RecyclerView.Adapter<ItemCartAdappter.Item
         });
 
         //---------------------------------------------
-        Call<ResponseBodyAllProduct> responseBodyProductCall = ApiClient.getProductService().getDescription(id_sp,
+        Call<ResponseBodyProduct> responseBodyProductCall = ApiClient.getProductService().getDescription(id_sp,
                 "Bearer " + StoreUtil.get(mContext.getApplicationContext(), Contants.accessToken));
-        responseBodyProductCall.enqueue(new Callback<ResponseBodyAllProduct>() {
+        responseBodyProductCall.enqueue(new Callback<ResponseBodyProduct>() {
             @Override
-            public void onResponse(Call<ResponseBodyAllProduct> call, Response<ResponseBodyAllProduct> response) {
-                ItemAllFood itemFood = response.body().getData().get(0);
+            public void onResponse(Call<ResponseBodyProduct> call, Response<ResponseBodyProduct> response) {
+                ItemFood itemFood = response.body().getData().get(0);
                 String anh = itemFood.getUrl();
 //                holder.tv_nameProduct.setText(itemFood.getTensp());
                 holder.tv_nameProduct.setText(itemFood.getTensp());
@@ -198,7 +182,7 @@ public class ItemCartAdappter extends RecyclerView.Adapter<ItemCartAdappter.Item
             }
 
             @Override
-            public void onFailure(Call<ResponseBodyAllProduct> call, Throwable t) {
+            public void onFailure(Call<ResponseBodyProduct> call, Throwable t) {
                 t.printStackTrace();
             }
         });

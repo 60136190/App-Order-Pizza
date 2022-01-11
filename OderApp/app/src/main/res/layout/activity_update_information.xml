@@ -158,13 +158,24 @@
             android:text="Female"
             android:textColor="@color/primary" />
     </RadioGroup>
+        <TextView
+            android:id="@+id/tv_validateSex"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/teal_700"
+            android:layout_marginLeft="@dimen/_15sdp"
+            android:textSize="@dimen/_11ssp"
+            app:layout_constraintLeft_toLeftOf="@+id/radioGroup"
+            app:layout_constraintTop_toBottomOf="@+id/radioGroup"/>
 
-    <com.google.android.material.textfield.TextInputLayout
+
+        <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_phone_number"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_10sdp"
+        android:maxLength="10"
         app:startIconDrawable="@drawable/ic_baseline_local_phone_24"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/til_date_of_birth"
@@ -182,29 +193,6 @@
         />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/til_url"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_10sdp"
-        app:startIconDrawable="@drawable/ic_baseline_link_24"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/til_phone_number"
-        app:startIconTint="@color/primary">
-    <EditText
-        android:id="@+id/edt_url"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/background_input"
-        android:hint="Url your image"
-        android:paddingStart="@dimen/_20ssp"
-        android:textColor="@color/primary"
-        android:textColorHint="@color/primary"
-        android:textSize="@dimen/_13ssp"
-         />
-    </com.google.android.material.textfield.TextInputLayout>
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imgUserInfor"
         android:layout_width="@dimen/_150sdp"
@@ -214,7 +202,7 @@
         android:src="@drawable/loadimage"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/til_url" />
+        app:layout_constraintTop_toBottomOf="@id/til_phone_number" />
 
 
     <Button
@@ -231,5 +219,15 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+    <com.github.ybq.android.spinkit.SpinKitView
+        android:id="@+id/spin_kit"
+        style="@style/SpinKitView.Large.FoldingCube"
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="@dimen/_50sdp"
+        android:max="150"
+        android:progress="10"
+        android:visibility="invisible"
+        android:layout_gravity="center"
+        app:SpinKit_Color="@color/main_color" />
     </FrameLayout>
 

@@ -11,6 +11,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +22,7 @@ import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -46,6 +48,8 @@ import com.example.oderapp.model.response.ResponseDTO;
 import com.example.oderapp.model.response.ResponseInformationUser;
 import com.example.oderapp.utils.Contants;
 import com.example.oderapp.utils.StoreUtil;
+import com.github.ybq.android.spinkit.sprite.Sprite;
+import com.github.ybq.android.spinkit.style.FoldingCube;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -173,24 +177,6 @@ public class InfoFragment extends Fragment {
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                HashMap<String, String> hashMap = new HashMap<>();
-//                hashMap.put(Contants.refreshToken, "Bearer " + StoreUtil.get(getContext(), Contants.refreshToken));
-//                hashMap.put(Contants.contentType, "application/json");
-
-//                Call<ResponseDTO> loginResponeCall = ApiClient.getService().deleteUser();
-//                loginResponeCall.enqueue(new Callback<ResponseDTO>() {
-//                    @Override
-//                    public void onResponse(Call<ResponseDTO> call, Response<ResponseDTO> response) {
-//                        Toast.makeText(getContext(), "OK", Toast.LENGTH_SHORT).show();
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Call<ResponseDTO> call, Throwable t) {
-//                        Toast.makeText(getContext(), "ERROR", Toast.LENGTH_SHORT).show();
-//
-//                    }
-//                });
-
 
                 final Dialog dialog = new Dialog(v.getContext());
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -207,7 +193,7 @@ public class InfoFragment extends Fragment {
                 WindowManager.LayoutParams windowAtribute = window.getAttributes();
                 window.setAttributes(windowAtribute);
 
-
+                 ProgressBar progressBar =dialog.findViewById(R.id.spin_kit);
                 Button btnCancel = dialog.findViewById(R.id.btn_cancel);
                 Button btnLogout = dialog.findViewById(R.id.btn_logout);
 
@@ -227,9 +213,32 @@ public class InfoFragment extends Fragment {
                         loginResponeCall.enqueue(new Callback<ResponseDTO>() {
                             @Override
                             public void onResponse(Call<ResponseDTO> call, retrofit2.Response<ResponseDTO> response) {
-                                SharedPreferences preferences = getContext().getSharedPreferences("MySharedPref", 0);
-                                preferences.edit().remove("refreshToken").commit();
-                                getActivity().finish();
+                                if (response.isSuccessful()) {
+                                    SharedPreferences preferences = getContext().getSharedPreferences("MySharedPref", 0);
+                                    preferences.edit().remove("refreshToken").commit();
+                                    Sprite foldingCube = new FoldingCube();
+                                    progressBar.setIndeterminateDrawable(foldingCube);
+                                    progressBar.setVisibility(View.VISIBLE);
+
+                                    CountDownTimer countDownTimer = new CountDownTimer(5000, 1000) {
+                                        @Override
+                                        public void onTick(long millisUntilFinished) {
+                                            int current = progressBar.getProgress();
+                                            if (current >= progressBar.getMax()) {
+                                                current = 0;
+                                            }
+                                            progressBar.setProgress(current + 10);
+                                        }
+
+                                        @Override
+                                        public void onFinish() {
+                                            progressBar.setVisibility(View.INVISIBLE);
+                                            getActivity().finish();
+                                        }
+
+                                    };
+                                    countDownTimer.start();
+                                }
                             }
 
                             @Override

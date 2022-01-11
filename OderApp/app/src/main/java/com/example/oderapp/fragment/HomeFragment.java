@@ -1,11 +1,10 @@
 package com.example.oderapp.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -15,12 +14,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ViewFlipper;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.Person;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -33,16 +29,12 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.oderapp.R;
 import com.example.oderapp.activities.ApiClient;
+import com.example.oderapp.activities.InformationUserActivity;
 import com.example.oderapp.adapters.HotThisMonthAdapter;
-import com.example.oderapp.adapters.ItemAllProductAdappter;
-import com.example.oderapp.adapters.ItemCartAdappter;
 import com.example.oderapp.adapters.ItemProductAdappter;
 import com.example.oderapp.model.Hot;
 import com.example.oderapp.model.InformationUser;
-import com.example.oderapp.model.ItemAllFood;
 import com.example.oderapp.model.ItemFood;
-import com.example.oderapp.model.response.ResponseBodyAllProduct;
-import com.example.oderapp.model.response.ResponseBodyCart;
 import com.example.oderapp.model.response.ResponseBodyProduct;
 import com.example.oderapp.model.response.ResponseInformationUser;
 import com.example.oderapp.utils.Contants;
@@ -55,9 +47,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
 
 import retrofit2.Call;
@@ -77,15 +66,19 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
 
     //get all product
     private RecyclerView mRecyclerView;
-    private ItemAllProductAdappter mitemPizzaAdappter;
-    private ArrayList<ItemAllFood> mitemItemFoodList;
+    private ItemProductAdappter mitemPizzaAdappter;
+    private ArrayList<ItemFood> mitemItemFoodList;
     private RequestQueue mRequestQueue;
 
     // Hot this month
     private RecyclerView rcvHotThisMonth;
     private List<Hot> hotThisMonths;
 
-    private TextView all;
+    // loadmore
+    private boolean isLoading;
+    private boolean isLastPage;
+    private int totalPage = 5;
+    private int currentPage = 1;
 
     View view;
     public HomeFragment() {
@@ -106,6 +99,13 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
         setImageUser();
         // set border image
         imgUser.setClipToOutline(true);
+        imgUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), InformationUserActivity.class);
+                startActivity(intent);
+            }
+        });
 
 
         ArrayAdapter<String> aadapter = new ArrayAdapter<String>(getContext()
@@ -152,10 +152,16 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
         mRecyclerView = view.findViewById(R.id.rcv_all_product);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
         mRecyclerView.setLayoutManager(gridLayoutManager);
+
+
+
+
         return view;
     }
+
 
     private void initUi() {
         roundedImageView = view.findViewById(R.id.pizza);
@@ -163,7 +169,6 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
         searchView = view.findViewById(R.id.search);
         imgUser = view.findViewById(R.id.img_user);
         spinnerSort = view.findViewById(R.id.spn_sort);
-        all = view.findViewById(R.id.all);
     }
 
     @Override
@@ -185,42 +190,43 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
 
 
 
+
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
 
     private void sortAsc() {
-        Call<ResponseBodyAllProduct> responseDTOCall = ApiClient.getProductService().sortProductAsc(
+        Call<ResponseBodyProduct> responseDTOCall = ApiClient.getProductService().sortProductAsc(
                 "Bearer " + StoreUtil.get(getContext(), Contants.accessToken));
-        responseDTOCall.enqueue(new Callback<ResponseBodyAllProduct>() {
+        responseDTOCall.enqueue(new Callback<ResponseBodyProduct>() {
             @Override
-            public void onResponse(Call<ResponseBodyAllProduct> call, Response<ResponseBodyAllProduct> response) {
-                mitemPizzaAdappter = new ItemAllProductAdappter(getContext(), (ArrayList<ItemAllFood>) response.body().getData());
+            public void onResponse(Call<ResponseBodyProduct> call, Response<ResponseBodyProduct> response) {
+                mitemPizzaAdappter = new ItemProductAdappter(getContext(),  response.body().getData());
                 mRecyclerView.setAdapter(mitemPizzaAdappter);
                 mitemPizzaAdappter.notifyDataSetChanged();
             }
 
             @Override
-            public void onFailure(Call<ResponseBodyAllProduct> call, Throwable t) {
+            public void onFailure(Call<ResponseBodyProduct> call, Throwable t) {
                 t.printStackTrace();
             }
         });
     }
 
     private void sortDesc() {
-        Call<ResponseBodyAllProduct> responseDTOCall = ApiClient.getProductService().sortProductDesc(
+        Call<ResponseBodyProduct> responseDTOCall = ApiClient.getProductService().sortProductDesc(
                 "Bearer " + StoreUtil.get(getContext(), Contants.accessToken));
-        responseDTOCall.enqueue(new Callback<ResponseBodyAllProduct>() {
+        responseDTOCall.enqueue(new Callback<ResponseBodyProduct>() {
             @Override
-            public void onResponse(Call<ResponseBodyAllProduct> call, Response<ResponseBodyAllProduct> response) {
-                mitemPizzaAdappter = new ItemAllProductAdappter(getContext(), (ArrayList<ItemAllFood>) response.body().getData());
+            public void onResponse(Call<ResponseBodyProduct> call, Response<ResponseBodyProduct> response) {
+                mitemPizzaAdappter = new ItemProductAdappter(getContext(),  response.body().getData());
                 mRecyclerView.setAdapter(mitemPizzaAdappter);
                 mitemPizzaAdappter.notifyDataSetChanged();
             }
 
             @Override
-            public void onFailure(Call<ResponseBodyAllProduct> call, Throwable t) {
+            public void onFailure(Call<ResponseBodyProduct> call, Throwable t) {
                 t.printStackTrace();
             }
         });
@@ -289,11 +295,11 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
                                 int productPrice = dt.getInt("gia");
                                 String productDetail = dt.getString("chitiet");
                                 String productSize = dt.getString("size");
-                                String productCategory = dt.getString("tendm");
-                                mitemItemFoodList.add(new ItemAllFood(productId,productName,productPrice,productImage,productDetail,productSize,productCategory));
+                                mitemItemFoodList.add(new ItemFood(productId,productName,productPrice,productImage,productDetail,productSize));
                             }
-                            mitemPizzaAdappter = new ItemAllProductAdappter(getActivity(), mitemItemFoodList);
+                            mitemPizzaAdappter = new ItemProductAdappter(getActivity(), mitemItemFoodList);
                             mRecyclerView.setAdapter(mitemPizzaAdappter);
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -322,13 +328,14 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
 
     // filter products
     private void filter(String text) {
-        ArrayList<ItemAllFood> filteredList = new ArrayList<>();
-        for (ItemAllFood item : mitemItemFoodList) {
+        ArrayList<ItemFood> filteredList = new ArrayList<>();
+        for (ItemFood item : mitemItemFoodList) {
             if (item.getTensp().toUpperCase().contains(text.toUpperCase())) {
                 filteredList.add(item);
             }
         }
         mitemPizzaAdappter.filterList(filteredList);
     }
+
 
 }

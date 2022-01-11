@@ -1,7 +1,5 @@
 package com.example.oderapp.model.response;
 
-import com.example.oderapp.model.ItemAllFood;
-import com.example.oderapp.model.ItemCart;
 import com.example.oderapp.model.ItemFood;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

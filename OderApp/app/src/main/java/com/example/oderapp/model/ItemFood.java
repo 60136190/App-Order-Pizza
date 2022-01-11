@@ -12,14 +12,13 @@ public class ItemFood implements Serializable {
     private String size;
     private int id_dm;
 
-    public ItemFood(int id, String tensp, int gia, String url, String chitiet, String size, int id_dm) {
+    public ItemFood(int id, String tensp, int gia, String url, String chitiet, String size) {
         this.id = id;
         this.tensp = tensp;
         this.gia = gia;
         this.url = url;
         this.chitiet = chitiet;
         this.size = size;
-        this.id_dm = id_dm;
     }
 
     public int getId() {
