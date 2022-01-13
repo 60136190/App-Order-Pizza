@@ -37,6 +37,7 @@ public class ItemCartAdappter extends RecyclerView.Adapter<ItemCartAdappter.Item
     List<ItemCart> mItemCartList;
     // filter
 
+
     public ItemCartAdappter(Context context, List<ItemCart> mItemCartList) {
         this.mContext = context;
         this.mItemCartList = mItemCartList;
@@ -175,7 +176,8 @@ public class ItemCartAdappter extends RecyclerView.Adapter<ItemCartAdappter.Item
                 ItemFood itemFood = response.body().getData().get(0);
                 String anh = itemFood.getUrl();
 //                holder.tv_nameProduct.setText(itemFood.getTensp());
-                holder.tv_nameProduct.setText(itemFood.getTensp());
+                    holder.tv_nameProduct.setText(itemFood.getTensp());
+
 
                 Picasso.with(mContext.getApplicationContext())
                         .load(anh).fit().centerInside().into(holder.imgProduct);
@@ -200,13 +202,6 @@ public class ItemCartAdappter extends RecyclerView.Adapter<ItemCartAdappter.Item
         }
         return 0;
     }
-//    public void getsize(){
-//        EvenbusiSizeListCart event = new EvenbusiSizeListCart();
-//        event.setSize(getItemCount());
-//        EventBus.getDefault().post(event);
-//
-//        Log.e(String.valueOf(getItemCount()),"nam");
-//    }
 
 
     public class ItemViewHolder extends RecyclerView.ViewHolder {
@@ -237,7 +232,6 @@ public class ItemCartAdappter extends RecyclerView.Adapter<ItemCartAdappter.Item
             swipeRevealLayout = itemView.findViewById(R.id.swipereveallayout);
         }
     }
-
 
 
 

@@ -75,7 +75,7 @@ public interface UserService {
     @GET("/customer/profile")
     Call<ResponseInformationUser> getProfile(@Header("Authorization") String authorization);
 
-    @DELETE("/customer/logout")
+    @GET("/customer/logout")
     Call<ResponseDTO> deleteUser(@Header("Cookie") String refreshToken);
 
     @POST("/address/add")

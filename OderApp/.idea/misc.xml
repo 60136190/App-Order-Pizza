@@ -24,6 +24,7 @@
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/drawable/border_image_user.xml" value="0.19166666666666668" />
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/drawable/border_radiobutton.xml" value="0.19166666666666668" />
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/drawable/border_soluong_itemcart.xml" value="0.19166666666666668" />
+        <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/drawable/border_top_view_error.xml" value="0.19166666666666668" />
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/drawable/cart_backgroung.xml" value="0.21197916666666666" />
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/drawable/dialog_top.xml" value="0.19166666666666668" />
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/drawable/ic_about_us.xml" value="0.21197916666666666" />
@@ -48,9 +49,11 @@
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/drawable/ic_outline_share_24.xml" value="0.21197916666666666" />
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/drawable/ic_outline_work_outline_24.xml" value="0.21197916666666666" />
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/drawable/ic_protect.xml" value="0.19166666666666668" />
+        <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/drawable/ic_sex.xml" value="0.19166666666666668" />
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/drawable/ic_sort.xml" value="0.19166666666666668" />
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/drawable/ic_white_backspace.xml" value="0.19166666666666668" />
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/drawable/item_cart.xml" value="0.19166666666666668" />
+        <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/drawable/linear_layout_error.xml" value="0.19166666666666668" />
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/drawable/search.xml" value="0.21614583333333334" />
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/font/flamenco.xml" value="0.20572916666666666" />
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/layout/activity_about_us.xml" value="0.22" />
@@ -85,6 +88,7 @@
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/layout/activity_tess.xml" value="0.17552083333333332" />
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/layout/activity_test_uicategory.xml" value="0.17282051282051283" />
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/layout/activity_update_information.xml" value="0.22" />
+        <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/layout/dialog_cannot_cancel_bill.xml" value="0.22" />
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/layout/dialog_confirm_delete_all_cart.xml" value="0.17552083333333332" />
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/layout/dialog_confirm_logout.xml" value="0.17552083333333332" />
         <entry key="..\:/AndroidStudio/OderApp/app/src/main/res/layout/dialog_confirm_order.xml" value="0.17552083333333332" />

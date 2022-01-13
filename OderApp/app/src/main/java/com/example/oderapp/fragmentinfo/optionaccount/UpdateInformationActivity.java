@@ -12,6 +12,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -57,6 +59,7 @@ import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -127,9 +130,67 @@ public class UpdateInformationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_information);
         initUi();
-
         getData();
-//        initCongif();
+
+        edtNgaySinh.addTextChangedListener(new TextWatcher() {
+            private String current = "";
+            private String ddmmyyyy = "YYYYMMDD";
+            private Calendar cal = Calendar.getInstance();
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (!s.toString().equals(current)) {
+                    String clean = s.toString().replaceAll("[^\\d.]", "");
+                    String cleanC = current.replaceAll("[^\\d.]", "");
+
+                    int cl = clean.length();
+                    int sel = cl;
+                    for (int i = 2; i <= cl && i < 6; i += 2) {
+                        sel++;
+                    }
+                    //Fix for pressing delete next to a forward slash
+                    if (clean.equals(cleanC)) sel--;
+
+                    if (clean.length() < 8){
+                        clean = clean + ddmmyyyy.substring(clean.length());
+                    }else{
+                        //This part makes sure that when we finish entering numbers
+                        //the date is correct, fixing it otherwise
+                        int day  = Integer.parseInt(clean.substring(6,8));
+                        int mon  = Integer.parseInt(clean.substring(4,6));
+                        int year = Integer.parseInt(clean.substring(0,4));
+
+                        if(mon > 12) mon = 12;
+                        cal.set(Calendar.MONTH, mon-1);
+
+                        year = (year<1900)?1900:(year>2100)?2100:year;
+                        cal.set(Calendar.YEAR, year);
+                        // ^ first set year for the line below to work correctly
+                        //with leap years - otherwise, date e.g. 29/02/2012
+                        //would be automatically corrected to 28/02/2012
+
+                        day = (day > cal.getActualMaximum(Calendar.DATE))? cal.getActualMaximum(Calendar.DATE):day;
+                        clean = String.format("%02d%02d%02d",year, mon, day);
+                    }
+
+                    clean = String.format("%s-%s-%s", clean.substring(0, 4),
+                            clean.substring(4, 6),
+                            clean.substring(6, 8));
+
+                    sel = sel < 0 ? 0 : sel;
+                    current = clean;
+                    edtNgaySinh.setText(current);
+                    edtNgaySinh.setSelection(sel < current.length() ? sel : current.length());
+
+                }
+            }
+
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
 
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -172,7 +233,7 @@ public class UpdateInformationActivity extends AppCompatActivity {
                                 InformationUser informationUser = response.body().getData().get(0);
                                 String url = informationUser.getUrl();
                                 String public_id = informationUser.getPublic_id();
-                                if (url.isEmpty() || public_id.isEmpty()) {
+                                if (url ==null || public_id ==null) {
                                     // upload image
                                     Call<ReponseUrl> responseDTOCall = ApiClient.getService().uploadImage(
                                             "Bearer " + StoreUtil.get(UpdateInformationActivity.this, Contants.accessToken),
@@ -324,7 +385,6 @@ public class UpdateInformationActivity extends AppCompatActivity {
                 public void onFailure(Call<ResponseDTO> call, Throwable t) {
                 }
             });
-
     }
 
     //     get data user profile
@@ -337,10 +397,16 @@ public class UpdateInformationActivity extends AppCompatActivity {
                 InformationUser informationUser = response.body().getData().get(0);
                 edtHoTen.setText(informationUser.getHoten());
                 edtUserName.setText(informationUser.getUsername());
-                edtNgaySinh.setText(informationUser.getNgaysinh());
+
+                String string = informationUser.getNgaysinh();
+                String[] parts = string.split("T");
+                String part1 = parts[0];
+                edtNgaySinh.setText(part1);
+
+
                 edtDienThoai.setText(informationUser.getDienthoai());
                 String im = informationUser.getUrl();
-                if (im.isEmpty()) {
+                if (im == null) {
                     imgInfo.setImageResource(R.drawable.loadimage);
                 }else{
                     Glide.with(getApplicationContext())
@@ -456,7 +522,7 @@ public class UpdateInformationActivity extends AppCompatActivity {
     private boolean validateFullName() {
         String fullname = edtHoTen.getText().toString().trim();
         if (fullname.length() < 8){
-            tilFullName.setError("Minimum 8 Chac");
+            tilFullName.setError("Minimum 8 Character");
             return false;
         }else if (!fullname.matches(".*[A-Z].*")){
             tilFullName.setError("Must contain 1 upper-case Character");
@@ -493,7 +559,7 @@ public class UpdateInformationActivity extends AppCompatActivity {
     private boolean validateDateofBirth() {
         String dateofbirth = edtNgaySinh.getText().toString().trim();
         if (dateofbirth.length() < 10){
-            tilDateofBirth.setError("Minimum 10 Chac");
+            tilDateofBirth.setError("Minimum 10 Character");
             return false;
         }
         else {
@@ -513,8 +579,8 @@ public class UpdateInformationActivity extends AppCompatActivity {
     }
     private boolean validatePhoneNumber() {
         String phonenumber = edtDienThoai.getText().toString().trim();
-        if (phonenumber.length() < 10){
-            tilPhoneNumber.setError("Minimum 10 Chac");
+        if (phonenumber.length() > 10){
+            tilPhoneNumber.setError("Minimum 10 Character");
             return false;
         }else if (phonenumber.matches(".*[-,._].*")) {
             tilPhoneNumber.setError("Not special character");

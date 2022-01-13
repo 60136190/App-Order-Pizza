@@ -144,7 +144,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
     private boolean validateOldPassword() {
         String oldpass = edtOldPassword.getText().toString().trim();
         if (oldpass.length() < 8){
-            tilOldpass.setError("Minimum 8 Chac");
+            tilOldpass.setError("Minimum 8 Character");
             return false;
         }else if (!oldpass.matches(".*[A-Z].*")){
             tilOldpass.setError("Must contain 1 upper-case Character");
@@ -172,7 +172,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
     private boolean validateNewPassword() {
         String newpass = edtNewPassword.getText().toString().trim();
         if (newpass.length() < 8){
-            tilNewpass.setError("Minimum 8 Chac");
+            tilNewpass.setError("Minimum 8 Character");
             return false;
         }else if (!newpass.matches(".*[A-Z].*")){
             tilNewpass.setError("Must contain 1 upper-case Character");

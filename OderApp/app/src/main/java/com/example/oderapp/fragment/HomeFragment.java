@@ -258,7 +258,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
             public void onResponse(Call<ResponseInformationUser> call, retrofit2.Response<ResponseInformationUser> response) {
 
                 InformationUser informationUser = response.body().getData().get(0);
-                if (informationUser.getUrl().isEmpty()){
+                if (informationUser.getUrl() == null){
                     tvHiName.setText(informationUser.getUsername());
 
                 }else{
@@ -279,7 +279,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
 
 
     private void getAllProduct() {
-        String url = "http://192.168.1.5:5000/product/";
+        String url = "http://18.138.235.4:5000/product/";
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new com.android.volley.Response.Listener<JSONObject>() {
                     @Override

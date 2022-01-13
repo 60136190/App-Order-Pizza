@@ -96,7 +96,11 @@ public class DetailBillActivity extends AppCompatActivity {
                 mRecyclerView.setLayoutManager(new LinearLayoutManager(DetailBillActivity.this));
 
                 ItemDetailBill itemDetailBill = response.body().getData().get(0);
-                tvOrderDate.setText(itemDetailBill.getCreatedAt());
+
+                String string = itemDetailBill.getCreatedAt();
+                String[] parts = string.split("T");
+                String part1 = parts[0]; // 004
+                tvOrderDate.setText(part1);
             }
 
             @Override

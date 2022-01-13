@@ -53,7 +53,6 @@ public class Login extends AppCompatActivity {
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
-
         signin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,8 +80,8 @@ public class Login extends AppCompatActivity {
         imgRegisterGoogle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                loginUsingGoogle();
-                signIn();
+                loginUsingGoogle();
+//                signIn();
             }
         });
     }

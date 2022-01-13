@@ -15,9 +15,12 @@ import com.example.oderapp.fragmentinfo.optionaccount.UpdateInformationActivity;
 import com.example.oderapp.model.InformationUser;
 import com.example.oderapp.model.response.ResponseInformationUser;
 import com.example.oderapp.utils.StoreUtil;
+import com.google.type.DateTime;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -31,6 +34,7 @@ public class InformationUserActivity extends AppCompatActivity {
     private TextView tvPhoneNumber;
     private TextView tvSex;
     private TextView tvDateOfBirth;
+    private TextView tvEmail;
     private Button btn_update;
 
     @Override
@@ -56,6 +60,7 @@ public class InformationUserActivity extends AppCompatActivity {
         tvPhoneNumber = findViewById(R.id.tv_phone_number);
         tvSex = findViewById(R.id.tv_sex);
         tvDateOfBirth = findViewById(R.id.tv_date_of_birth);
+        tvEmail = findViewById(R.id.tv_email);
         btn_update = findViewById(R.id.buttonUpdate);
     }
     public void getData() {
@@ -67,11 +72,16 @@ public class InformationUserActivity extends AppCompatActivity {
                 InformationUser informationUser = response.body().getData().get(0);
                 tvFullName.setText(informationUser.getHoten());
                 tvUserName.setText(informationUser.getUsername());
-
-                tvDateOfBirth.setText(informationUser.getNgaysinh());
+                tvEmail.setText(informationUser.getEmail());
                 tvPhoneNumber.setText(informationUser.getDienthoai());
+
+                String string = informationUser.getNgaysinh();
+                String[] parts = string.split("T");
+                String part1 = parts[0]; // 004
+                tvDateOfBirth.setText(part1);
+
                 String im = informationUser.getUrl();
-                if (im.isEmpty()) {
+                if (im == null) {
                     imgUser.setImageResource(R.drawable.user);
                 }else{
                     Glide.with(getApplicationContext())

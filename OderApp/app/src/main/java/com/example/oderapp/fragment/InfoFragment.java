@@ -240,7 +240,7 @@ public class InfoFragment extends Fragment {
                                     countDownTimer.start();
                                 }
                             }
-
+//
                             @Override
                             public void onFailure(Call<ResponseDTO> call, Throwable t) {
 

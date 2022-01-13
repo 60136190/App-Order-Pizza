@@ -193,19 +193,19 @@
         />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/imgUserInfor"
-        android:layout_width="@dimen/_150sdp"
-        android:layout_height="@dimen/_150sdp"
-        android:layout_marginTop="@dimen/_30sdp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/loadimage"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/til_phone_number" />
 
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imgUserInfor"
+            android:layout_width="@dimen/_150sdp"
+            android:layout_height="@dimen/_150sdp"
+            android:layout_marginTop="36dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/loadimage"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/til_phone_number" />
 
-    <Button
+        <Button
         android:id="@+id/buttonUpdate"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_50sdp"
