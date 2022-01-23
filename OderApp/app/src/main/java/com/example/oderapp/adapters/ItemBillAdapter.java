@@ -107,6 +107,7 @@ public class ItemBillAdapter extends RecyclerView.Adapter<ItemBillAdapter.ItemVi
                             holder.tvTinhTrangHD.setTextColor(Color.parseColor("#FA655A"));
                         }
 
+
                     };
                     countDownTimer.start();
                     Call<ResponseBodyBill> responseBodyBillCall = ApiClient.getProductService().cancelBill(id,
@@ -260,6 +261,7 @@ public class ItemBillAdapter extends RecyclerView.Adapter<ItemBillAdapter.ItemVi
         });
 
 
+
     }
 
 
@@ -298,6 +300,7 @@ public class ItemBillAdapter extends RecyclerView.Adapter<ItemBillAdapter.ItemVi
 
 
     }
+
 
 
 }

@@ -183,6 +183,7 @@
     <EditText
         android:id="@+id/edt_phone_number"
         android:layout_width="@dimen/_140sdp"
+        android:maxLength="10"
         android:layout_height="wrap_content"
         android:background="@drawable/background_input"
         android:hint="Phone number"

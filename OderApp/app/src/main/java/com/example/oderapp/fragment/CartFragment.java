@@ -172,6 +172,8 @@ public class CartFragment extends Fragment {
 
                     @Override
                     public void onFinish() {
+                        getCart();
+                        getQuantilyAndPrice();
                         progressBar.setVisibility(View.INVISIBLE);
                     }
                 };
@@ -235,6 +237,11 @@ public class CartFragment extends Fragment {
         });
     }
 
-
+    @Override
+    public void onStart() {
+        super.onStart();
+        getCart();
+        getQuantilyAndPrice();
+    }
 }
 

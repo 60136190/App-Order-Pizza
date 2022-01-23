@@ -39,7 +39,7 @@ public class FirstScreenActivity extends AppCompatActivity {
                     Intent i3 = new Intent(FirstScreenActivity.this, Login.class);
                     startActivity(i3);
                 }else{
-//                    getReFreshToken();
+                    getReFreshToken();
                     Intent intentslide = new Intent(FirstScreenActivity.this, MainActivity.class);
                     startActivity(intentslide);
                     finish();

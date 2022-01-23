@@ -44,8 +44,11 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.json.JSONArray;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -112,52 +115,53 @@ public class PaymentActivity extends AppCompatActivity {
             public void onClick(View v) {
                 HashMap<String, String> hashMap = new HashMap<>();
                 hashMap.put(Contants.accessToken, "Bearer " + StoreUtil.get(PaymentActivity.this, Contants.accessToken));
-
                 String voucher = edtVoucherCode.getText().toString();
-                if (voucher.isEmpty() || (!"Coupon5".equals(voucher) && !"Coupon10".equals(voucher))) {
-                    final Dialog dialog = new Dialog(v.getContext());
-                    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                    dialog.setContentView(R.layout.dialog_not_voucher);
-                    Window window = dialog.getWindow();
-                    if (window == null) {
-                        return;
-                    }
-                    window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
-                    window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-                    WindowManager.LayoutParams windowAtribute = window.getAttributes();
-                    window.setAttributes(windowAtribute);
-                    Button btnContinue = dialog.findViewById(R.id.btn_continue);
-                    btnContinue.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            dialog.dismiss();
-                        }
-                    });
-                    // show dialog thanks
-                    dialog.show();
-
-                    voucher = "Coupon0";
-                }
                 Call<ResponseBodyVoucher> addAddressResponeCall = ApiClient.getService().getVoucher(
                         voucher, hashMap);
                 addAddressResponeCall.enqueue(new Callback<ResponseBodyVoucher>() {
                     @Override
                     public void onResponse(Call<ResponseBodyVoucher> call, Response<ResponseBodyVoucher> response) {
-                        Voucher vc = response.body().getData().get(0);
-                        String a = "Coupon0";
-                        if (vc.getId().equals(a)) {
-                            tvCoupon.setText("0");
-                        } else {
-                            tvCoupon.setText(vc.getId());
+                        if (response.isSuccessful()) {
+                            Voucher vc = response.body().getData().get(0);
+                            String a = "Coupon0";
+                            if (vc.getId().equals(a)) {
+                                tvCoupon.setText("0");
+                            } else {
+                                tvCoupon.setText(String.valueOf(vc.getGiatri()));
+                            }
+                            int giatri = vc.getGiatri();
+                            float tam = 0;
+                            float kq = 0;
+                            int price = Integer.parseInt(tvPrice.getText().toString());
+                            tam = (price * giatri) / 100;
+                            kq = price - tam;
+                            tvTotal.setText(String.valueOf(kq));
                         }
-                        int giatri = vc.getGiatri();
-                        float tam = 0;
-                        float kq = 0;
-                        int price = Integer.parseInt(tvPrice.getText().toString());
-                        tam = (price * giatri)/100;
-                        kq = price - tam;
-                        tvTotal.setText(String.valueOf(kq));
+                        else{
+                            final Dialog dialog = new Dialog(v.getContext());
+                            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                            dialog.setContentView(R.layout.dialog_not_voucher);
+                            Window window = dialog.getWindow();
+                            if (window == null) {
+                                return;
+                            }
+                            window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+                            window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                            WindowManager.LayoutParams windowAtribute = window.getAttributes();
+                            window.setAttributes(windowAtribute);
+                            Button btnContinue = dialog.findViewById(R.id.btn_continue);
+                            btnContinue.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    dialog.dismiss();
+                                }
+                            });
+                            // show dialog thanks
+                            dialog.show();
+                            edtVoucherCode.setText("");
+                        }
                     }
 
                     @Override
@@ -166,14 +170,7 @@ public class PaymentActivity extends AppCompatActivity {
                     }
                 });
 
-//                String code = edtVoucherCode.getText().toString();
-//                String coupon5 = "Coupon5";
-//                String coupon10 ="Coupon10";
-//                if (code.equals(coupon5) || code.equals(coupon10)){
-//                    tvCoupon.setText(code);
-//                }else{
-//                    tvCoupon.setText("");
-//                }
+
             }
         });
         btnBuyNow.setOnClickListener(new View.OnClickListener() {
@@ -202,17 +199,14 @@ public class PaymentActivity extends AppCompatActivity {
                             int IdAddress = Integer.parseInt(tvIdAddress.getText().toString());
                             int IdMethod = Integer.parseInt(tvIdMethod.getText().toString());
                             String voucherCode = edtVoucherCode.getText().toString();
-//                            String coupon5 = "Coupon5";
-//                            String coupon10 = "Coupon10";
-//                            String ok;
-//                            if (voucherCode.equals(coupon5) ||
-//                                    voucherCode.equals(coupon10)) {
-//                                ok = voucherCode;
-//                            } else {
-//                                ok = "Coupon0";
-//                            }
+                            String ok;
+                            if (voucherCode.isEmpty()) {
+                                ok = "Coupon0";
+                            } else {
+                                ok = voucherCode;
+                            }
 
-                            itemBill = new ItemBill(IdMethod, IdAddress, voucherCode);
+                            itemBill = new ItemBill(IdMethod, IdAddress, ok);
                             HashMap<String, String> hashMap = new HashMap<>();
                             hashMap.put(Contants.contentLength, "<calculated when request is sent>");
                             hashMap.put(Contants.accessToken, "Bearer " + StoreUtil.get(PaymentActivity.this, Contants.accessToken));

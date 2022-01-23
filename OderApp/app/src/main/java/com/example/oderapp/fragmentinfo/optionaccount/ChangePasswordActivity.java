@@ -86,7 +86,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
         hashMap.put(Contants.contentType, "application/json");
         hashMap.put(Contants.contentLength, "<calculated when request is sent>");
 
-        if (validateOldPassword() && validateNewPassword() && validateConfirmNewPassword()) {
+        if (validateNewPassword() && validateConfirmNewPassword()) {
             Call<ResponseChangePasswordDTO> responseDTOCall = ApiClient.getService().changePasswordUser(hashMap, changePasswordRequest);
             responseDTOCall.enqueue(new Callback<ResponseChangePasswordDTO>() {
                 @Override
@@ -141,34 +141,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
 
     }
 
-    private boolean validateOldPassword() {
-        String oldpass = edtOldPassword.getText().toString().trim();
-        if (oldpass.length() < 8){
-            tilOldpass.setError("Minimum 8 Character");
-            return false;
-        }else if (!oldpass.matches(".*[A-Z].*")){
-            tilOldpass.setError("Must contain 1 upper-case Character");
-            return false;
-        }else if (!oldpass.matches(".*[a-z].*")) {
-            tilOldpass.setError("Must contain 1 Lower-case Character");
-            return false;
-        }else if (!oldpass.matches(".*[@!#$%^&*()_+=<>?/|].*")) {
-            tilOldpass.setError("Must contain 1 special character (@!#$%^&*()_+=<>?/|)");
-            return false;
-        }else if (!oldpass.matches(".*[0-9].*")) {
-            tilOldpass.setError("Must contain at least 1 number");
-            return false;
-        }
-        else if (!oldpass.matches("\\S+$")) {
-            tilOldpass.setError("Must be no white space");
-            return false;
-        }
-        else {
-            tilOldpass.setError(null);
-            return true;
-        }
 
-    }
     private boolean validateNewPassword() {
         String newpass = edtNewPassword.getText().toString().trim();
         if (newpass.length() < 8){

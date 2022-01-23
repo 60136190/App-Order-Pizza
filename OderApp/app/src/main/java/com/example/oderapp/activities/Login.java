@@ -38,8 +38,8 @@ public class Login extends AppCompatActivity {
     private EditText edtPass;
     private ImageView imgRegisterGoogle;
 
-    GoogleSignInClient mGoogleSignInClient;
-    int RC_SIGN_IN = 0;
+//    GoogleSignInClient mGoogleSignInClient;
+//    int RC_SIGN_IN = 0;
 
 
     @Override
@@ -48,10 +48,10 @@ public class Login extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         initUi();
 
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .build();
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+//        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+//                .requestEmail()
+//                .build();
+//        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
         signin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,7 +80,7 @@ public class Login extends AppCompatActivity {
         imgRegisterGoogle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loginUsingGoogle();
+//                loginUsingGoogle();
 //                signIn();
             }
         });
@@ -154,35 +154,35 @@ public class Login extends AppCompatActivity {
     }
 
 
-    private void signIn() {
-        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-        startActivityForResult(signInIntent, RC_SIGN_IN);
-        loginUsingGoogle();
-    }
+//    private void signIn() {
+//        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+//        startActivityForResult(signInIntent, RC_SIGN_IN);
+//        loginUsingGoogle();
+//    }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
-        if (requestCode == RC_SIGN_IN) {
-            // The Task returned from this call is always completed, no need to attach
-            // a listener.
-            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-            handleSignInResult(task);
-        }
-    }
-
-    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
-        try {
-            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-
-            // Signed in successfully, show authenticated UI.
-            Intent intent = new Intent(Login.this,SliderActivity.class);
-            startActivity(intent);
-        } catch (ApiException e) {
-        }
-    }
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//
+//        // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
+//        if (requestCode == RC_SIGN_IN) {
+//            // The Task returned from this call is always completed, no need to attach
+//            // a listener.
+//            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+//            handleSignInResult(task);
+//        }
+//    }
+//
+//    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
+//        try {
+//            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
+//
+//            // Signed in successfully, show authenticated UI.
+//            Intent intent = new Intent(Login.this,SliderActivity.class);
+//            startActivity(intent);
+//        } catch (ApiException e) {
+//        }
+//    }
 
 }
 

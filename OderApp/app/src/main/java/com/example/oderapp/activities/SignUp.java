@@ -226,7 +226,7 @@ public class SignUp extends AppCompatActivity {
     private boolean validateFullName() {
         String fullname = edtHoTen.getText().toString().trim();
         if (fullname.length() < 8){
-            tilFullName.setError("Minimum 8 Chac");
+            tilFullName.setError("Minimum 8 Character");
             return false;
         }else if (!fullname.matches(".*[A-Z].*")){
             tilFullName.setError("Must contain 1 upper-case Character");

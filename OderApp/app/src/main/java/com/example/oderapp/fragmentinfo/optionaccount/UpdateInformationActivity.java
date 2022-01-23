@@ -580,7 +580,7 @@ public class UpdateInformationActivity extends AppCompatActivity {
     private boolean validatePhoneNumber() {
         String phonenumber = edtDienThoai.getText().toString().trim();
         if (phonenumber.length() > 10){
-            tilPhoneNumber.setError("Minimum 10 Character");
+            tilPhoneNumber.setError("Maximum 10 Character");
             return false;
         }else if (phonenumber.matches(".*[-,._].*")) {
             tilPhoneNumber.setError("Not special character");

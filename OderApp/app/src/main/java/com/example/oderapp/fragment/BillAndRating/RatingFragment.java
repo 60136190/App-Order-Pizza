@@ -84,4 +84,9 @@ public class RatingFragment extends Fragment {
             }
         });
     }
+    @Override
+    public void onStart() {
+        super.onStart();
+        getAllHistoryRating();
+    }
 }

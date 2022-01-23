@@ -108,6 +108,9 @@ public interface UserService {
     @GET("/voucher/check/{id}")
     Call<ResponseBodyVoucher> getVoucher (@Path("id") String id,@HeaderMap HashMap<String, String> hashMap);
 
+    @GET("/voucher/all/customer")
+    Call<ResponseBodyVoucher> getAllVoucher(@Header("Authorization") String authorization);
+
     @POST("/rating/add/{id}")
     Call<ResponseRating> ratingBill(@Path("id") int id, @Body Rating rating, @HeaderMap HashMap<String, String> hashMap);
 

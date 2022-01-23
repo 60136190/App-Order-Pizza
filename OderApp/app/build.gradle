@@ -25,10 +25,23 @@ android {
     }
 
     buildTypes {
+        debug {
+            signingConfig signingConfigs.debug
+        }
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.my_config
+
+            crunchPngs false // or true
+
+            lintOptions {
+                checkReleaseBuilds false
+                abortOnError false
+            }
+
+            release {
+                minifyEnabled false
+                proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+                signingConfig signingConfigs.my_config
+            }
         }
     }
     compileOptions {

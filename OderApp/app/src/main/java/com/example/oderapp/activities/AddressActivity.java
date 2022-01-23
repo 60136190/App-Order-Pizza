@@ -104,5 +104,10 @@ public class AddressActivity extends AppCompatActivity{
             }
         });
     }
+    @Override
+    public void onStart() {
+        super.onStart();
+        getListAddress();
+    }
 
 }

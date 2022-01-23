@@ -65,4 +65,5 @@ public class BillFragment extends Fragment {
             }
         });
     }
+
 }
